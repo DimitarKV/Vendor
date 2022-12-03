@@ -1,0 +1,15 @@
+D:\DOTNET\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Vendor.Application.deps.json
+D:\DOTNET\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Vendor.Application.dll
+D:\DOTNET\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Vendor.Application.pdb
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.csproj.AssemblyReference.cache
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.AssemblyInfoInputs.cache
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.AssemblyInfo.cs
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.csproj.CoreCompileInputs.cache
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.csproj.CopyComplete
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.dll
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\refint\Vendor.Application.dll
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.pdb
+D:\DOTNET\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\ref\Vendor.Application.dll
+D:\DOTNET\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Vendor.Domain.dll
+D:\DOTNET\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Vendor.Domain.pdb

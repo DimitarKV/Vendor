@@ -1,0 +1,12 @@
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\bin\Debug\net7.0\Vendor.Domain.deps.json
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\bin\Debug\net7.0\Vendor.Domain.dll
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\bin\Debug\net7.0\Vendor.Domain.pdb
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\Vendor.Domain.csproj.AssemblyReference.cache
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\Vendor.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\Vendor.Domain.AssemblyInfoInputs.cache
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\Vendor.Domain.AssemblyInfo.cs
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\Vendor.Domain.csproj.CoreCompileInputs.cache
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\Vendor.Domain.dll
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\refint\Vendor.Domain.dll
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\Vendor.Domain.pdb
+D:\DOTNET\Vendor\src\Common\Vendor.Domain\obj\Debug\net7.0\ref\Vendor.Domain.dll
