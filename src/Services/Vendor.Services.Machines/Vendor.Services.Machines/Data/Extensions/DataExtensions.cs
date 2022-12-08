@@ -18,6 +18,7 @@ public static class DataExtensions
         builder.Services.AddTransient<IMachineDbContext, MachineDbContext>();
         builder.Services.AddTransient<MachineDbContext, MachineDbContext>();
         builder.Services.AddTransient<IVendingRepository, VendingRepository>();
+        // builder.Services.AddTransient<
     }
 
     public static void EnsureDatabaseCreated(this WebApplication app)

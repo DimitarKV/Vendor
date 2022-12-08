@@ -17,12 +17,6 @@ public class ApiResponse
         Message = "";
     }
 
-    public ApiResponse(ApiResponse response)
-    {
-        Errors = response.Errors;
-        Message = response.Message;
-    }
-    
     public bool IsValid => (Errors == null || !Errors.Any());
 }
 

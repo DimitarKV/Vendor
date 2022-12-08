@@ -1,6 +1,4 @@
-﻿using Vendor.Domain.Entities;
-
-namespace Vendor.Services.Machines.Data.Entities;
+﻿namespace Vendor.Domain.Entities;
 
 public class Product : Entity<int>
 {

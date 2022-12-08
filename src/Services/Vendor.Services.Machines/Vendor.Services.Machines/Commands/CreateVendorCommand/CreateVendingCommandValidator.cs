@@ -13,5 +13,10 @@ public class CreateVendingCommandValidator : AbstractValidator<CreateVendingComm
                 await context.Vendings.Where(v => v.Title == title).FirstOrDefaultAsync() is null)
             .WithErrorCode("409")
             .WithMessage("Title is not available!");
+
+        RuleFor(v => v.Title)
+            .Must(title => title.Length >= 4)
+            .WithErrorCode("409")
+            .WithMessage("Title length must be at least 4 characters!");
     }
 }

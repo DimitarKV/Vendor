@@ -1,11 +1,15 @@
-﻿namespace Vendor.Services.Machines.Data.Entities;
+﻿using Vendor.Domain.Entities;
+
+namespace Vendor.Services.Machines.Data.Entities;
 
 public class Vending : Machine
 {
-    public List<Tray> Products { get; set; }
+    public List<Spiral> Spirals { get; set; }
+    public List<Product> Products { get; set; }
     
     public Vending()
     {
-        Products = new List<Tray>();
+        Spirals = new List<Spiral>();
+        Products = new List<Product>();
     }
 }

@@ -6,7 +6,6 @@ namespace Vendor.Services.Machines.Data.Persistence;
 
 public class MachineDbContext : DbContext, IMachineDbContext
 {
-    public DbSet<Product> Products { get; set; }
     public DbSet<Vending> Vendings { get; set; }
     public DbSet<Banknote> Banknotes { get; set; }
 
@@ -23,6 +22,10 @@ public class MachineDbContext : DbContext, IMachineDbContext
     {
         modelBuilder.Entity<Banknote>()
             .HasIndex(b => b.ValueInString)
+            .IsUnique();
+
+        modelBuilder.Entity<Vending>()
+            .HasIndex(v => v.Title)
             .IsUnique();
     }
 }
