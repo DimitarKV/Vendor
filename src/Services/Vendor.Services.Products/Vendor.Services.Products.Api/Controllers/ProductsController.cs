@@ -8,8 +8,9 @@ namespace Vendor.Services.Products.Api.Controllers;
 [Route("/[controller]/[action]")]
 public class ProductsController : ControllerBase
 {
-    public async Task<IActionResult> GetProduct()
+    [HttpGet]
+    public async Task<IActionResult> GetProduct(int id)
     {
-        return Ok(new ApiResponse<Product>(new Product() {ImageUrl = "hhhhh", Name = "name", Id = 1}));
+        return Ok(new ApiResponse<Product>(new Product() {ImageUrl = "hhhhh", Name = "name", Id = id}));
     }
 }

@@ -14,9 +14,9 @@ public class ProductRepository : IProductRepository
         _httpClient = httpClient;
     }
 
-    public async Task<ApiResponse<Product>> GetProductAsync(string name)
+    public async Task<ApiResponse<Product>> GetProductAsync(int id)
     {
-        var responseString = await _httpClient.GetStringAsync("products/GetProduct");
+        var responseString = await _httpClient.GetStringAsync("products/GetProduct?id=" + id);
 
         var response = JsonConvert.DeserializeObject<ApiResponse<Product>>(responseString)!;
         return response;
