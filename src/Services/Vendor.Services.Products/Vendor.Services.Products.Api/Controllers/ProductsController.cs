@@ -1,11 +1,15 @@
 ﻿// using CloudinaryDotNet;
 // using CloudinaryDotNet.Actions;
 
+using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Vendor.Domain.Entities;
 using Vendor.Domain.Types;
+using Vendor.Services.Products.Commands.CreateProductCommand;
+using Vendor.Services.Products.DTO;
 
 namespace Vendor.Services.Products.Api.Controllers;
 
@@ -14,20 +18,39 @@ namespace Vendor.Services.Products.Api.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly Cloudinary _cloudinary;
-    
-    public ProductsController(Cloudinary cloudinary)
+    private readonly IMapper _mapper;
+    private readonly IMediator _mediator;
+
+    public ProductsController(Cloudinary cloudinary, IMapper mapper, IMediator mediator)
     {
         _cloudinary = cloudinary;
+        _mapper = mapper;
+        _mediator = mediator;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> Product(int id)
+    [HttpPost]
+    public async Task<IActionResult> CreateProduct([FromForm]CreateProductDto dto)
     {
-        var uploadParams = new ImageUploadParams(){
-            File = new FileDescription(@"https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg"),
-            PublicId = "olympic_flag"};
+        var uploadParams = new ImageUploadParams()
+        {
+            File = new FileDescription(dto.Image.FileName, dto.Image.OpenReadStream()),
+            PublicId = dto.Name.Replace(" ", "")
+        };
         var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 
-        return Ok(new ApiResponse<Product>(new Product() {ImageUrl = "hhhhh", Name = "name", Id = id}));
+        if (uploadResult.Error is not null)
+        {
+            return BadRequest(new ApiResponse(uploadResult.Error.Message, new []{"Error"}));
+        }
+        
+        var command = _mapper.Map<CreateProductCommand>(dto);
+        command.ImageUrl = uploadResult.Uri.ToString();
+
+        var result = await _mediator.Send(command);
+
+        if (!result.IsValid)
+            return BadRequest(result);
+
+        return Ok(result);
     }
 }

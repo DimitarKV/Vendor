@@ -1,4 +1,7 @@
+using Vendor.Application.Extensions;
+using Vendor.Services.Products.Api.Controllers;
 using Vendor.Services.Products.Data.Extensions;
+using Vendor.Services.Products.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddApplication(new [] {typeof(ProductsController).Assembly, typeof(ProductProfiles).Assembly});
 
 var app = builder.Build();
 
@@ -19,6 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
 app.EnsureDatabaseCreated();
 app.UseHttpsRedirection();
 app.UseAuthorization();
