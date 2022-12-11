@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "2NtV6QZ/YxF1bXDtthYuLmU+4CIo2JI86GH89LIy6G4BQ+p+o/Uf6NDWJoHyEUVEH3ZsRkdYDti7uiVvhtYK6Q==",
+  "dgSpecHash": "Aj5aDHdziItRPRanlHpsz433CPq2ah4j1vHZGc6OZvP+XmPC72U7Poj6H60b6dIak688idUR8alyaCGJMU9xXg==",
   "success": true,
-  "projectFilePath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines\\Vendor.Services.Machines.csproj",
+  "projectFilePath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines\\Vendor.Services.Machines.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mitko\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",

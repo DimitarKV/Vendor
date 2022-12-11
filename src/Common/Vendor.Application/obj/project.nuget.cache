@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "DgRmYlFe7/mHH/DlvCQ++8h4bF9vn1DbMaVzY9wgoFKxEbVfOIu7Vxk8uPELcyUOxsHT7BbWJCLgjx1yPauNqg==",
+  "dgSpecHash": "x/JlKGy4g1jtKkk0SXTufNTaTtMa2NzMVgKN5LU5HnzINKHGBIh3ktn9vJ/n2VVex4dyLMveZQcukZda2FomhA==",
   "success": true,
-  "projectFilePath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Application\\Vendor.Application.csproj",
+  "projectFilePath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Application\\Vendor.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mitko\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

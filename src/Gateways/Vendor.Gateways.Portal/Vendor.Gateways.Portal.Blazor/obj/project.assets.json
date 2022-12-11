@@ -8,24 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\mitko\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\mitko\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\Vendor.Gateways.Portal.Blazor.csproj",
+      "projectUniqueName": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\Vendor.Gateways.Portal.Blazor.csproj",
       "projectName": "Vendor.Gateways.Portal.Blazor",
-      "projectPath": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\Vendor.Gateways.Portal.Blazor.csproj",
+      "projectPath": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\Vendor.Gateways.Portal.Blazor.csproj",
       "packagesPath": "C:\\Users\\mitko\\.nuget\\packages\\",
-      "outputPath": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\",
+      "outputPath": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\mitko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

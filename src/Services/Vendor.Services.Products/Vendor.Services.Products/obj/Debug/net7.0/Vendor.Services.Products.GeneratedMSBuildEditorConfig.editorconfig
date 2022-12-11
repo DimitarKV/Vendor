@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Vendor.Services.Products
-build_property.ProjectDir = D:\DOTNET\Vendor\src\Services\Vendor.Services.Products\Vendor.Services.Products\
+build_property.ProjectDir = D:\Dimitar\Vendor\src\Services\Vendor.Services.Products\Vendor.Services.Products\

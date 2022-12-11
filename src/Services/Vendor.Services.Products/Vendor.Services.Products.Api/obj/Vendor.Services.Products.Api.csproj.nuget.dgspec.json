@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\Vendor.Services.Products.Api.csproj": {}
+    "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\Vendor.Services.Products.Api.csproj": {}
   },
   "projects": {
-    "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj": {
+    "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
+        "projectUniqueName": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
         "projectName": "Vendor.Domain",
-        "projectPath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
+        "projectPath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
         "packagesPath": "C:\\Users\\mitko\\.nuget\\packages\\",
-        "outputPath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\obj\\",
+        "outputPath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\mitko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -69,21 +65,17 @@
         }
       }
     },
-    "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\Vendor.Services.Products.Api.csproj": {
+    "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\Vendor.Services.Products.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\Vendor.Services.Products.Api.csproj",
+        "projectUniqueName": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\Vendor.Services.Products.Api.csproj",
         "projectName": "Vendor.Services.Products.Api",
-        "projectPath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\Vendor.Services.Products.Api.csproj",
+        "projectPath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\Vendor.Services.Products.Api.csproj",
         "packagesPath": "C:\\Users\\mitko\\.nuget\\packages\\",
-        "outputPath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\obj\\",
+        "outputPath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products.Api\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\mitko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -97,8 +89,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj": {
-                "projectPath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj"
+              "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj": {
+                "projectPath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj"
               }
             }
           }
@@ -145,21 +137,17 @@
         }
       }
     },
-    "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj": {
+    "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj",
+        "projectUniqueName": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj",
         "projectName": "Vendor.Services.Products",
-        "projectPath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj",
+        "projectPath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\Vendor.Services.Products.csproj",
         "packagesPath": "C:\\Users\\mitko\\.nuget\\packages\\",
-        "outputPath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\obj\\",
+        "outputPath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Products\\Vendor.Services.Products\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
           "C:\\Users\\mitko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -173,8 +161,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj": {
-                "projectPath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj"
+              "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj": {
+                "projectPath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj"
               }
             }
           }
@@ -189,6 +177,18 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Cloudinary.Core": {
+              "target": "Package",
+              "version": "[1.31.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "MediatR.Contracts": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.0, )"

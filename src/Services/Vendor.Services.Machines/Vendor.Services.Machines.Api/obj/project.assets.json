@@ -4003,24 +4003,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mitko\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\mitko\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines.Api\\Vendor.Services.Machines.Api.csproj",
+      "projectUniqueName": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines.Api\\Vendor.Services.Machines.Api.csproj",
       "projectName": "Vendor.Services.Machines.Api",
-      "projectPath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines.Api\\Vendor.Services.Machines.Api.csproj",
+      "projectPath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines.Api\\Vendor.Services.Machines.Api.csproj",
       "packagesPath": "C:\\Users\\mitko\\.nuget\\packages\\",
-      "outputPath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines.Api\\obj\\",
+      "outputPath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines.Api\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\mitko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4034,14 +4029,14 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Application\\Vendor.Application.csproj": {
-              "projectPath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Application\\Vendor.Application.csproj"
+            "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Application\\Vendor.Application.csproj": {
+              "projectPath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Application\\Vendor.Application.csproj"
             },
-            "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj": {
-              "projectPath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj"
+            "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj": {
+              "projectPath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj"
             },
-            "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines\\Vendor.Services.Machines.csproj": {
-              "projectPath": "D:\\DOTNET\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines\\Vendor.Services.Machines.csproj"
+            "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines\\Vendor.Services.Machines.csproj": {
+              "projectPath": "D:\\Dimitar\\Vendor\\src\\Services\\Vendor.Services.Machines\\Vendor.Services.Machines\\Vendor.Services.Machines.csproj"
             }
           }
         }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Pyu3S8rMLhVhuGmPGUQ1+yzVakYGAOkL5EKnsNW2Xs8=",
+  "Hash": "1YqUMWL+5bU2zG9biSLB74WR++lbm/rsTnYFUrRiaiw=",
   "Source": "Vendor.Gateways.Portal.Blazor",
   "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
   "Mode": "Default",
@@ -10,34 +10,17 @@
     {
       "Name": "Vendor.Gateways.Portal.Blazor\\wwwroot",
       "Source": "Vendor.Gateways.Portal.Blazor",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\mitko\\.nuget\\packages\\blazor.geolocation\\2.0.11\\staticwebassets\\blazorators.geolocation.g.js",
-      "SourceId": "Blazor.Geolocation",
-      "SourceType": "Package",
-      "ContentRoot": "C:\\Users\\mitko\\.nuget\\packages\\blazor.geolocation\\2.0.11\\staticwebassets\\",
-      "BasePath": "_content/Blazor.Geolocation",
-      "RelativePath": "blazorators.geolocation.g.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\mitko\\.nuget\\packages\\blazor.geolocation\\2.0.11\\staticwebassets\\blazorators.geolocation.g.js"
-    },
-    {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Vendor.Gateways.Portal.Blazor.styles.css",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Vendor.Gateways.Portal.Blazor.styles.css",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "Vendor.Gateways.Portal.Blazor.styles.css",
       "AssetKind": "All",
@@ -48,13 +31,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Vendor.Gateways.Portal.Blazor.styles.css"
+      "OriginalItemSpec": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\bundle\\Vendor.Gateways.Portal.Blazor.styles.css"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Vendor.Gateways.Portal.Blazor.bundle.scp.css",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Vendor.Gateways.Portal.Blazor.bundle.scp.css",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "Vendor.Gateways.Portal.Blazor.bundle.scp.css",
       "AssetKind": "All",
@@ -65,13 +48,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Vendor.Gateways.Portal.Blazor.bundle.scp.css"
+      "OriginalItemSpec": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\Vendor.Gateways.Portal.Blazor.bundle.scp.css"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -85,10 +68,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -102,10 +85,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/FONT-LICENSE",
       "AssetKind": "All",
@@ -119,10 +102,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
       "AssetKind": "All",
@@ -136,10 +119,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.eot",
       "AssetKind": "All",
@@ -153,10 +136,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.otf",
       "AssetKind": "All",
@@ -170,10 +153,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.svg",
       "AssetKind": "All",
@@ -187,10 +170,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.ttf",
       "AssetKind": "All",
@@ -204,10 +187,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.woff",
       "AssetKind": "All",
@@ -221,10 +204,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/ICON-LICENSE",
       "AssetKind": "All",
@@ -238,10 +221,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/open-iconic/README.md",
       "AssetKind": "All",
@@ -255,10 +238,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\site.css",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\css\\site.css",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -272,10 +255,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\favicon.ico",
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\favicon.ico",
       "SourceId": "Vendor.Gateways.Portal.Blazor",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
       "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",

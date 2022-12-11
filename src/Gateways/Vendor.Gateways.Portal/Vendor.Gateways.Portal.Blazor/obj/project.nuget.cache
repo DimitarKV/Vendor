@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "E/fYqPE47/OwWmvcqiH81EQh6dAgoD1t10CCnFEsVi1AzgpUZMPFdSJgmniFlnSb+0/W6+McvuMxitRgN6XzBQ==",
+  "dgSpecHash": "/kb+E+3Enl0QqnJXS0URR34X9q6YikIT/KRizobbsiG7VPmXyHgtFEwV1HpwTeRce6zIZjitYgOBHG6z+xXniA==",
   "success": true,
-  "projectFilePath": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\Vendor.Gateways.Portal.Blazor.csproj",
+  "projectFilePath": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\Vendor.Gateways.Portal.Blazor.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mitko\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.11\\microsoft.netcore.app.ref.6.0.11.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.11\\microsoft.windowsdesktop.app.ref.6.0.11.nupkg.sha512",
