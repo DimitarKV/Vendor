@@ -1,15 +1,12 @@
-﻿// using CloudinaryDotNet;
-// using CloudinaryDotNet.Actions;
-
-using AutoMapper;
+﻿using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Vendor.Domain.Entities;
 using Vendor.Domain.Types;
 using Vendor.Services.Products.Commands.CreateProductCommand;
 using Vendor.Services.Products.DTO;
+using Vendor.Services.Products.Queries;
 
 namespace Vendor.Services.Products.Api.Controllers;
 
@@ -47,6 +44,30 @@ public class ProductsController : ControllerBase
         command.ImageUrl = uploadResult.Uri.ToString();
 
         var result = await _mediator.Send(command);
+
+        if (!result.IsValid)
+            return BadRequest(result);
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> QueryProduct(int id)
+    {
+        var query = new QueryProductById() { Id = id };
+        var result = await _mediator.Send(query);
+
+        if (!result.IsValid)
+            return BadRequest(result);
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> QueryMatchingProducts(string name)
+    {
+        var query = new QueryProductsByMatchingName() { Name = name };
+        var result = await _mediator.Send(query);
 
         if (!result.IsValid)
             return BadRequest(result);
