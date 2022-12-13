@@ -11,10 +11,10 @@ public class LoadSpiralCommand : IRequest<ApiResponse>
     public string Spiral { get; set; }
     public int ProductId { get; set; }
     public int Loads { get; set; }
-    public int Price { get; set; }
+    public Double Price { get; set; }
 }
 
-//TODO: create validations for missing vending title in the database + missing product id
+//TODO: create validations for missing vending title in the database
 public class LoadSpiralCommandHandler : IRequestHandler<LoadSpiralCommand, ApiResponse>
 {
     private readonly MachineDbContext _context;
@@ -26,7 +26,7 @@ public class LoadSpiralCommandHandler : IRequestHandler<LoadSpiralCommand, ApiRe
 
     public async Task<ApiResponse> Handle(LoadSpiralCommand request, CancellationToken cancellationToken)
     {
-        var vending = await _context.Vendings.FirstAsync(v => v.Title == request.Title, cancellationToken);
+        var vending = await _context.Vendings.Include(v => v.Spirals).FirstAsync(v => v.Title == request.Title, cancellationToken);
         var spiral = vending.Spirals.First(s => s.Name == request.Spiral);
         
         //Set loads per current spiral in the vending tray

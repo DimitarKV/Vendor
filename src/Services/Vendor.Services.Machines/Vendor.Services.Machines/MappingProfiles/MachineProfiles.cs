@@ -13,7 +13,19 @@ public class MachineProfiles : Profile
     public MachineProfiles()
     {
         CreateMap<CreateVendingCommand, Vending>();
-        CreateMap<Vending, VendingView>();
+
+        CreateMap<Vending, VendingView>()
+            .ForMember(destinationMember =>
+                    destinationMember.Products,
+                memberOptions =>
+                    memberOptions.MapFrom(
+                        src => src.Spirals
+                            .Where(s => s.ProductId != null)
+                            .Select(s => new ProductView(){ProductId = s.ProductId, Quantity = s.Loads})
+                            .ToList()
+                    )
+            );
+
         CreateMap<CreateVendingDto, CreateVendingCommand>();
         CreateMap<VendingDropDto, VendingDropCommand>();
         CreateMap<LoadSpiralDto, LoadSpiralCommand>();

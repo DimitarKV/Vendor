@@ -9,7 +9,7 @@ using Vendor.Services.Machines.Commands.VendingDropCommand;
 namespace Vendor.Services.Machines.Api.Controllers;
 
 [ApiController]
-[Route("/machines/[controller]/[action]")]
+[Route("/[controller]/[action]")]
 public class VendingController : ControllerBase
 {
     private readonly IMediator _mediator;

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Vendor.Domain.Commands.UploadImageCommand;
 using Vendor.Domain.Entities;
 using Vendor.Services.Products.Commands.CreateProductCommand;
 using Vendor.Services.Products.DTO;
@@ -12,5 +13,6 @@ public class ProductProfiles : Profile
     {
         CreateMap<CreateProductDto, CreateProductCommand>();
         CreateMap<Product, ProductView>();
+        CreateMap<CreateProductDto, UploadImageCommand>();
     }
 }

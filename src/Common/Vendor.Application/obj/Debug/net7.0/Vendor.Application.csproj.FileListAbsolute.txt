@@ -28,3 +28,8 @@ D:\Dimitar\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Applicat
 D:\Dimitar\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\refint\Vendor.Application.dll
 D:\Dimitar\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\Vendor.Application.pdb
 D:\Dimitar\Vendor\src\Common\Vendor.Application\obj\Debug\net7.0\ref\Vendor.Application.dll
+D:\Dimitar\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Microsoft.AspNetCore.Http.Features.dll
+D:\Dimitar\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Microsoft.Net.Http.Headers.dll
+D:\Dimitar\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\System.IO.Pipelines.dll
+D:\Dimitar\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+D:\Dimitar\Vendor\src\Common\Vendor.Application\bin\Debug\net7.0\Microsoft.Extensions.Features.dll

@@ -43,7 +43,7 @@ public class CreateVendingCommandHandler : IRequestHandler<CreateVendingCommand,
     {
         var vending = _mapper.Map<Vending>(request);
         vending.Money = 0;
-        
+
         for (int j = 0; j < request.Spirals; j++)
         {
             var spiral = new Spiral(){Name = j.ToString()};

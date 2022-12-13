@@ -3,6 +3,7 @@ using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Vendor.Domain.Commands.UploadImageCommand;
 using Vendor.Domain.Types;
 using Vendor.Services.Products.Commands.CreateProductCommand;
 using Vendor.Services.Products.DTO;
@@ -28,27 +29,22 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromForm]CreateProductDto dto)
     {
-        var uploadParams = new ImageUploadParams()
+        var uploadImageCommand = _mapper.Map<UploadImageCommand>(dto);
+        var uploadResult = await _mediator.Send(uploadImageCommand);
+        if (!uploadResult.IsValid)
         {
-            File = new FileDescription(dto.Image.FileName, dto.Image.OpenReadStream()),
-            PublicId = dto.Name.Replace(" ", "")
-        };
-        var uploadResult = await _cloudinary.UploadAsync(uploadParams);
-
-        if (uploadResult.Error is not null)
-        {
-            return BadRequest(new ApiResponse(uploadResult.Error.Message, new []{"Error"}));
+            return BadRequest(uploadResult);
         }
         
-        var command = _mapper.Map<CreateProductCommand>(dto);
-        command.ImageUrl = uploadResult.Uri.ToString();
+        var createProductCommand = _mapper.Map<CreateProductCommand>(dto);
+        createProductCommand.ImageUrl = uploadResult.Result;
 
-        var result = await _mediator.Send(command);
+        var createProductResult = await _mediator.Send(createProductCommand);
 
-        if (!result.IsValid)
-            return BadRequest(result);
+        if (!createProductResult.IsValid)
+            return BadRequest(createProductResult);
 
-        return Ok(result);
+        return Ok(createProductResult);
     }
 
     [HttpGet]

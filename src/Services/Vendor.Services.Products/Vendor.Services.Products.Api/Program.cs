@@ -1,4 +1,5 @@
 using Vendor.Application.Extensions;
+using Vendor.Domain.Commands.UploadImageCommand;
 using Vendor.Services.Products.Api.Controllers;
 using Vendor.Services.Products.Data.Extensions;
 using Vendor.Services.Products.MappingProfiles;
@@ -12,7 +13,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddApplication(new [] {typeof(ProductsController).Assembly, typeof(ProductProfiles).Assembly});
+builder.Services.AddApplication(new [] {typeof(ProductsController).Assembly, typeof(ProductProfiles).Assembly, typeof(UploadImageCommand).Assembly});
 
 var app = builder.Build();
 

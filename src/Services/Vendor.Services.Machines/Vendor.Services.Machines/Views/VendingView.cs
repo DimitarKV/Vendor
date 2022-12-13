@@ -10,5 +10,5 @@ public class VendingView
     public Double Longitude { get; set; }
     public Double Money { get; set; }
     public List<Banknote> Banknotes { get; set; }
-    public List<Product> Products { get; set; }
+    public List<ProductView> Products { get; set; }
 }

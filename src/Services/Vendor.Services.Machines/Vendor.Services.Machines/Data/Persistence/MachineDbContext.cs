@@ -8,6 +8,7 @@ public class MachineDbContext : DbContext, IMachineDbContext
 {
     public DbSet<Vending> Vendings { get; set; }
     public DbSet<Banknote> Banknotes { get; set; }
+    public DbSet<Spiral> Spirals { get; set; }
 
     public MachineDbContext()
     {
