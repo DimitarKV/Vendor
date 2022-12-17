@@ -29,5 +29,6 @@ public class MachineProfiles : Profile
         CreateMap<CreateVendingDto, CreateVendingCommand>();
         CreateMap<VendingDropDto, VendingDropCommand>();
         CreateMap<LoadSpiralDto, LoadSpiralCommand>();
+        CreateMap<Spiral, SpiralView>();
     }
 }
