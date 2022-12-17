@@ -23,8 +23,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         _context = context;
         _mapper = mapper;
     }
-
-    //TODO: Add validation for product name already existing in the database
+    
     public async Task<ApiResponse<ProductView>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var product = new Product() { Name = request.Name, ImageUrl = request.ImageUrl };
