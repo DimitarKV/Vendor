@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1YqUMWL+5bU2zG9biSLB74WR++lbm/rsTnYFUrRiaiw=",
+  "Hash": "72a85dG8G0wR3gy187A9gXMoQymkTt/gA0Mu4j4wBeQ=",
   "Source": "Vendor.Gateways.Portal.Blazor",
   "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
   "Mode": "Default",
@@ -270,6 +270,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\js\\GeoLocation.js",
+      "SourceId": "Vendor.Gateways.Portal.Blazor",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\wwwroot\\",
+      "BasePath": "_content/Vendor.Gateways.Portal.Blazor",
+      "RelativePath": "js/GeoLocation.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\GeoLocation.js"
     }
   ]
 }

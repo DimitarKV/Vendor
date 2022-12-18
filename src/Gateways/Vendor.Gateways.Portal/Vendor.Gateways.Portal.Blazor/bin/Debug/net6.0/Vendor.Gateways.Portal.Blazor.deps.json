@@ -7,14 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v6.0": {
       "Vendor.Gateways.Portal.Blazor/1.0.0": {
+        "dependencies": {
+          "Vendor.Gateways.Portal": "1.0.0"
+        },
         "runtime": {
           "Vendor.Gateways.Portal.Blazor.dll": {}
+        }
+      },
+      "Vendor.Gateways.Portal/1.0.0": {
+        "runtime": {
+          "Vendor.Gateways.Portal.dll": {}
         }
       }
     }
   },
   "libraries": {
     "Vendor.Gateways.Portal.Blazor/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Vendor.Gateways.Portal/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

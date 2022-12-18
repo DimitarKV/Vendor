@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net6.0": {
+      "Vendor.Gateways.Portal/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Vendor.Gateways.Portal.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Vendor.Gateways.Portal.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Vendor.Gateways.Portal/1.0.0": {
+      "type": "project",
+      "path": "../Vendor.Gateways.Portal/Vendor.Gateways.Portal.csproj",
+      "msbuildProject": "../Vendor.Gateways.Portal/Vendor.Gateways.Portal.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net6.0": [
+      "Vendor.Gateways.Portal >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\mitko\\.nuget\\packages\\": {}
@@ -33,7 +52,11 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.csproj": {
+              "projectPath": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

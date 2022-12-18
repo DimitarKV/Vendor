@@ -60,3 +60,6 @@ D:\Dimitar\Vendor\src\Gateways\Vendor.Gateways.Portal\Vendor.Gateways.Portal.Bla
 D:\Dimitar\Vendor\src\Gateways\Vendor.Gateways.Portal\Vendor.Gateways.Portal.Blazor\obj\Debug\net6.0\Vendor.Gateways.Portal.Blazor.pdb
 D:\Dimitar\Vendor\src\Gateways\Vendor.Gateways.Portal\Vendor.Gateways.Portal.Blazor\obj\Debug\net6.0\Vendor.Gateways.Portal.Blazor.genruntimeconfig.cache
 D:\Dimitar\Vendor\src\Gateways\Vendor.Gateways.Portal\Vendor.Gateways.Portal.Blazor\obj\Debug\net6.0\ref\Vendor.Gateways.Portal.Blazor.dll
+D:\Dimitar\Vendor\src\Gateways\Vendor.Gateways.Portal\Vendor.Gateways.Portal.Blazor\bin\Debug\net6.0\Vendor.Gateways.Portal.dll
+D:\Dimitar\Vendor\src\Gateways\Vendor.Gateways.Portal\Vendor.Gateways.Portal.Blazor\bin\Debug\net6.0\Vendor.Gateways.Portal.pdb
+D:\Dimitar\Vendor\src\Gateways\Vendor.Gateways.Portal\Vendor.Gateways.Portal.Blazor\obj\Debug\net6.0\Vendor.Gateways.Portal.Blazor.csproj.CopyComplete
