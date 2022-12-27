@@ -30,6 +30,7 @@ public class LoadSpiralCommandHandler : IRequestHandler<LoadSpiralCommand, ApiRe
         _mapper = mapper;
     }
 
+    //TODO: Add validation for missing spiral
     public async Task<ApiResponse<SpiralView>> Handle(LoadSpiralCommand request, CancellationToken cancellationToken)
     {
         var vending = await _context.Vendings.Include(v => v.Spirals).FirstAsync(v => v.Title == request.Title, cancellationToken);

@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Vendor.Domain.Types;
 using Vendor.Services.Products.Data.Persistence;
 using Vendor.Services.Products.Views;
 
-namespace Vendor.Services.Products.Queries;
+namespace Vendor.Services.Products.Queries.QueryProductsByMatchingName;
 
 public class QueryProductsByMatchingName : IRequest<ApiResponse<List<ProductView>>>
 {

@@ -6,6 +6,7 @@ using Vendor.Services.Products.Commands.CreateProductCommand;
 using Vendor.Services.Products.DTO;
 using Vendor.Services.Products.Queries;
 using Vendor.Services.Products.Queries.QueryProductById;
+using Vendor.Services.Products.Queries.QueryProductsByMatchingName;
 
 namespace Vendor.Services.Products.Api.Controllers;
 
@@ -44,9 +45,9 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Query(int id)
+    public async Task<IActionResult> Query(QueryProductsDto dto)
     {
-        var query = new QueryProductById() { Id = id };
+        var query = _mapper.Map<QueryProductById>(dto);
         var result = await _mediator.Send(query);
 
         if (!result.IsValid)
@@ -56,9 +57,9 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> QueryMatching(string name)
+    public async Task<IActionResult> QueryMatching(QueryProductsByNameDto dto)
     {
-        var query = new QueryProductsByMatchingName() { Name = name };
+        var query = _mapper.Map<QueryProductsByMatchingName>(dto);
         var result = await _mediator.Send(query);
 
         if (!result.IsValid)

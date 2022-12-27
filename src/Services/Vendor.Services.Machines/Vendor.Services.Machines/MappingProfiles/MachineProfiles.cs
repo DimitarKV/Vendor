@@ -4,6 +4,7 @@ using Vendor.Services.Machines.Commands.LoadSpiralCommand;
 using Vendor.Services.Machines.Commands.VendingDropCommand;
 using Vendor.Services.Machines.Data.Entities;
 using Vendor.Services.Machines.DTO;
+using Vendor.Services.Machines.Queries;
 using Vendor.Services.Machines.Views;
 
 namespace Vendor.Services.Machines.MappingProfiles;
@@ -30,5 +31,6 @@ public class MachineProfiles : Profile
         CreateMap<VendingDropDto, VendingDropCommand>();
         CreateMap<LoadSpiralDto, LoadSpiralCommand>();
         CreateMap<Spiral, SpiralView>();
+        CreateMap<QuerySpiralDto, QuerySpiral>();
     }
 }

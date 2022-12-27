@@ -37,7 +37,7 @@ public class VendingController : ControllerBase
     {
         var command = _mapper.Map<LoadSpiralCommand>(dto);
         var result = await _mediator.Send(command);
-        
+
         if (result.IsValid)
             return Ok(result);
         return BadRequest(result);
