@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "82tG7lJC0dZ1Wt3rAx68I8iyXFcrx+bS2yKxmrdS1lqx2YyTVWkGtK7MYCgNL6RW2f6bFGz6tlbrqFTiOebxfg==",
+  "dgSpecHash": "b0q9oWAtVs+086f9pPF99P2PGIIYtNn6aYe67EXJtH6hdPb6vRExXQBrR/KjfQXwgA95TwvlaDVzucmsc7c6/A==",
   "success": true,
-  "projectFilePath": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.csproj",
+  "projectFilePath": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mitko\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.11\\microsoft.netcore.app.ref.6.0.11.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.11\\microsoft.windowsdesktop.app.ref.6.0.11.nupkg.sha512",

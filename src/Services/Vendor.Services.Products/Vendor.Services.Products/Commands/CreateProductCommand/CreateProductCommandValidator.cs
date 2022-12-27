@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Linq;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Vendor.Services.Products.Data.Persistence;
 

@@ -4,7 +4,7 @@ using Vendor.Domain.Types;
 using Vendor.Services.Products.Data.Persistence;
 using Vendor.Services.Products.Views;
 
-namespace Vendor.Services.Products.Queries;
+namespace Vendor.Services.Products.Queries.QueryProductById;
 
 public class QueryProductById : IRequest<ApiResponse<ProductView>>
 {
