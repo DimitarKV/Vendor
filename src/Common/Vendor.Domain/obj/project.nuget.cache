@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gLtE2XQ0w1Y6C/kaH2EyAXbj/2ZoHrsMdTB8EZFrCcLEpeAZE1mh2QuxzNZ+7m7cke7IMGu2Pxe55u3v8glUDA==",
+  "dgSpecHash": "YEvSKCjUzg6wDjBDaeUim8iMucp0HCkYLIH53prhOK778Db75+NE7BBZOpXkZg5GQtn/f44SvpWwxaD8y/Rrqw==",
   "success": true,
-  "projectFilePath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
+  "projectFilePath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mitko\\.nuget\\packages\\cloudinary.core\\1.31.0\\cloudinary.core.1.31.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\mediatr\\11.1.0\\mediatr.11.1.0.nupkg.sha512",

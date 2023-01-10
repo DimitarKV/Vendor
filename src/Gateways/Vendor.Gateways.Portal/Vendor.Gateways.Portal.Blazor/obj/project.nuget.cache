@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qr2lQDJluV3BOfJidxPSZDIAg13+XjCUG8z7e++2Se68UFa4V6P93SbQ4zBIzaluv4hAUL0OoyUxTaHiZy57Hg==",
+  "dgSpecHash": "RE2kzclSCulz8THqgIQHAsHJCP8fG1Cdu/kNNnNee0OwvKE9KREj6FMm3/7/P7wwyk/JQGv/mIsdGc4QUHtjDA==",
   "success": true,
-  "projectFilePath": "D:\\DOTNET\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\Vendor.Gateways.Portal.Blazor.csproj",
+  "projectFilePath": "D:\\Dimitar\\Vendor\\src\\Gateways\\Vendor.Gateways.Portal\\Vendor.Gateways.Portal.Blazor\\Vendor.Gateways.Portal.Blazor.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

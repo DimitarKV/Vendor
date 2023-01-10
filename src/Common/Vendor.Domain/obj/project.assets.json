@@ -4945,24 +4945,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mitko\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\mitko\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
+      "projectUniqueName": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
       "projectName": "Vendor.Domain",
-      "projectPath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
+      "projectPath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
       "packagesPath": "C:\\Users\\mitko\\.nuget\\packages\\",
-      "outputPath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\obj\\",
+      "outputPath": "D:\\Dimitar\\Vendor\\src\\Common\\Vendor.Domain\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
         "C:\\Users\\mitko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
