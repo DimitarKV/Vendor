@@ -48,7 +48,7 @@ public class CreateVendingCommandHandler : IRequestHandler<CreateVendingCommand,
         for (int j = 0; j < request.Spirals; j++)
         {
             var spiral = new Spiral(){Name = j.ToString()};
-            vending.Spirals.Add(spiral);
+            // vending.Spirals.Add(spiral);
         }
 
         var result = _context.Vendings.Add(vending).Entity;
