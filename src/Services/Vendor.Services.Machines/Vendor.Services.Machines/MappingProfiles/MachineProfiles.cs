@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Vendor.Domain.Views;
 using Vendor.Services.Machines.Commands.CreateVendorCommand;
 using Vendor.Services.Machines.Commands.LoadSpiralCommand;
 using Vendor.Services.Machines.Commands.VendingDropCommand;
@@ -25,7 +26,12 @@ public class MachineProfiles : Profile
                             .Select(s => new ProductView(){ProductId = s.ProductId, Quantity = s.Loads})
                             .ToList()
                     )
-            );
+            )
+            // .ForMember(destinationMember => destinationMember.Banknotes,
+            //     memberOptions => 
+            //         memberOptions.MapFrom(
+            //             src => src.Banknotes))
+            ;
 
         CreateMap<CreateVendingDto, CreateVendingCommand>();
         CreateMap<VendingDropDto, VendingDropCommand>();

@@ -12,6 +12,7 @@ public static class SynchronousConfiguration
         var services = builder.Services;
         services.AddHttpClient<IProductRepository, ProductRepository>(client =>
         {
+            //TODO: Extract configuration info as in Vendor.Gateways.Portal.Extensions
             client.BaseAddress = new Uri(builder.Configuration["ProductsUrl"]!);
         });
     }

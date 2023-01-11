@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Vendor.Domain.Types;
+using Vendor.Domain.Views;
 using Vendor.Services.Machines.Data.Persistence;
 using Vendor.Services.Machines.Views;
 

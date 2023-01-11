@@ -1,13 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "gLtE2XQ0w1Y6C/kaH2EyAXbj/2ZoHrsMdTB8EZFrCcLEpeAZE1mh2QuxzNZ+7m7cke7IMGu2Pxe55u3v8glUDA==",
+  "dgSpecHash": "ZjpJJmc5Bdh4XuPGLedm3O9Q6/UWDBsCABDMSDIojf9dd6+bJUtSHWh+fztAo3XXXqJ+OvqM2Uk6BSuP0E/c2A==",
   "success": true,
   "projectFilePath": "D:\\DOTNET\\Vendor\\src\\Common\\Vendor.Domain\\Vendor.Domain.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\mitko\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\cloudinary.core\\1.31.0\\cloudinary.core.1.31.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\mediatr\\11.1.0\\mediatr.11.1.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",
-    "C:\\Users\\mitko\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
+    "C:\\Users\\mitko\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.0\\microsoft.entityframeworkcore.7.0.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.0\\microsoft.entityframeworkcore.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\mitko\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.0\\microsoft.entityframeworkcore.analyzers.7.0.0.nupkg.sha512",

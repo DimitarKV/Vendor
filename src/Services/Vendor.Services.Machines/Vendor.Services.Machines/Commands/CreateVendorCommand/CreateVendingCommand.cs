@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Vendor.Domain.Types;
+using Vendor.Domain.Views;
 using Vendor.Services.Machines.Data.Entities;
 using Vendor.Services.Machines.Data.Persistence;
 using Vendor.Services.Machines.Views;

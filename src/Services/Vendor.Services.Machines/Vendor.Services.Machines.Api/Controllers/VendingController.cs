@@ -5,6 +5,7 @@ using Vendor.Services.Machines.DTO;
 using Vendor.Services.Machines.Commands.CreateVendorCommand;
 using Vendor.Services.Machines.Commands.LoadSpiralCommand;
 using Vendor.Services.Machines.Commands.VendingDropCommand;
+using Vendor.Services.Machines.Queries.QueryEmptyVendings;
 
 namespace Vendor.Services.Machines.Api.Controllers;
 
@@ -48,6 +49,16 @@ public class VendingController : ControllerBase
     {
         var command = _mapper.Map<VendingDropCommand>(dto);
         var result = await _mediator.Send(command);
+
+        if (result.IsValid)
+            return Ok(result);
+        return BadRequest(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> QueryEmpty()
+    {
+        var result = await _mediator.Send(new QueryEmptyVendings());
 
         if (result.IsValid)
             return Ok(result);

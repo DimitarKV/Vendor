@@ -1,7 +1,6 @@
-﻿using Vendor.Domain.Entities;
-using Vendor.Services.Machines.Data.Entities;
+﻿using Vendor.Services.Machines.Views;
 
-namespace Vendor.Services.Machines.Views;
+namespace Vendor.Domain.Views;
 
 public class VendingView
 {
@@ -9,6 +8,6 @@ public class VendingView
     public Double Latitude { get; set; }
     public Double Longitude { get; set; }
     public Double Money { get; set; }
-    public List<Banknote> Banknotes { get; set; }
+    public List<BanknoteView> Banknotes { get; set; }
     public List<ProductView> Products { get; set; }
 }
