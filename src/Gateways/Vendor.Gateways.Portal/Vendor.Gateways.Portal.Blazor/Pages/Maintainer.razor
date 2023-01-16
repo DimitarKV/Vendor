@@ -1,11 +1,46 @@
 ﻿@page "/Maintainer"
 @using Vendor.Gateways.Portal.Services
+@using Vendor.Domain.Views
 
 @inject IMaintainerService _service
 
 <h3>Maintainer</h3>
+@if (_vendingViews.Count == 0)
+{
+    //TODO: Render loading animation
+}
+else
+{
+    @foreach (var view in _vendingViews)
+    {
+        <h3>@view.Title</h3>
+        <h3 @onclick="() => HandleMachine(view)">Handle</h3>
+    }
+}
 
 
 @code {
+    private List<VendingView> _vendingViews = new List<VendingView>();
+
+    protected override void OnInitialized()
+    {
+        PopulateViews();
+    }
+
+    private void HandleMachine(VendingView vending)
+    {
+        Console.WriteLine(vending.Title);
+    }
+
+    private async Task PopulateViews()
+    {
+        _vendingViews = await _service.FetchEmptyMachines();
+        StateHasChanged();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("dsag");
+    }
 
 }

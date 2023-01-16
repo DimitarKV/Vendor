@@ -23,9 +23,9 @@
     public Test()
     {
         _moduleTask = new(() => jsRuntime!.InvokeAsync<IJSObjectReference>(
-             identifier: "import",
+            identifier: "import",
             args: "/js/GeoLocation.js")
-        .AsTask());
+            .AsTask());
 
         _dotNetObjectReference = DotNetObjectReference.Create(this);
     }

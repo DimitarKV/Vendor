@@ -1,4 +1,4 @@
-﻿namespace Vendor.Services.Machines.DTO;
+﻿namespace Vendor.Domain.DTO;
 
 public class LoadSpiralDto
 {

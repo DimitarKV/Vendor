@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Vendor.Domain.DTO;
 using Vendor.Services.Machines.DTO;
 using Vendor.Services.Machines.Commands.CreateVendorCommand;
 using Vendor.Services.Machines.Commands.LoadSpiralCommand;

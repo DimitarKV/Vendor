@@ -1,0 +1,103 @@
+﻿@page "/Maintainer/Create"
+@using Vendor.Domain.DTO
+@using Vendor.Gateways.Portal.DTO
+@implements IAsyncDisposable
+<h3>CreateMachine</h3>
+
+<div style="margin-top: 200px">
+    <EditForm Model="@model" OnSubmit="@HandleSubmit">
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+
+        <div>
+            <label for="title">Machine title</label>
+            <InputText id="title" @bind-Value="model.Title"></InputText>
+        </div>
+
+        <div>
+            <label for="currentLocationCheckbox">Use current location</label>
+            <InputCheckbox id="currentLocationCheckbox" Value="@_checkBoxValue" ValueChanged="HandleCheckbox" ValueExpression="() => _checkBoxValue"></InputCheckbox>
+
+            <label hidden="@_checkBoxValue" for="latitude">Latitude</label>
+            <InputNumber hidden="@_checkBoxValue" id="latitude" @bind-Value="model.Latitude"></InputNumber>
+            <label hidden="@_checkBoxValue" for="longitude">Longitude</label>
+            <InputNumber hidden="@_checkBoxValue" id="longitude" @bind-Value="model.Longitude"></InputNumber>
+        </div>
+
+        <div>
+            <label for="spirals">Number of spirals in the vending</label>
+            <InputNumber id="spirals" @bind-Value="model.Spirals"></InputNumber>
+        </div>
+
+        <button type="submit">Create</button>
+    </EditForm>
+
+</div>
+
+
+@code {
+    private CreateVendingDto model = new();
+    private bool _checkBoxValue = false;
+
+    private readonly Lazy<Task<IJSObjectReference>> _moduleTask;
+    private readonly DotNetObjectReference<CreateMachine> _dotNetObjectReference;
+    private GeoCoordinatesDto? _geoCoordinatesDto = null;
+
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
+    public CreateMachine()
+    {
+        _moduleTask = new(() => JsRuntime!.InvokeAsync<IJSObjectReference>(
+            identifier: "import",
+            args: "/js/GeoLocation.js")
+            .AsTask());
+
+        _dotNetObjectReference = DotNetObjectReference.Create(this);
+    }
+
+    private async Task HandleCheckbox(bool val)
+    {
+        _checkBoxValue = val;
+        if (_checkBoxValue)
+            await GetLocationAsync();
+
+    }
+
+    private async Task HandleSubmit()
+    {
+        if (_checkBoxValue)
+        {
+            if (_geoCoordinatesDto is not null)
+            {
+                model.Latitude = _geoCoordinatesDto!.Latitude;
+                model.Longitude = _geoCoordinatesDto!.Longitude;
+            }
+        }
+
+        Console.WriteLine();
+    }
+
+    public async Task GetLocationAsync()
+    {
+        var module = await _moduleTask.Value;
+        await module.InvokeVoidAsync(identifier: "getCurrentPosition", _dotNetObjectReference);
+    }
+
+    [JSInvokable]
+    public async Task OnSuccessAsync(GeoCoordinatesDto geoCoordinatesDto)
+    {
+        this._geoCoordinatesDto = geoCoordinatesDto;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (_moduleTask.IsValueCreated)
+        {
+            var module = await _moduleTask.Value;
+            await module.DisposeAsync();
+        }
+    }
+
+}

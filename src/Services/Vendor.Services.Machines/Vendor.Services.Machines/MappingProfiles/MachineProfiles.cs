@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Vendor.Domain.DTO;
 using Vendor.Domain.Views;
 using Vendor.Services.Machines.Commands.CreateVendorCommand;
 using Vendor.Services.Machines.Commands.LoadSpiralCommand;
