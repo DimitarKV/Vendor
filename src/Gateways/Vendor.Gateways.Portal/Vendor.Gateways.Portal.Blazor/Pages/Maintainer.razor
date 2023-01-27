@@ -27,9 +27,9 @@ else
         PopulateViews();
     }
 
-    private void HandleMachine(VendingView vending)
+    private async Task HandleMachine(VendingView vending)
     {
-        Console.WriteLine(vending.Title);
+        await _service.HandleMachine(vending.Title);
     }
 
     private async Task PopulateViews()
@@ -37,10 +37,4 @@ else
         _vendingViews = await _service.FetchEmptyMachines();
         StateHasChanged();
     }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        Console.WriteLine("dsag");
-    }
-
 }

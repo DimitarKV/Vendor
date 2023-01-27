@@ -35,4 +35,9 @@ public class MaintainerService : IMaintainerService
         var result = await _client.GetAsync(Endpoints.QueryEmptyVendings);
         return (await result.Content.ReadFromJsonAsync<ApiResponse<List<VendingView>>>())!.Result;
     }
+
+    public Task HandleMachine(string title)
+    {
+        throw new NotImplementedException();
+    }
 }
