@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vendor.Domain.Commands.UploadImageCommand;
 using Vendor.Services.Products.Commands.CreateProductCommand;
@@ -24,6 +25,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> Create([FromForm]CreateProductDto dto)
     {
         var uploadImageCommand = _mapper.Map<UploadImageCommand>(dto);

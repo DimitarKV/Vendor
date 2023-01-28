@@ -14,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication(new [] {typeof(ProductsController).Assembly, typeof(ProductProfiles).Assembly, typeof(UploadImageCommand).Assembly});
+builder.AddSecurity();
+builder.AddCloudinary();
 
 var app = builder.Build();
 
@@ -26,8 +28,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseStaticFiles();
 app.EnsureDatabaseCreated();
-app.UseHttpsRedirection();
-app.UseAuthorization();
+app.UseSecurity();
 app.MapControllers();
 
 app.Run();

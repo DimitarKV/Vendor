@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Vendor.Domain.Types;
 using Vendor.Services.User.Identity;
 
-namespace Vendor.Services.User.Commands.CreateTokenCommand;
+namespace Vendor.Services.User.Commands.Token.CreateTokenCommand;
 
 public class CreateTokenCommand : IRequest<ApiResponse<string>>
 {

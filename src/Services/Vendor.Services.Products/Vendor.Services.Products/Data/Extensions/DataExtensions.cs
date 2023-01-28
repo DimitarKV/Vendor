@@ -19,11 +19,6 @@ public static class DataExtensions
         builder.Services.AddDbContext<ProductsDbContext>(o => o.UseSqlServer(connectionString));
         builder.Services.AddTransient<IProductsDbContext, ProductsDbContext>();
         builder.Services.AddTransient<ProductsDbContext, ProductsDbContext>();
-        builder.Services.AddSingleton<Cloudinary, Cloudinary>(sp => new Cloudinary(
-            new Account(
-                Environment.GetEnvironmentVariable("CLOUDINARY_CLOUD_NAME"),
-                Environment.GetEnvironmentVariable("CLOUDINARY_API_KEY"),
-                Environment.GetEnvironmentVariable("CLOUDINARY_API_SECRET"))));
     }
 
     public static void EnsureDatabaseCreated(this WebApplication app)

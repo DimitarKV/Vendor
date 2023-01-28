@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Vendor.Services.User.Identity;
 
-namespace Vendor.Services.User.Commands.CreateTokenCommand;
+namespace Vendor.Services.User.Commands.Token.CreateTokenCommand;
 
 public class CreateTokenCommandValidator : AbstractValidator<CreateTokenCommand>
 {
