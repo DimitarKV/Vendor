@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Vendor.Domain.Types;
@@ -6,7 +7,7 @@ using Vendor.Services.Machines.Data.Persistence;
 using Vendor.Services.Machines.Data.Repositories.Interfaces;
 using Vendor.Services.Machines.Views;
 
-namespace Vendor.Services.Machines.Commands.LoadSpiralCommand;
+namespace Vendor.Services.Machines.Commands;
 
 public class LoadSpiralCommand : IRequest<ApiResponse<SpiralView>>
 {
@@ -30,7 +31,6 @@ public class LoadSpiralCommandHandler : IRequestHandler<LoadSpiralCommand, ApiRe
         _mapper = mapper;
     }
 
-    //TODO: Add validation for missing spiral
     public async Task<ApiResponse<SpiralView>> Handle(LoadSpiralCommand request, CancellationToken cancellationToken)
     {
         var vending = await _context.Vendings.Include(v => v.Spirals).FirstAsync(v => v.Title == request.Title, cancellationToken);
@@ -46,5 +46,25 @@ public class LoadSpiralCommandHandler : IRequestHandler<LoadSpiralCommand, ApiRe
         await _context.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse<SpiralView>(_mapper.Map<SpiralView>(spiral), "Spiral loaded");
+    }
+}
+
+public class LoadSpiralCommandValidator : AbstractValidator<LoadSpiralCommand>
+{
+    public LoadSpiralCommandValidator(MachineDbContext context)
+    {
+        RuleFor(v => v)
+            .Cascade(CascadeMode.Stop)
+            
+            .MustAsync(async (cv, _) =>
+                await context.Vendings.FirstOrDefaultAsync(v => v.Title == cv.Title) is not null)
+            .WithMessage("No such vending machine in the database!")
+            .WithErrorCode("409")
+            
+            .MustAsync(async (cv, _) => 
+                (await context.Vendings.Include(v => v.Spirals)
+                    .FirstAsync(v => v.Title == cv.Title)).Spirals.Any(s => s.Name == cv.Spiral))
+            .WithMessage("No such spiral in the specified machine")
+            .WithErrorCode("409");
     }
 }

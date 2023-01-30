@@ -5,7 +5,7 @@ using Vendor.Domain.Types;
 using Vendor.Services.Products.Data.Persistence;
 using Vendor.Services.Products.Views;
 
-namespace Vendor.Services.Products.Queries.QueryProductsByMatchingName;
+namespace Vendor.Services.Products.Queries;
 
 public class QueryProductsByMatchingName : IRequest<ApiResponse<List<ProductView>>>
 {

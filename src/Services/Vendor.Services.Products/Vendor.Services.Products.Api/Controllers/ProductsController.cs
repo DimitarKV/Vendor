@@ -3,11 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vendor.Domain.Commands.UploadImageCommand;
-using Vendor.Services.Products.Commands.CreateProductCommand;
+using Vendor.Services.Products.Commands;
 using Vendor.Services.Products.DTO;
 using Vendor.Services.Products.Queries;
-using Vendor.Services.Products.Queries.QueryProductById;
-using Vendor.Services.Products.Queries.QueryProductsByMatchingName;
 
 namespace Vendor.Services.Products.Api.Controllers;
 
@@ -25,7 +23,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
     public async Task<IActionResult> Create([FromForm]CreateProductDto dto)
     {
         var uploadImageCommand = _mapper.Map<UploadImageCommand>(dto);
@@ -47,6 +45,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
     public async Task<IActionResult> Query(QueryProductsDto dto)
     {
         var query = _mapper.Map<QueryProductById>(dto);
@@ -59,6 +58,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
     public async Task<IActionResult> QueryMatching(QueryProductsByNameDto dto)
     {
         var query = _mapper.Map<QueryProductsByMatchingName>(dto);

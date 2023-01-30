@@ -16,6 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplication(new[] {typeof(Machine).Assembly, typeof(VendingController).Assembly});
+builder.AddSecurity();
 
 var app = builder.Build();
 
@@ -26,9 +27,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.EnsureDatabaseCreated();
-app.UseHttpsRedirection();
-app.UseAuthorization();
 app.MapControllers();
+app.UseSecurity();
 
 app.Run();

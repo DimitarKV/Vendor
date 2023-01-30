@@ -1,15 +1,15 @@
-﻿using System.Security.Policy;
+﻿using System.Security.Claims;
 using AutoMapper;
-using Azure.Core;
+using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Vendor.Domain.Types;
 using Vendor.Services.User.Authorization;
 using Vendor.Services.User.Data.Entities;
-using Vendor.Services.User.Identity;
 
-namespace Vendor.Services.User.Commands.User.CreateUserCommand;
+namespace Vendor.Services.User.Commands.User;
 
 public class CreateUserCommand : IRequest<ApiResponse<VendorUser?>>
 {
@@ -32,16 +32,17 @@ public class CreateUserCommand : IRequest<ApiResponse<VendorUser?>>
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiResponse<VendorUser?>>
 {
     private readonly IMapper _mapper;
-    private readonly IIdentityService _identityService;
+    private readonly UserManager<VendorUser> _userManager;
     private readonly IConfiguration _configuration;
     private readonly IEmailSender _emailSender;
 
-    public CreateUserCommandHandler(IMapper mapper, IIdentityService identityService, IConfiguration configuration, IEmailSender emailSender)
+    public CreateUserCommandHandler(IMapper mapper, IConfiguration configuration, IEmailSender emailSender,
+        UserManager<VendorUser> userManager)
     {
         _mapper = mapper;
-        _identityService = identityService;
         _configuration = configuration;
         _emailSender = emailSender;
+        _userManager = userManager;
     }
 
     /// <summary>
@@ -57,14 +58,33 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         user.CreatedOn = DateTime.Now;
         user.UpdatedOn = DateTime.Now;
 
-        var result = await _identityService.CreateAsync(user, request.Password);
+        var result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
             return new ApiResponse<VendorUser?>(null, "An error occurred while creating a user",
                 result.Errors.Select(x => x.Description));
 
-        await _identityService.AddClaimAsync(user, Claims.User);
-        
+        Claim role = Claims.RoleClaims["User"];
+        if (_userManager.Users.Count() == 1)
+        {
+            role = Claims.RoleClaims["User"];
+            role = Claims.RoleClaims["Maintainer"];
+            role = Claims.RoleClaims["Admin"];
+        }
+        await _userManager.AddClaimAsync(user, role);
+
         return new ApiResponse<VendorUser?>(user, "Successfully created a user");
+    }
+}
+
+public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+{
+    public CreateUserCommandValidator(UserManager<VendorUser> userManager)
+    {
+        RuleFor(command => command.UserName)
+            .MustAsync(async (userName, _) =>
+                await userManager.FindByNameAsync(userName) is null)
+            .WithErrorCode("401")
+            .WithMessage("User already exists");
     }
 }

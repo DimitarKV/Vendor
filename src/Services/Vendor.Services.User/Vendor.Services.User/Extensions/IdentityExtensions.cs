@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Vendor.Services.User.Data.Entities;
 using Vendor.Services.User.Data.Persistence;
-using Vendor.Services.User.Identity;
 using Vendor.Services.User.SendGridConfiguration;
 using Vendor.Services.User.SendGridConfiguration.Sender;
 
@@ -20,7 +19,6 @@ public static class IdentityExtensions
         
         var services = builder.Services;
         
-        services.AddTransient<IIdentityService, IdentityService>();
         
         services.AddIdentity<VendorUser, IdentityRole>()
             .AddEntityFrameworkStores<UserDbContext>()

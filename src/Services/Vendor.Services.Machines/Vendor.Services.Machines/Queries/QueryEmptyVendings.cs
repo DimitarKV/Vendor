@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
 using Vendor.Services.Machines.Data.Persistence;
-using Vendor.Services.Machines.Views;
 
-namespace Vendor.Services.Machines.Queries.QueryEmptyVendings;
+namespace Vendor.Services.Machines.Queries;
 
 public class QueryEmptyVendings : IRequest<ApiResponse<List<VendingView>>>
 {

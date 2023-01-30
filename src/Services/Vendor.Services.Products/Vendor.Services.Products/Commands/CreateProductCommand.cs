@@ -1,13 +1,13 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Vendor.Domain.Entities;
 using Vendor.Domain.Types;
 using Vendor.Services.Products.Data.Persistence;
 using Vendor.Services.Products.Views;
 
-namespace Vendor.Services.Products.Commands.CreateProductCommand;
+namespace Vendor.Services.Products.Commands;
 
 public class CreateProductCommand : IRequest<ApiResponse<ProductView>>
 {
@@ -33,5 +33,17 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         await _context.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse<ProductView>(_mapper.Map<ProductView>(product), "Successfully created product");
+    }
+}
+
+public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+{
+    public CreateProductCommandValidator(ProductsDbContext context)
+    {
+        RuleFor(p => p.Name)
+            .MustAsync(async (name, _) =>
+                await context.Products.Where(p => p.Name == name).FirstOrDefaultAsync() is null)
+            .WithMessage("Product name already exists in database!")
+            .WithErrorCode("409");
     }
 }

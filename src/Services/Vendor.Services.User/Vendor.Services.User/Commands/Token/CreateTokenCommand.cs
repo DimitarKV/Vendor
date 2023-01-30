@@ -1,13 +1,15 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Vendor.Domain.Types;
-using Vendor.Services.User.Identity;
+using Vendor.Services.User.Data.Entities;
 
-namespace Vendor.Services.User.Commands.Token.CreateTokenCommand;
+namespace Vendor.Services.User.Commands.Token;
 
 public class CreateTokenCommand : IRequest<ApiResponse<string>>
 {
@@ -29,15 +31,15 @@ public class CreateTokenCommand : IRequest<ApiResponse<string>>
 public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, ApiResponse<string>>
 {
     private readonly IConfiguration _configuration;
-    private readonly IIdentityService _identityService;
+    private readonly UserManager<VendorUser> _userManager;
 
     //TODO extract as global
     private const int ExpirationInMinutes = 30;
     
-    public CreateTokenCommandHandler(IConfiguration configuration, IIdentityService identityService)
+    public CreateTokenCommandHandler(IConfiguration configuration, UserManager<VendorUser> userManager)
     {
         _configuration = configuration;
-        _identityService = identityService;
+        _userManager = userManager;
     }
     
     /// <summary>
@@ -54,9 +56,9 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Api
         var credentials = new SigningCredentials(securityKey, 
             SecurityAlgorithms.HmacSha256);
         
-        var user = await _identityService.FindByNameAsync(request.UserName);
+        var user = await _userManager.FindByNameAsync(request.UserName);
         
-        var claims = await _identityService.GetClaimsAsync(user);
+        var claims = await _userManager.GetClaimsAsync(user);
         claims.Add(new Claim(ClaimTypes.Name, request.UserName));
         
         var token = new JwtSecurityToken(issuer: issuer,
@@ -69,5 +71,22 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Api
         var stringToken = tokenHandler.WriteToken(token);
 
         return new ApiResponse<string>(stringToken, "Successfully created a token");
+    }
+}
+
+public class CreateTokenCommandValidator : AbstractValidator<CreateTokenCommand>
+{
+    public CreateTokenCommandValidator(UserManager<VendorUser> _userManager)
+    {
+        RuleFor(x => new {x.UserName, x.Password})
+            .Cascade(CascadeMode.Stop)
+            
+            .MustAsync(async (pair, _) => await _userManager.FindByNameAsync(pair.UserName) is not null)
+            
+            .MustAsync(async (pair, _) =>
+                await _userManager.CheckPasswordAsync((await _userManager.FindByNameAsync(pair.UserName))!, pair.Password))
+            
+            .WithErrorCode("401")
+            .WithMessage("Wrong credentials");
     }
 }

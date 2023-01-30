@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vendor.Services.Machines.DTO;
 using Vendor.Services.Machines.Queries;
@@ -20,6 +21,7 @@ public class SpiralController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
     public async Task<IActionResult> Query(QuerySpiralDto dto)
     {
         var command = _mapper.Map<QuerySpiral>(dto);

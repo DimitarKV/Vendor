@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
 using Vendor.Services.Machines.Data.Entities;
 using Vendor.Services.Machines.Data.Persistence;
-using Vendor.Services.Machines.Views;
 
-namespace Vendor.Services.Machines.Commands.CreateVendorCommand;
+namespace Vendor.Services.Machines.Commands;
 
 public class CreateVendingCommand : IRequest<ApiResponse<VendingView>>
 {
@@ -48,7 +49,7 @@ public class CreateVendingCommandHandler : IRequestHandler<CreateVendingCommand,
         for (int j = 0; j < request.Spirals; j++)
         {
             var spiral = new Spiral(){Name = j.ToString()};
-            // vending.Spirals.Add(spiral);
+            vending.Spirals.Add(spiral);
         }
 
         var result = _context.Vendings.Add(vending).Entity;
@@ -57,5 +58,22 @@ public class CreateVendingCommandHandler : IRequestHandler<CreateVendingCommand,
         var vendingView = _mapper.Map<VendingView>(result);
 
         return new ApiResponse<VendingView>(vendingView);
+    }
+}
+
+public class CreateVendingCommandValidator : AbstractValidator<CreateVendingCommand>
+{
+    public CreateVendingCommandValidator(MachineDbContext context)
+    {
+        RuleFor(v => v.Title)
+            .MustAsync(async (title, _) =>
+                await context.Vendings.Where(v => v.Title == title).FirstOrDefaultAsync() is null)
+            .WithErrorCode("409")
+            .WithMessage("Title is not available!");
+
+        RuleFor(v => v.Title)
+            .Must(title => title.Length >= 4)
+            .WithErrorCode("409")
+            .WithMessage("Title length must be at least 4 characters!");
     }
 }

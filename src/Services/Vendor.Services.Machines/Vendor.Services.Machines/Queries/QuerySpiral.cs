@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Vendor.Domain.Types;
@@ -30,5 +31,26 @@ public class QuerySpiralHandler : IRequestHandler<QuerySpiral, ApiResponse<Spira
                 .FirstAsync(v => v.Title == request.Title, cancellationToken: cancellationToken))
             .Spirals.First(s => s.Name == request.Name);
         return new ApiResponse<SpiralView>(_mapper.Map<SpiralView>(spiral), "Here u go buddy!");
+    }
+}
+
+public class QuerySpiralValidator : AbstractValidator<QuerySpiral>
+{
+    public QuerySpiralValidator(MachineDbContext context)
+    {
+        RuleFor(q => q)
+            .Cascade(CascadeMode.Stop)
+            
+            .MustAsync(async (q, _) =>
+                await context.Vendings.FirstOrDefaultAsync(v => v.Title == q.Title) is not null)
+            .WithMessage("No such vending machine in the database!")
+            .WithErrorCode("409")
+            
+            .MustAsync(async (q, _) =>
+                (await context.Vendings.Include(v => v.Spirals)
+                    .FirstOrDefaultAsync(v => v.Title == q.Title))!.Spirals
+                .FirstOrDefault(s => s.Name == q.Name) is not null)
+            .WithMessage("No such spiral in the machine!")
+            .WithErrorCode("409");
     }
 }

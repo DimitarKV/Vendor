@@ -1,9 +1,8 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vendor.Services.User.Commands.User.ConfirmUserEmailCommand;
-using Vendor.Services.User.Commands.User.CreateUserCommand;
-using Vendor.Services.User.Commands.User.GenerateConfirmationTokenCommand;
-using Vendor.Services.User.Commands.User.SendConfirmationEmailCommand;
+using Vendor.Services.User.Commands.Token;
+using Vendor.Services.User.Commands.User;
 
 namespace Vendor.Services.User.Api.Controllers;
 
@@ -52,5 +51,26 @@ public class UserController : ControllerBase
         if (!confirmUserEmail.IsValid)
             return BadRequest(confirmUserEmail);
         return Ok(confirmUserEmail);
+    }
+
+    [HttpPost]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin")]
+    public async Task<IActionResult> AddRole(AddRoleToUserCommand command)
+    {
+        var addRoleCommand = await _mediator.Send(command);
+
+        if (!addRoleCommand.IsValid)
+            return BadRequest(addRoleCommand);
+        return Ok(addRoleCommand);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> Login(CreateTokenCommand command)
+    {
+        var loginResult = await _mediator.Send(command);
+        
+        if (!loginResult.IsValid)
+            return BadRequest(loginResult);
+        return Ok(loginResult);
     }
 }

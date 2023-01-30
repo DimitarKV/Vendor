@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.AddPersistence();
-builder.Services.AddApplication(new[] {typeof(VendorUser).Assembly, typeof(TokenController).Assembly});
+builder.Services.AddApplication(new[] {typeof(VendorUser).Assembly, typeof(UserController).Assembly});
 builder.AddIdentity();
 builder.AddSecurity();
 
