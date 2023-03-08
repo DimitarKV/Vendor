@@ -25,13 +25,13 @@ public class UserController : ControllerBase
         if (!response.IsValid)
             return BadRequest(response);
         var generateConfirmationToken = await _mediator.Send(new GenerateConfirmationTokenCommand()
-            {Username = response.Result!.UserName!});
+            {Username = response.Result!.Username!});
         
         
         if (!generateConfirmationToken.IsValid)
             return BadRequest(generateConfirmationToken);
         var confirmationLink = Url.Action(nameof(ConfirmEmail), "User",
-            new {Token = generateConfirmationToken.Result, Username = response.Result!.UserName}, Request.Scheme);
+            new {Token = generateConfirmationToken.Result, Username = response.Result!.Username}, Request.Scheme);
         
 
         var sendConfirmationLink =
