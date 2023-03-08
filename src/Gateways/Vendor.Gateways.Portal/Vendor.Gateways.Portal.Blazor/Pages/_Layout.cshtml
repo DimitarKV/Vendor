@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="~/" />
+    <base href="~/"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with Creative Studio landing page.">
@@ -17,15 +17,19 @@
 
     <!-- Bootstrap + Creative Studio main styles -->
     <link rel="stylesheet" href="css/creative-studio.css">
+    
+    <link rel="stylesheet" href="css/site.css"/>
 
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered"/>
 </head>
-<body>
+<body style="background: url('images/header-background-dark.jpg') no-repeat center center fixed; padding-top: 100px">
 
 @RenderBody()
 
 <script src="_framework/blazor.server.js"></script>
 <script src="js/GeoLocation.js" type="module"></script>
+<script src="vendors/jquery/jquery-3.4.1.js"></script>
+<script src="vendors/bootstrap/bootstrap.bundle.js"></script>
 
 </body>
 </html>

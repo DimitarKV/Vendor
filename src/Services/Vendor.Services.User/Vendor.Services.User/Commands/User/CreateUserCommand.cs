@@ -13,7 +13,6 @@ namespace Vendor.Services.User.Commands.User;
 
 public class CreateUserCommand : IRequest<ApiResponse<VendorUser?>>
 {
-    public string UserName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
 
@@ -21,9 +20,8 @@ public class CreateUserCommand : IRequest<ApiResponse<VendorUser?>>
     {
     }
 
-    public CreateUserCommand(string userName, string email, string password)
+    public CreateUserCommand(string email, string password)
     {
-        UserName = userName;
         Email = email;
         Password = password;
     }
@@ -81,9 +79,9 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {
     public CreateUserCommandValidator(UserManager<VendorUser> userManager)
     {
-        RuleFor(command => command.UserName)
-            .MustAsync(async (userName, _) =>
-                await userManager.FindByNameAsync(userName) is null)
+        RuleFor(command => command.Email)
+            .MustAsync(async (email, _) =>
+                await userManager.FindByEmailAsync(email) is null)
             .WithErrorCode("401")
             .WithMessage("User already exists");
     }

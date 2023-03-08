@@ -12,9 +12,4 @@ public class VendorUser : IdentityUser, IEntity<string>
     {
         
     }
-
-    public VendorUser(string username)
-    {
-        UserName = username;
-    }
 }
