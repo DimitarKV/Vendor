@@ -6,14 +6,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Vendor.Domain.Types;
+using Vendor.Domain.Views;
 using Vendor.Services.User.Authorization;
 using Vendor.Services.User.Data.Entities;
 
 namespace Vendor.Services.User.Commands.User;
 
-public class CreateUserCommand : IRequest<ApiResponse<VendorUser?>>
+public class CreateUserCommand : IRequest<ApiResponse<UserView?>>
 {
     public string Email { get; set; }
+    public string Username { get; set; }
     public string Password { get; set; }
 
     public CreateUserCommand()
@@ -27,7 +29,7 @@ public class CreateUserCommand : IRequest<ApiResponse<VendorUser?>>
     }
 }
 
-public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiResponse<VendorUser?>>
+public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiResponse<UserView?>>
 {
     private readonly IMapper _mapper;
     private readonly UserManager<VendorUser> _userManager;
@@ -49,7 +51,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
     /// <param name="request"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task<ApiResponse<VendorUser?>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<UserView?>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var user = _mapper.Map<VendorUser>(request);
 
@@ -59,7 +61,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
-            return new ApiResponse<VendorUser?>(null, "An error occurred while creating a user",
+            return new ApiResponse<UserView?>(null, "An error occurred while creating a user",
                 result.Errors.Select(x => x.Description));
 
         Claim role = Claims.RoleClaims["User"];
@@ -71,7 +73,7 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         }
         await _userManager.AddClaimAsync(user, role);
 
-        return new ApiResponse<VendorUser?>(user, "Successfully created a user");
+        return new ApiResponse<UserView?>(_mapper.Map<UserView>(user), "Successfully created a user");
     }
 }
 
@@ -79,7 +81,7 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 {
     public CreateUserCommandValidator(UserManager<VendorUser> userManager)
     {
-        RuleFor(command => command.Email)
+        RuleFor(command => command.Username)
             .MustAsync(async (email, _) =>
                 await userManager.FindByEmailAsync(email) is null)
             .WithErrorCode("401")

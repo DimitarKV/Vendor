@@ -4,7 +4,7 @@ using Vendor.Domain.Types;
 using Vendor.Domain.Views;
 using Vendor.Gateways.Portal.Static;
 
-namespace Vendor.Gateways.Portal.Services;
+namespace Vendor.Gateways.Portal.Services.Maintainer;
 
 public class MaintainerService : IMaintainerService
 {

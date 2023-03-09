@@ -1,6 +1,6 @@
 ﻿using Vendor.Domain.Views;
 
-namespace Vendor.Gateways.Portal.Services;
+namespace Vendor.Gateways.Portal.Services.Maintainer;
 
 public interface IMaintainerService
 {

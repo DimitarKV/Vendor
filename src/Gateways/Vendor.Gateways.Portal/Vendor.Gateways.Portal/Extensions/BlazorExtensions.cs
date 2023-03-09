@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Vendor.Gateways.Portal.Services;
+using Vendor.Gateways.Portal.Services.Authentication;
+using Vendor.Gateways.Portal.Services.Maintainer;
 
 namespace Vendor.Gateways.Portal.Extensions;
 
@@ -15,6 +16,12 @@ public static class BlazorExtensions
             client.BaseAddress = new Uri(builder.Configuration["Services:Machines:Endpoint"]!);
         });
         
+        services.AddHttpClient<IAuthenticationService, AuthenticationService>(builder.Configuration["Services:Users:Client"]!, client =>
+        {
+            client.BaseAddress = new Uri(builder.Configuration["Services:Users:Endpoint"]!);
+        });
+        
         services.AddScoped<IMaintainerService, MaintainerService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
     }
 }

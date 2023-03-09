@@ -31,7 +31,7 @@ public static class IdentityExtensions
             options.Password.RequireLowercase = false;
             options.Password.RequireUppercase = false;
             options.Password.RequireNonAlphanumeric = false;
-
+            
             // options.SignIn.RequireConfirmedAccount = true;
         });
 

@@ -2,7 +2,7 @@
 
 namespace Vendor.Gateways.Portal.DTO;
 
-public class RegisterUserDto
+public class RegisterUserFormData
 {
     [Required]
     public string Email { get; set; }
@@ -10,4 +10,6 @@ public class RegisterUserDto
     public string Username { get; set; }
     [Required]
     public string Password { get; set; }
+    [Required]
+    public string RepeatPassword { get; set; }
 }
