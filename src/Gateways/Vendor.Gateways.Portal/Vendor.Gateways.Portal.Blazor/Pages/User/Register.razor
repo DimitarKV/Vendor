@@ -1,7 +1,6 @@
 ﻿@page "/Register"
 @using Vendor.Gateways.Portal.DTO
 @using Vendor.Gateways.Portal.Services.Authentication
-@using CloudinaryDotNet.Actions
 @using Vendor.Gateways.Portal.Providers
 @inject IAuthenticationService AuthenticationService;
 @inject NavigationManager NavManager;
@@ -110,7 +109,7 @@
         if (loginResult.IsValid)
         {
             await StateProvider.SetAuthenticationStateAsync(loginResult.Result);
-            NavManager.NavigateTo("/");
+            NavManager.NavigateTo("/", true);
             return;
         }
         
