@@ -1,7 +1,9 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using Microsoft.Extensions.Configuration;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
+using Vendor.Gateways.Portal.Providers;
 using Vendor.Gateways.Portal.Static;
 
 namespace Vendor.Gateways.Portal.Services.Maintainer;
@@ -9,10 +11,12 @@ namespace Vendor.Gateways.Portal.Services.Maintainer;
 public class MaintainerService : IMaintainerService
 {
     private readonly HttpClient _client;
+    private readonly TokenAuthenticationStateProvider _stateProvider;
 
-    public MaintainerService(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    public MaintainerService(IHttpClientFactory httpClientFactory, IConfiguration configuration, TokenAuthenticationStateProvider stateProvider)
     {
         _client = httpClientFactory.CreateClient(configuration["Services:Machines:Client"]!);
+        _stateProvider = stateProvider;
     }
     
     // JS code for Haversine formula
@@ -32,6 +36,7 @@ public class MaintainerService : IMaintainerService
     //TODO: Sort by proximity to maintainer
     public async Task<List<VendingView>> FetchEmptyMachines()
     {
+
         var result = await _client.GetAsync(Endpoints.QueryEmptyVendings);
         return (await result.Content.ReadFromJsonAsync<ApiResponse<List<VendingView>>>())!.Result;
     }

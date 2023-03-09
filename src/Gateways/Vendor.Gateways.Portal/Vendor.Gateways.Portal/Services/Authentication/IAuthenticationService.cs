@@ -6,5 +6,6 @@ namespace Vendor.Gateways.Portal.Services.Authentication;
 
 public interface IAuthenticationService
 {
-    Task<ApiResponse<UserView>> Register(RegisterUserFormData createUserForm);
+    Task<ApiResponse<UserView>> RegisterAsync(RegisterUserFormData createUserForm);
+    Task<ApiResponse<string>> LoginAsync(LoginUserFormData loginForm);
 }

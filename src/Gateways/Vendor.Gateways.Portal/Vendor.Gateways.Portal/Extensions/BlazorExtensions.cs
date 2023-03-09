@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using Vendor.Gateways.Portal.Providers;
 using Vendor.Gateways.Portal.Services.Authentication;
 using Vendor.Gateways.Portal.Services.Maintainer;
 
@@ -23,5 +26,7 @@ public static class BlazorExtensions
         
         services.AddScoped<IMaintainerService, MaintainerService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<TokenAuthenticationStateProvider, TokenAuthenticationStateProvider>();
+        services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
     }
 }

@@ -18,12 +18,20 @@ public class AuthenticationService : IAuthenticationService
     }
 
     //Add user view to common
-    public async Task<ApiResponse<UserView>> Register(RegisterUserFormData createUserForm)
+    public async Task<ApiResponse<UserView>> RegisterAsync(RegisterUserFormData createUserForm)
     {
         var content = new StringContent(JsonConvert.SerializeObject(createUserForm), Encoding.UTF8, "application/json");
         var result = await _client.PostAsync(Endpoints.RegisterUser, content);
         var stringContent = await result.Content.ReadAsStringAsync();
         return JsonConvert.DeserializeObject<ApiResponse<UserView>>(await result.Content.ReadAsStringAsync());
         
+    }
+
+    public async Task<ApiResponse<string>> LoginAsync(LoginUserFormData loginForm)
+    {
+        var content = new StringContent(JsonConvert.SerializeObject(loginForm), Encoding.UTF8, "application/json");
+        var result = await _client.PostAsync(Endpoints.Login, content);
+        var stringResult = await result.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<ApiResponse<string>>(stringResult);
     }
 }
