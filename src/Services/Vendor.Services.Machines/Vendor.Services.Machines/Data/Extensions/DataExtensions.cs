@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,12 +14,15 @@ public static class DataExtensions
 {
     public static void AddPersistence(this WebApplicationBuilder builder, string stringName = "Database")
     {
-        var connectionString = builder.Configuration.GetConnectionString(stringName);
-        builder.Services.AddDbContext<MachineDbContext>(o => o.UseSqlServer(connectionString));
+        var connectionStringBuilder =
+            new SqlConnectionStringBuilder(builder.Configuration.GetConnectionString("Database"));
+        connectionStringBuilder.UserID = builder.Configuration["ConnectionStrings:DbUser"];
+        connectionStringBuilder.Password = builder.Configuration["ConnectionStrings:DbPassword"];
+        builder.Services.AddDbContext<MachineDbContext>(o => o.UseSqlServer(connectionStringBuilder.ConnectionString));
+        
         builder.Services.AddTransient<IMachineDbContext, MachineDbContext>();
         builder.Services.AddTransient<MachineDbContext, MachineDbContext>();
         builder.Services.AddTransient<IVendingRepository, VendingRepository>();
-        // builder.Services.AddTransient<
     }
 
     public static void EnsureDatabaseCreated(this WebApplication app)
