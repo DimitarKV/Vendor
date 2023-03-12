@@ -1,4 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using Vendor.Gateways.Portal.Providers
+@using Vendor.Gateways.Portal.Extensions
+@inherits LayoutComponentBase
+@inject TokenAuthenticationStateProvider _stateProvider
+@inject NavigationManager _navManager;
 
 <nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
     <div class="container">
@@ -34,16 +38,21 @@
                     <a class="nav-link" href="/contactus">Contact us</a>
                 </li>
 
-                    <AuthorizeView>
-                        <NotAuthorized>
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-primary btn-sm ml-lg-3" href="/register">Sign up</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-primary btn-sm ml-lg-3" href="/login">Sign in</a>
-                            </li>
-                        </NotAuthorized>
-                    </AuthorizeView>
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary btn-sm ml-lg-3" href="/register">Sign up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary btn-sm ml-lg-3" href="/login">Sign in</a>
+                        </li>
+                    </NotAuthorized>
+                    <Authorized>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary btn-sm ml-lg-3" @onclick="HandleLogoutAsync">Log out</a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
 
 
             </ul>
@@ -52,3 +61,15 @@
 </nav>
 
 @Body
+
+@code
+{
+    private async Task HandleLogoutAsync()
+    {
+        if ((await _stateProvider.GetAuthenticationStateAsync()).User.IsAuthenticated())
+        {
+            await _stateProvider.SetAuthenticationStateAsync(null);
+            _navManager.NavigateTo("/", true);
+        }
+    }
+}
