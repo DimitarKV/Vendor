@@ -4,16 +4,17 @@ using Vendor.Domain.Views;
 using Vendor.Gateways.Portal.Providers;
 using Vendor.Gateways.Portal.Static;
 using Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
+using Vendor.Gateways.Portal.Wrappers.ResponseTypes;
 
 namespace Vendor.Gateways.Portal.Services.Maintainer;
 
 public class MaintainerService : IMaintainerService
 {
     private readonly HttpClient _client;
-    private readonly HttpClientWrapper _clientWrapper;
+    private readonly IHttpClientWrapper _clientWrapper;
 
     public MaintainerService(IHttpClientFactory httpClientFactory, IConfiguration configuration,
-        TokenAuthenticationStateProvider stateProvider, HttpClientWrapper clientWrapper)
+        TokenAuthenticationStateProvider stateProvider, IHttpClientWrapper clientWrapper)
     {
         _client = httpClientFactory.CreateClient(configuration["Services:Machines:Client"]!);
         _clientWrapper = clientWrapper;
@@ -34,16 +35,13 @@ public class MaintainerService : IMaintainerService
     // const d = R * c; // in metres
 
     //TODO: Sort by proximity to maintainer
-    public async Task<ApiResponse<List<VendingView>>> FetchEmptyMachines()
+    public async Task<ClientResponse<ApiResponse<List<VendingView>>>> FetchEmptyMachines()
     {
-        var result = await _clientWrapper.SendAsJsonAsync<ApiResponse<List<VendingView>>>(_client,
+        var response = await _clientWrapper.SendAsJsonAsync<ApiResponse<List<VendingView>>>(_client,
             Endpoints.QueryEmptyVendings,
             HttpMethod.Get);
-        
-        if (result.IsValid)
-            return result.Result;
-        
-        return new ApiResponse<List<VendingView>>(default!, result.Message, result.Errors);
+
+        return response;
     }
 
     public Task HandleMachine(string title)

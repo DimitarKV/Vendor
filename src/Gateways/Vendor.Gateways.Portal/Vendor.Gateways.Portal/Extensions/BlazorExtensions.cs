@@ -27,6 +27,6 @@ public static class BlazorExtensions
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<TokenAuthenticationStateProvider, TokenAuthenticationStateProvider>();
         services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
-        services.AddScoped<HttpClientWrapper>();
+        services.AddScoped<IHttpClientWrapper, HttpClientWrapper>();
     }
 }

@@ -2,6 +2,7 @@
 using Vendor.Domain.Types;
 using Vendor.Gateways.Portal.Extensions;
 using Vendor.Gateways.Portal.Providers;
+using Vendor.Gateways.Portal.Wrappers.ResponseTypes;
 
 namespace Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
 
@@ -14,7 +15,8 @@ public class HttpClientWrapper : IHttpClientWrapper
         _stateProvider = stateProvider;
     }
 
-    public async Task<ApiResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method, S? body,
+    public async Task<ClientResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method,
+        S? body,
         IEnumerable<KeyValuePair<string, string>>? headers)
     {
         var request = new HttpRequestMessage(method, uri);
@@ -34,7 +36,7 @@ public class HttpClientWrapper : IHttpClientWrapper
         return await ReadResultAsync<R>(result);
     }
 
-    public async Task<ApiResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method,
+    public async Task<ClientResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method,
         IEnumerable<KeyValuePair<string, string>>? headers)
     {
         var request = new HttpRequestMessage(method, uri);
@@ -52,7 +54,7 @@ public class HttpClientWrapper : IHttpClientWrapper
         return await ReadResultAsync<R>(result);
     }
 
-    public async Task<ApiResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method)
+    public async Task<ClientResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method)
     {
         var request = new HttpRequestMessage(method, uri);
 
@@ -64,24 +66,24 @@ public class HttpClientWrapper : IHttpClientWrapper
         return await ReadResultAsync<R>(result);
     }
 
-    private async Task<ApiResponse<R>> ReadResultAsync<R>(HttpResponseMessage response)
+    private async Task<ClientResponse<R>> ReadResultAsync<R>(HttpResponseMessage response)
     {
+        var clientResponse = new ClientResponse<R>()
+        {
+            StatusCode = response.StatusCode,
+            IsSuccessful = response.IsSuccessStatusCode,
+            ReasonPhrase = response.ReasonPhrase
+        };
+        
         try
         {
-            return new ApiResponse<R>()
-            {
-                Result = (await response.Content.ReadFromJsonAsync<R>())!,
-                Message = response.StatusCode.ToString()
-            };
+            clientResponse.Result = (await response.Content.ReadFromJsonAsync<R>())!;
         }
         catch (Exception e)
         {
-            return new ApiResponse<R>()
-            {
-                Result = default!,
-                Errors = new List<string>() {response.ReasonPhrase!},
-                Message = response.StatusCode.ToString()
-            };
+            clientResponse.Result = default;
         }
+
+        return clientResponse;
     }
 }

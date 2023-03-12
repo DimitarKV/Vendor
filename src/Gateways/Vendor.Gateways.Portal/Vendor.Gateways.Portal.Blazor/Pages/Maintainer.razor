@@ -32,7 +32,9 @@ else
     private async Task PopulateVendingViews()
     {
         Console.WriteLine(await _stateProvider.GetTokenAsync());
-        _vendingViews = (await _service.FetchEmptyMachines()).Result;
+        var response = await _service.FetchEmptyMachines();
+        if (response.IsSuccessful)
+            _vendingViews = response.Result!.Result;
         StateHasChanged();
     }
 
