@@ -1,5 +1,5 @@
-﻿using System.Net.Http.Json;
-using Vendor.Domain.Types;
+﻿using System.Net;
+using System.Net.Http.Json;
 using Vendor.Gateways.Portal.Extensions;
 using Vendor.Gateways.Portal.Providers;
 using Vendor.Gateways.Portal.Wrappers.ResponseTypes;
@@ -31,7 +31,23 @@ public class HttpClientWrapper : IHttpClientWrapper
             foreach (var header in headers)
                 request.Headers.Add(header.Key, header.Value);
 
-        var result = await client.SendAsync(request);
+        var result = await TrySendAsync(client, request);
+
+        return await ReadResultAsync<R>(result);
+    }
+
+    public async Task<ClientResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method,
+        S? body)
+    {
+        var request = new HttpRequestMessage(method, uri);
+
+        if (body is not null)
+            request.Content = JsonContent.Create(body);
+
+        if ((await _stateProvider.GetAuthenticationStateAsync()).User.IsAuthenticated())
+            request.Headers.Add("Authorization", "Bearer " + await _stateProvider.GetTokenAsync());
+
+        var result = await TrySendAsync(client, request);
 
         return await ReadResultAsync<R>(result);
     }
@@ -49,7 +65,7 @@ public class HttpClientWrapper : IHttpClientWrapper
             foreach (var header in headers)
                 request.Headers.Add(header.Key, header.Value);
 
-        var result = await client.SendAsync(request);
+        var result = await TrySendAsync(client, request);
 
         return await ReadResultAsync<R>(result);
     }
@@ -61,9 +77,25 @@ public class HttpClientWrapper : IHttpClientWrapper
         if ((await _stateProvider.GetAuthenticationStateAsync()).User.IsAuthenticated())
             request.Headers.Add("Authorization", "Bearer " + await _stateProvider.GetTokenAsync());
 
-        var result = await client.SendAsync(request);
+        var result = await TrySendAsync(client, request);
 
         return await ReadResultAsync<R>(result);
+    }
+
+    private async Task<HttpResponseMessage> TrySendAsync(HttpClient client, HttpRequestMessage request)
+    {
+        try
+        {
+            return await client.SendAsync(request);
+        }
+        catch (HttpRequestException e)
+        {
+            return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
+        }
+        catch (Exception e)
+        {
+            return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+        }
     }
 
     private async Task<ClientResponse<R>> ReadResultAsync<R>(HttpResponseMessage response)
@@ -74,7 +106,7 @@ public class HttpClientWrapper : IHttpClientWrapper
             IsSuccessful = response.IsSuccessStatusCode,
             ReasonPhrase = response.ReasonPhrase
         };
-        
+
         try
         {
             clientResponse.Result = (await response.Content.ReadFromJsonAsync<R>())!;

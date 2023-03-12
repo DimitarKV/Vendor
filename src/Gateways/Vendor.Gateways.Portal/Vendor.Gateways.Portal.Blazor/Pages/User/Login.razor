@@ -4,9 +4,9 @@
 @using Vendor.Gateways.Portal.Providers
 @using Vendor.Gateways.Portal.Services.Authentication
 
-@inject IAuthenticationService AuthenticationService;
-@inject NavigationManager NavManager;
-@inject TokenAuthenticationStateProvider StateProvider;
+@inject IAuthenticationService _authenticationService;
+@inject NavigationManager _navManager;
+@inject TokenAuthenticationStateProvider _stateProvider;
 
 <section class="vh-100">
     <div class="container h-100">
@@ -74,12 +74,12 @@
 
     private async void HandleFormSubmitAsync()
     {
-        var loginResult = await AuthenticationService.LoginAsync(DataModel);
-        if (loginResult.IsValid)
+        var loginResult = await _authenticationService.LoginAsync(DataModel);
+        if (loginResult.IsSuccessful && loginResult.Result!.IsValid)
         {
-            var token = loginResult.Result;
-            await StateProvider.SetAuthenticationStateAsync(token);
-            NavManager.NavigateTo("/", true);
+            var token = loginResult.Result.Result;
+            await _stateProvider.SetAuthenticationStateAsync(token);
+            _navManager.NavigateTo("/", true);
             return;
         }
         

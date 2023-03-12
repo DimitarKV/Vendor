@@ -2,9 +2,9 @@
 @using Vendor.Gateways.Portal.DTO
 @using Vendor.Gateways.Portal.Services.Authentication
 @using Vendor.Gateways.Portal.Providers
-@inject IAuthenticationService AuthenticationService;
-@inject NavigationManager NavManager;
-@inject TokenAuthenticationStateProvider StateProvider;
+@inject IAuthenticationService _authenticationService;
+@inject NavigationManager _navManager;
+@inject TokenAuthenticationStateProvider _stateProvider;
 
 <section class="vh-70">
     <div class="container h-100">
@@ -23,7 +23,7 @@
                                     <ValidationSummary/>
 
                                     <ul class="validation-errors">
-                                        @foreach (var error in ValidationErrors)
+                                        @foreach (var error in _validationErrors)
                                         {
                                             <li class="validation-message">@error</li>
                                         }
@@ -84,36 +84,41 @@
 
 @code {
 
-    private RegisterUserFormData DataModel = new RegisterUserFormData();
-    private EditContext _editContext;
-    private List<string> ValidationErrors = new List<string>();
+    private readonly RegisterUserFormData DataModel = new RegisterUserFormData();
+    private List<string> _validationErrors = new List<string>();
 
     protected override void OnInitialized()
     {
-        _editContext = new EditContext(this);
     }
 
     private async void HandleFormSubmitAsync()
     {
-        var result = await AuthenticationService.RegisterAsync(DataModel);
-        if (!result.IsValid)
+        var result = await _authenticationService.RegisterAsync(DataModel);
+        if (!result.IsSuccessful)
         {
-            ValidationErrors = result.Errors!;
+            _validationErrors.Add("An error occured trying to connect with the server, please try again later!");
+            StateHasChanged();
+            return;
+        }
+            
+        if (!result.Result!.IsValid)
+        {
+            _validationErrors = result.Result.Errors!;
             StateHasChanged();
             return;
         }
 
-        var loginResult = await AuthenticationService.LoginAsync(
+        var loginResult = await _authenticationService.LoginAsync(
             new LoginUserFormData() {Username = DataModel.Username, Password = DataModel.Password});
 
-        if (loginResult.IsValid)
+        if (loginResult.IsSuccessful && loginResult.Result!.IsValid)
         {
-            await StateProvider.SetAuthenticationStateAsync(loginResult.Result);
-            NavManager.NavigateTo("/", true);
+            await _stateProvider.SetAuthenticationStateAsync(loginResult.Result.Result);
+            _navManager.NavigateTo("/", true);
             return;
         }
         
-        ValidationErrors.Add("An error occured while trying to log in, please do so manually!");
+        _validationErrors.Add("An error occured while trying to log in, please do so manually!");
     }
 
 }
