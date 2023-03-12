@@ -1,44 +1,37 @@
 ﻿@page "/Maintainer"
 @using Vendor.Domain.Views
-@using Vendor.Gateways.Portal.Providers
 @using Vendor.Gateways.Portal.Services.Maintainer
 
 @inject IMaintainerService _service
-@inject TokenAuthenticationStateProvider _stateProvider
 
-<h3>Maintainer</h3>
-@if (_vendingViews.Count == 0)
-{
-    //TODO: Render loading animation
-}
-else
-{
-    @foreach (var view in _vendingViews)
-    {
-        <h3>@view.Title</h3>
-        <h3 @onclick="() => HandleMachine(view)">Handle</h3>
-    }
-}
-
-<section class="vh-70">
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-8 col-xl-10">
-                <div class="card text-black" style="border-radius: 25px;">
-                    <div class="card-body p-md-5">
-                        <div class="row justify-content-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+<div class="container h-70">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-8 col-xl-10">
+            <div class="card text-black" style="border-radius: 25px;">
+                <div class="card-body p-md-5">
+                    <div class="row justify-content-center">
+                        @* <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1"> *@
+                            @if (_vendingViews.Count == 0)
+                            {
                                 <div class="spinner-border text-primary" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>
-                            </div>
-                        </div>
+                            }
+                            else
+                            {
+                                @foreach (var view in _vendingViews)
+                                {
+                                    <h3>@view.Title</h3>
+                                    <h3 @onclick="() => HandleMachine(view)">Handle</h3>
+                                }
+                            }
+                        @* </div> *@
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</section>
+</div>
 
 
 @code {
