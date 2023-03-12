@@ -1,10 +1,11 @@
-﻿using Vendor.Domain.Views;
+﻿using Vendor.Domain.Types;
+using Vendor.Domain.Views;
 
 namespace Vendor.Gateways.Portal.Services.Maintainer;
 
 public interface IMaintainerService
 {
-    Task<List<VendingView>> FetchEmptyMachines();
+    Task<ApiResponse<List<VendingView>>> FetchEmptyMachines();
 
     Task HandleMachine(string title);
 }

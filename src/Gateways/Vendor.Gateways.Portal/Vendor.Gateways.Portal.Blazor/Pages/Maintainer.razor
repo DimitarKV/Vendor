@@ -1,14 +1,16 @@
 ﻿@page "/Maintainer"
-@using Vendor.Gateways.Portal.Services
 @using Vendor.Domain.Views
+@using Vendor.Gateways.Portal.Providers
 @using Vendor.Gateways.Portal.Services.Maintainer
 
 @inject IMaintainerService _service
+@inject TokenAuthenticationStateProvider _stateProvider
 
 <h3>Maintainer</h3>
 @if (_vendingViews.Count == 0)
 {
     //TODO: Render loading animation
+    <button @onclick="@PopulateVendingViews">Load</button>
 }
 else
 {
@@ -23,9 +25,15 @@ else
 @code {
     private List<VendingView> _vendingViews = new List<VendingView>();
 
-    protected override void OnInitialized()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        PopulateViews();
+    }
+
+    private async Task PopulateVendingViews()
+    {
+        Console.WriteLine(await _stateProvider.GetTokenAsync());
+        _vendingViews = (await _service.FetchEmptyMachines()).Result;
+        StateHasChanged();
     }
 
     private async Task HandleMachine(VendingView vending)
@@ -33,9 +41,4 @@ else
         await _service.HandleMachine(vending.Title);
     }
 
-    private async Task PopulateViews()
-    {
-        _vendingViews = await _service.FetchEmptyMachines();
-        StateHasChanged();
-    }
 }

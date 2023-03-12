@@ -1,24 +1,24 @@
-﻿using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
 using Vendor.Gateways.Portal.Providers;
 using Vendor.Gateways.Portal.Static;
+using Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
 
 namespace Vendor.Gateways.Portal.Services.Maintainer;
 
 public class MaintainerService : IMaintainerService
 {
     private readonly HttpClient _client;
-    private readonly TokenAuthenticationStateProvider _stateProvider;
+    private readonly HttpClientWrapper _clientWrapper;
 
-    public MaintainerService(IHttpClientFactory httpClientFactory, IConfiguration configuration, TokenAuthenticationStateProvider stateProvider)
+    public MaintainerService(IHttpClientFactory httpClientFactory, IConfiguration configuration,
+        TokenAuthenticationStateProvider stateProvider, HttpClientWrapper clientWrapper)
     {
         _client = httpClientFactory.CreateClient(configuration["Services:Machines:Client"]!);
-        _stateProvider = stateProvider;
+        _clientWrapper = clientWrapper;
     }
-    
+
     // JS code for Haversine formula
     // const R = 6371e3; // metres
     // const φ1 = lat1 * Math.PI/180; // φ, λ in radians
@@ -32,13 +32,18 @@ public class MaintainerService : IMaintainerService
     // const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     //
     // const d = R * c; // in metres
-    
-    //TODO: Sort by proximity to maintainer
-    public async Task<List<VendingView>> FetchEmptyMachines()
-    {
 
-        var result = await _client.GetAsync(Endpoints.QueryEmptyVendings);
-        return (await result.Content.ReadFromJsonAsync<ApiResponse<List<VendingView>>>())!.Result;
+    //TODO: Sort by proximity to maintainer
+    public async Task<ApiResponse<List<VendingView>>> FetchEmptyMachines()
+    {
+        var result = await _clientWrapper.SendAsJsonAsync<ApiResponse<List<VendingView>>>(_client,
+            Endpoints.QueryEmptyVendings,
+            HttpMethod.Get);
+        
+        if (result.IsValid)
+            return result.Result;
+        
+        return new ApiResponse<List<VendingView>>(default!, result.Message, result.Errors);
     }
 
     public Task HandleMachine(string title)
