@@ -1,0 +1,57 @@
+﻿@using Vendor.Services.Machines.Views
+@using Vendor.Domain.Views
+@using Vendor.Gateways.Portal.Services.Product
+@inject IProductService ProductService
+
+<h3>@Machine.Spirals.Count()</h3>
+
+<div class="card text-center" style="width: 13rem; background-color: rgba(0,0,0,0.2); border-color: black">
+    <img class="card-img-top" src="@Machine.Image" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">@Machine.Title</h5>
+        <p class="card-text">@Machine.Spirals.Count(s => s.Quantity == 0) Empty spirals</p>
+        
+        @if (@UnavailableProducts.Any())
+        {
+            <p class="card-text">
+                Out of product
+            </p>
+        }
+        
+        @* <a href="/Maintainer/@view.Title" class="btn btn-primary">More</a> *@
+        @* <a @onclick="() => HandleMachine(view)" class="btn btn-success">Handle</a> *@
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public VendingView Machine { get; set; }
+
+    public List<string> UnavailableProducts { get; set; } = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await AggregateEmptySpirals();
+        StateHasChanged();
+    }
+
+    protected async Task AggregateEmptySpirals()
+    {
+        var unavailableProductIds = Machine.Spirals.Aggregate(new Dictionary<int, int>(), (d, next) =>
+        {
+            if (d.ContainsKey(next.ProductId))
+                d[next.ProductId] += next.Quantity;
+            else
+                d.Add(next.ProductId, next.Quantity);
+            return d;
+        },
+            d => d.Where(kp => kp.Value == 0).Select(kp => kp.Key).ToList());
+
+        foreach (var productId in unavailableProductIds)
+        {
+            var result = await ProductService.GetProductByIdAsync(productId);
+        }
+    }
+
+}

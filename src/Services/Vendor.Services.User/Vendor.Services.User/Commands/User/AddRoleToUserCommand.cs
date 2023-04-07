@@ -28,8 +28,14 @@ public class AddRoleToUserCommandHandler : IRequestHandler<AddRoleToUserCommand,
     {
         var user = await _userManager.FindByNameAsync(request.Username);
 
+        foreach (var claim in await _userManager.GetClaimsAsync(user!))
+        {
+            if (claim.Type == ClaimTypes.Role)
+                await _userManager.RemoveClaimAsync(user!, claim);
+        }
+        
         var identityResult =
-            await _userManager.AddClaimAsync(user!, Claims.RoleClaims[request.Role]);
+            await _userManager.AddClaimAsync(user!, Claims.RoleClaims[request.Role].Claim);
 
         if (!identityResult.Succeeded)
             return new ApiResponse("Error", identityResult.Errors.Select(e => e.Description));

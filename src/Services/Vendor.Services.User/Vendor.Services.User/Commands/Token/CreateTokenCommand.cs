@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Vendor.Domain.Types;
+using Vendor.Services.User.Authorization;
 using Vendor.Services.User.Data.Entities;
 
 namespace Vendor.Services.User.Commands.Token;
@@ -33,21 +34,12 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Api
     private readonly IConfiguration _configuration;
     private readonly UserManager<VendorUser> _userManager;
 
-    //TODO extract as global
-    private const int ExpirationInMinutes = 30;
-    
     public CreateTokenCommandHandler(IConfiguration configuration, UserManager<VendorUser> userManager)
     {
         _configuration = configuration;
         _userManager = userManager;
     }
     
-    /// <summary>
-    /// Creates token after login operation
-    /// </summary>
-    /// <param name="request"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
     public async Task<ApiResponse<string>> Handle(CreateTokenCommand request, CancellationToken cancellationToken)
     {
         var issuer = _configuration["Jwt:Issuer"];
@@ -58,13 +50,16 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Api
         
         var user = await _userManager.FindByNameAsync(request.UserName);
         
-        var claims = await _userManager.GetClaimsAsync(user);
+        var claims = await _userManager.GetClaimsAsync(user!);
         claims.Add(new Claim(ClaimTypes.Name, request.UserName));
+
+        var role = claims.First(c => c.Type == ClaimTypes.Role).Value;
+        var expirationTime = Claims.RoleClaims[role].SessionExpiry;
         
         var token = new JwtSecurityToken(issuer: issuer,
             audience: audience,
             signingCredentials: credentials,
-            expires: DateTime.UtcNow.AddMinutes(ExpirationInMinutes),
+            expires: DateTime.UtcNow.AddMinutes(expirationTime),
             claims: claims);
         
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -76,15 +71,15 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Api
 
 public class CreateTokenCommandValidator : AbstractValidator<CreateTokenCommand>
 {
-    public CreateTokenCommandValidator(UserManager<VendorUser> _userManager)
+    public CreateTokenCommandValidator(UserManager<VendorUser> userManager)
     {
         RuleFor(x => new {x.UserName, x.Password})
             .Cascade(CascadeMode.Stop)
             
-            .MustAsync(async (pair, _) => await _userManager.FindByNameAsync(pair.UserName) is not null)
+            .MustAsync(async (pair, _) => await userManager.FindByNameAsync(pair.UserName) is not null)
             
             .MustAsync(async (pair, _) =>
-                await _userManager.CheckPasswordAsync((await _userManager.FindByNameAsync(pair.UserName))!, pair.Password))
+                await userManager.CheckPasswordAsync((await userManager.FindByNameAsync(pair.UserName))!, pair.Password))
             
             .WithErrorCode("401")
             .WithMessage("Wrong credentials");

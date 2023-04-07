@@ -9,6 +9,10 @@ body {
     overflow-x: hidden;
 }
 
+.card {
+    margin: 1rem;
+}
+
 .navbar-collapse.collapse.show {
     background-color: rgba(0, 0, 0, 0.8);
     padding: 10px;

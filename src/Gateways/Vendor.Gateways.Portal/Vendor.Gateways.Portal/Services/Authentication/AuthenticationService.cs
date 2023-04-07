@@ -39,4 +39,13 @@ public class AuthenticationService : IAuthenticationService
 
         return response;
     }
+
+    public async Task<ClientResponse<ApiResponse>> ConfirmEmailAsync(ConfirmEmailDto dto)
+    {
+        var response =
+            await _clientWrapper.SendAsJsonAsync<ApiResponse, ConfirmEmailDto>(_client, Endpoints.EmailConfirmation,
+                HttpMethod.Get, dto);
+
+        return response;
+    }
 }

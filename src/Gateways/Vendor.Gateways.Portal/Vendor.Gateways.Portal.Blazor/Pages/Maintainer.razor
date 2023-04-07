@@ -4,27 +4,31 @@
 
 @inject IMaintainerService _service
 
-<div class="container h-70">
+<div class="container h-70 mt-5">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-8 col-xl-10">
-            <div class="card text-black" style="border-radius: 25px;">
+            <div class="card text-light" style="border-radius: 25px; border-color: black; background-color: rgba(0,0,0,0.2)">
                 <div class="card-body p-md-5">
+                    <div class="text-center">
+                        <h2>Serviceable machines</h2>
+                    </div>
                     <div class="row justify-content-center">
                         @* <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1"> *@
-                            @if (_vendingViews.Count == 0)
+
+
+                        @if (_vendingViews.Count == 0)
+                        {
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading machines, please wait!</span>
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var view in _vendingViews)
                             {
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
+                                <VendingViewPartial Machine="@view"></VendingViewPartial>
                             }
-                            else
-                            {
-                                @foreach (var view in _vendingViews)
-                                {
-                                    <h3>@view.Title</h3>
-                                    <h3 @onclick="() => HandleMachine(view)">Handle</h3>
-                                }
-                            }
+                        }
                         @* </div> *@
                     </div>
                 </div>
@@ -33,13 +37,12 @@
     </div>
 </div>
 
-
 @code {
-    private List<VendingView> _vendingViews = new List<VendingView>();
+    private List<VendingView> _vendingViews = new();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)
+        if (_vendingViews.Count == 0 || firstRender)
             await PopulateVendingViews();
     }
 
@@ -49,11 +52,6 @@
         if (response.IsSuccessful)
             _vendingViews = response.Result!.Result;
         StateHasChanged();
-    }
-
-    private async Task HandleMachine(VendingView vending)
-    {
-        await _service.HandleMachine(vending.Title);
     }
 
 }

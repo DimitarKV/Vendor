@@ -6,6 +6,7 @@ using Vendor.Services.Machines.Data.Entities;
 using Vendor.Services.Machines.DTO;
 using Vendor.Services.Machines.Queries;
 using Vendor.Services.Machines.Views;
+using SpiralView = Vendor.Domain.Views.SpiralView;
 
 namespace Vendor.Services.Machines.MappingProfiles;
 
@@ -17,12 +18,11 @@ public class MachineProfiles : Profile
 
         CreateMap<Vending, VendingView>()
             .ForMember(destinationMember =>
-                    destinationMember.Products,
+                    destinationMember.Spirals,
                 memberOptions =>
                     memberOptions.MapFrom(
                         src => src.Spirals
-                            .Where(s => s.ProductId != null)
-                            .Select(s => new ProductView(){ProductId = s.ProductId, Quantity = s.Loads})
+                            .Select(s => new SpiralView(){ProductId = s.ProductId, Quantity = s.Loads})
                             .ToList()
                     )
             )
@@ -35,7 +35,7 @@ public class MachineProfiles : Profile
         CreateMap<CreateVendingDto, CreateVendingCommand>();
         CreateMap<VendingDropDto, VendingDropCommand>();
         CreateMap<LoadSpiralDto, LoadSpiralCommand>();
-        CreateMap<Spiral, SpiralView>();
+        CreateMap<Spiral, Views.SpiralView>();
         CreateMap<QuerySpiralDto, QuerySpiral>();
     }
 }

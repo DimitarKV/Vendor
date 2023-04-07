@@ -1,7 +1,8 @@
-﻿namespace Vendor.Services.Machines.Views;
+﻿namespace Vendor.Domain.Views;
 
 public class ProductView
 {
-    public int? ProductId { get; set; }
-    public int Quantity { get; set; }
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string ImageUrl { get; set; }
 }

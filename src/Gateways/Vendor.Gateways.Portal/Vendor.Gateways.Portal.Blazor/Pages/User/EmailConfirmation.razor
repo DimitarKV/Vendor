@@ -1,0 +1,33 @@
+﻿@page "/EmailConfirmation"
+@using Vendor.Gateways.Portal.Services.Authentication
+@using Vendor.Gateways.Portal.DTO
+@inject IAuthenticationService AuthService
+@inject NavigationManager NavManager
+
+<h3>EmailConfirmation</h3>
+
+<h1>@Message</h1>
+
+@code {
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "Token")]
+    public string Token { get; set; } = "";
+
+    [Parameter]
+    [SupplyParameterFromQuery(Name = "Username")]
+    public string Username { get; set; }
+
+    public string Message { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await AuthService.ConfirmEmailAsync(new ConfirmEmailDto() { Token = Token, Username = Username });
+        if (response.IsSuccessful && response.Result!.IsValid)
+            Message = "Successfully activated profile!";
+        else
+            Message = "There was a problem with the confirmation of the email!";
+
+    }
+
+}

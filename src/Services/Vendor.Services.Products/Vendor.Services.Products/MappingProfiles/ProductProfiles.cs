@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Vendor.Domain.Commands.UploadImageCommand;
 using Vendor.Domain.Entities;
+using Vendor.Domain.Views;
 using Vendor.Services.Products.Commands;
 using Vendor.Services.Products.DTO;
 using Vendor.Services.Products.Queries;
-using Vendor.Services.Products.Views;
 
 namespace Vendor.Services.Products.MappingProfiles;
 

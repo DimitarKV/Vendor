@@ -8,6 +8,7 @@ public class Machine : Entity<int>
     public string Title { get; set; }
     public Double Latitude { get; set; }
     public Double Longitude { get; set; }
+    public string ImageUrl { get; set; }
     public Double Money { get; set; }
     public List<Banknote> Banknotes { get; set; }
 

@@ -58,19 +58,23 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         user.CreatedOn = DateTime.Now;
         user.UpdatedOn = DateTime.Now;
 
+        if ((await _userManager.FindByNameAsync(request.Username)) is not null)
+        {
+            await _userManager.DeleteAsync((await _userManager.FindByNameAsync(request.Username))!);
+        }
+
         var result = await _userManager.CreateAsync(user, request.Password);
 
         if (!result.Succeeded)
             return new ApiResponse<UserView?>(null, "An error occurred while creating a user",
                 result.Errors.Select(x => x.Description));
 
-        Claim role = Claims.RoleClaims["User"];
+        Claim role = Claims.RoleClaims["User"].Claim;
         if (_userManager.Users.Count() == 1)
         {
-            role = Claims.RoleClaims["User"];
-            role = Claims.RoleClaims["Maintainer"];
-            role = Claims.RoleClaims["Admin"];
+            role = Claims.RoleClaims["Admin"].Claim;
         }
+
         await _userManager.AddClaimAsync(user, role);
 
         return new ApiResponse<UserView?>(_mapper.Map<UserView>(user), "Successfully created a user");
@@ -82,8 +86,15 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
     public CreateUserCommandValidator(UserManager<VendorUser> userManager)
     {
         RuleFor(command => command.Username)
-            .MustAsync(async (email, _) =>
-                await userManager.FindByEmailAsync(email) is null)
+            .MustAsync(async (username, _) =>
+                await userManager.FindByNameAsync(username) is null
+                ||
+                (
+                    (await userManager.FindByNameAsync(username))!.EmailConfirmed == false
+                    &&
+                    DateTime.Now.Subtract((await userManager.FindByNameAsync(username))!.CreatedOn).Days > 7
+                )
+            )
             .WithErrorCode("401")
             .WithMessage("User already exists");
     }

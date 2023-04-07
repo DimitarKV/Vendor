@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Flurl;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vendor.Services.User.Commands.Token;
@@ -11,10 +12,12 @@ namespace Vendor.Services.User.Api.Controllers;
 public class UserController : ControllerBase
 {
     private readonly IMediator _mediator;
+    private readonly IConfiguration _configuration;
 
-    public UserController(IMediator mediator)
+    public UserController(IMediator mediator, IConfiguration configuration)
     {
         _mediator = mediator;
+        _configuration = configuration;
     }
 
     [HttpPost]
@@ -30,9 +33,10 @@ public class UserController : ControllerBase
         
         if (!generateConfirmationToken.IsValid)
             return BadRequest(generateConfirmationToken);
-        var confirmationLink = Url.Action(nameof(ConfirmEmail), "User",
-            new {Token = generateConfirmationToken.Result, Username = response.Result!.Username}, Request.Scheme);
-        
+
+        var confirmationLinksBaseAddress = _configuration["EmailConfirmation:BaseAddress"];
+        var confirmationLink = confirmationLinksBaseAddress.SetQueryParams(new
+            { Token = generateConfirmationToken.Result, Username = response.Result!.Username });
 
         var sendConfirmationLink =
             await _mediator.Send(new SendConfirmationEmailCommand(confirmationLink!, response.Result!.Email!));
@@ -44,9 +48,9 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> ConfirmEmail(string token, string username)
+    public async Task<IActionResult> ConfirmEmail(ConfirmUserEmailCommand request)
     {
-        var confirmUserEmail = await _mediator.Send(new ConfirmUserEmailCommand(username, token));
+        var confirmUserEmail = await _mediator.Send(request);
         
         if (!confirmUserEmail.IsValid)
             return BadRequest(confirmUserEmail);

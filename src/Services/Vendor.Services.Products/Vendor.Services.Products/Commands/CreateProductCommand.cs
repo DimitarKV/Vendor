@@ -4,8 +4,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Vendor.Domain.Entities;
 using Vendor.Domain.Types;
+using Vendor.Domain.Views;
 using Vendor.Services.Products.Data.Persistence;
-using Vendor.Services.Products.Views;
 
 namespace Vendor.Services.Products.Commands;
 

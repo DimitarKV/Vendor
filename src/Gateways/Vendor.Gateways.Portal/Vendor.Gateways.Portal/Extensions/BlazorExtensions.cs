@@ -5,6 +5,7 @@ using Vendor.Gateways.Portal.Middleware;
 using Vendor.Gateways.Portal.Providers;
 using Vendor.Gateways.Portal.Services.Authentication;
 using Vendor.Gateways.Portal.Services.Maintainer;
+using Vendor.Gateways.Portal.Services.Product;
 using Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
 
 namespace Vendor.Gateways.Portal.Extensions;
@@ -22,11 +23,16 @@ public static class BlazorExtensions
         services.AddHttpClient<IAuthenticationService, AuthenticationService>(
             builder.Configuration["Services:Users:Client"]!,
             client => { client.BaseAddress = new Uri(builder.Configuration["Services:Users:Endpoint"]!); });
+        
+        services.AddHttpClient<IAuthenticationService, AuthenticationService>(
+            builder.Configuration["Services:Products:Client"]!,
+            client => { client.BaseAddress = new Uri(builder.Configuration["Services:Products:Endpoint"]!); });
 
         services.AddScoped<IMaintainerService, MaintainerService>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<TokenAuthenticationStateProvider, TokenAuthenticationStateProvider>();
         services.AddScoped<AuthenticationStateProvider, TokenAuthenticationStateProvider>();
         services.AddScoped<IHttpClientWrapper, HttpClientWrapper>();
+        services.AddScoped<IProductService, ProductService>();
     }
 }
