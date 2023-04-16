@@ -2,10 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vendor.Domain.Commands.UploadImageCommand;
-using Vendor.Services.Products.Commands;
-using Vendor.Services.Products.DTO;
-using Vendor.Services.Products.Queries;
+using Vendor.Domain.Commands.Cloudinary;
+using Vendor.Domain.Types;
+using Vendor.Services.Products.Api.CQRS.Commands;
+using Vendor.Services.Products.Api.CQRS.Queries;
+using Vendor.Services.Products.Domain.DTO;
 
 namespace Vendor.Services.Products.Api.Controllers;
 
@@ -24,15 +25,19 @@ public class ProductsController : ControllerBase
 
     [HttpPost]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> Create([FromForm]CreateProductDto dto)
+    public async Task<IActionResult> Create([FromForm] CreateProductDto dto)
     {
+        var product = (await _mediator.Send(new QueryProductByExactName(dto.Name))).Result;
+        if (product is not null)
+            return BadRequest(new ApiResponse("Error!", new[] { "A product with name " + dto.Name + " already exists!" }));
+
         var uploadImageCommand = _mapper.Map<UploadImageCommand>(dto);
         var uploadResult = await _mediator.Send(uploadImageCommand);
         if (!uploadResult.IsValid)
         {
             return BadRequest(uploadResult);
         }
-        
+
         var createProductCommand = _mapper.Map<CreateProductCommand>(dto);
         createProductCommand.ImageUrl = uploadResult.Result;
 
@@ -59,9 +64,9 @@ public class ProductsController : ControllerBase
 
     [HttpGet]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> QueryMatching(QueryProductsByNameDto dto)
+    public async Task<IActionResult> QueryMatching(string name)
     {
-        var query = _mapper.Map<QueryProductsByMatchingName>(dto);
+        var query = new QueryProductsByMatchingName(name);
         var result = await _mediator.Send(query);
 
         if (!result.IsValid)

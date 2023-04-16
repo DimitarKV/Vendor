@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Vendor.Domain.Entities;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
-using Vendor.Services.Products.Data.Persistence;
+using Vendor.Services.Products.Domain.AggregateModel.ProductAggregate;
 
-namespace Vendor.Services.Products.Commands;
+namespace Vendor.Services.Products.Api.CQRS.Commands;
 
 public class CreateProductCommand : IRequest<ApiResponse<ProductView>>
 {
@@ -17,20 +15,20 @@ public class CreateProductCommand : IRequest<ApiResponse<ProductView>>
 
 public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ApiResponse<ProductView>>
 {
-    private readonly ProductsDbContext _context;
+    private readonly IProductRepository _repository;
     private readonly IMapper _mapper;
 
-    public CreateProductCommandHandler(ProductsDbContext context, IMapper mapper)
+    public CreateProductCommandHandler(IProductRepository repository, IMapper mapper)
     {
-        _context = context;
+        _repository = repository;
         _mapper = mapper;
     }
     
     public async Task<ApiResponse<ProductView>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        var product = new Product() { Name = request.Name, ImageUrl = request.ImageUrl };
-        _context.Products.Add(product);
-        await _context.SaveChangesAsync(cancellationToken);
+        var product = new Product(request.Name, request.ImageUrl);
+        _repository.AddProduct(product);
+        await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         return new ApiResponse<ProductView>(_mapper.Map<ProductView>(product), "Successfully created product");
     }
@@ -38,11 +36,11 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
 
 public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
 {
-    public CreateProductCommandValidator(ProductsDbContext context)
+    public CreateProductCommandValidator(IProductRepository repository)
     {
         RuleFor(p => p.Name)
             .MustAsync(async (name, _) =>
-                await context.Products.Where(p => p.Name == name).FirstOrDefaultAsync() is null)
+                (await repository.FindProductByExactNameAsync(name)) is null)
             .WithMessage("Product name already exists in database!")
             .WithErrorCode("409");
     }

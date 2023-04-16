@@ -1,16 +1,9 @@
-﻿// using CloudinaryDotNet;
-
-using System;
-using CloudinaryDotNet;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Vendor.Services.Products.Data.Persistence;
-using Vendor.Services.Products.Data.Persistence.Interface;
+using Vendor.Services.Products.Domain.AggregateModel.ProductAggregate;
+using Vendor.Services.Products.Repositories;
 
-namespace Vendor.Services.Products.Data.Extensions;
+namespace Vendor.Services.Products.Api;
 
 public static class DataExtensions
 {
@@ -22,8 +15,8 @@ public static class DataExtensions
         connectionStringBuilder.Password = builder.Configuration["ConnectionStrings:DbPassword"];
         builder.Services.AddDbContext<ProductsDbContext>(o => o.UseSqlServer(connectionStringBuilder.ConnectionString));
         
-        builder.Services.AddTransient<IProductsDbContext, ProductsDbContext>();
         builder.Services.AddTransient<ProductsDbContext, ProductsDbContext>();
+        builder.Services.AddTransient<IProductRepository, ProductRepository>();
     }
 
     public static void EnsureDatabaseCreated(this WebApplication app)

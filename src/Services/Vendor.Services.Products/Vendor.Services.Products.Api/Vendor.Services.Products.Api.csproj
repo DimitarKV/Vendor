@@ -15,7 +15,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\Vendor.Application\Vendor.Application.csproj" />
-      <ProjectReference Include="..\Vendor.Services.Products\Vendor.Services.Products.csproj" />
+      <ProjectReference Include="..\Vendor.Services.Products.Domain\Vendor.Services.Products.Domain.csproj" />
+      <ProjectReference Include="..\Vendor.Services.Products.Infrastructure\Vendor.Services.Products.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

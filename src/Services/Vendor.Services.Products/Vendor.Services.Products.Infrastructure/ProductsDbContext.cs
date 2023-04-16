@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vendor.Domain.Entities;
-using Vendor.Services.Products.Data.Persistence.Interface;
+using Vendor.Services.Products.Domain.AggregateModel.ProductAggregate;
+using Vendor.Services.Products.Domain.SeedWork;
 
-namespace Vendor.Services.Products.Data.Persistence;
+namespace Vendor.Services.Products;
 
-public class ProductsDbContext : DbContext, IProductsDbContext
+public class ProductsDbContext : DbContext, IUnitOfWork
 {
     public DbSet<Product> Products { get; set; }
 

@@ -1,8 +1,9 @@
 using Vendor.Application.Extensions;
-using Vendor.Domain.Commands.UploadImageCommand;
+using Vendor.Domain.Commands.Cloudinary;
+using Vendor.Services.Products;
+using Vendor.Services.Products.Api;
 using Vendor.Services.Products.Api.Controllers;
-using Vendor.Services.Products.Data.Extensions;
-using Vendor.Services.Products.MappingProfiles;
+using Vendor.Services.Products.Domain.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
