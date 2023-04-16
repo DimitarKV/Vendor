@@ -5,11 +5,14 @@ namespace Vendor.Services.User.Data.Entities;
 
 public class VendorUser : IdentityUser, IEntity<string>
 {
-    public DateTime CreatedOn { get; set; }
-    public DateTime UpdatedOn { get; set; }
+    public DateTime CreatedOn { get; private set; }
+    public DateTime UpdatedOn { get; private set; }
 
     public VendorUser()
     {
-        
+        CreatedOn = DateTime.Now;
+        UpdatedOn = DateTime.Now;
     }
+    
+    
 }

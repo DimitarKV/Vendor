@@ -55,9 +55,6 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
     {
         var user = _mapper.Map<VendorUser>(request);
 
-        user.CreatedOn = DateTime.Now;
-        user.UpdatedOn = DateTime.Now;
-
         if ((await _userManager.FindByNameAsync(request.Username)) is not null)
         {
             await _userManager.DeleteAsync((await _userManager.FindByNameAsync(request.Username))!);
