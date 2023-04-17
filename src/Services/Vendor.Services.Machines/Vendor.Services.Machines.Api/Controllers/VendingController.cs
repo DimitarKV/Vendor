@@ -3,9 +3,9 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vendor.Domain.DTO;
-using Vendor.Services.Machines.Commands;
+using Vendor.Services.Machines.Api.CQRS.Commands;
+using Vendor.Services.Machines.Api.CQRS.Queries;
 using Vendor.Services.Machines.DTO;
-using Vendor.Services.Machines.Queries;
 
 namespace Vendor.Services.Machines.Api.Controllers;
 
@@ -24,9 +24,8 @@ public class VendingController : ControllerBase
 
     [HttpPost]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> Create(CreateVendingDto dto)
+    public async Task<IActionResult> Create(CreateVendingCommand command)
     {
-        var command = _mapper.Map<CreateVendingCommand>(dto);
         var result = await _mediator.Send(command);
 
         if (result.IsValid)
@@ -36,9 +35,8 @@ public class VendingController : ControllerBase
 
     [HttpPost]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> Load(LoadSpiralDto dto)
+    public async Task<IActionResult> Load(LoadSpiralCommand command)
     {
-        var command = _mapper.Map<LoadSpiralCommand>(dto);
         var result = await _mediator.Send(command);
 
         if (result.IsValid)
@@ -48,9 +46,8 @@ public class VendingController : ControllerBase
 
     [HttpPost]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Machine,Maintainer,Admin")]
-    public async Task<IActionResult> Drop(VendingDropDto dto)
+    public async Task<IActionResult> Drop(VendingDropCommand command)
     {
-        var command = _mapper.Map<VendingDropCommand>(dto);
         var result = await _mediator.Send(command);
 
         if (result.IsValid)

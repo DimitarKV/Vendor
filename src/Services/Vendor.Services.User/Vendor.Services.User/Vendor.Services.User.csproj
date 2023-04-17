@@ -27,4 +27,8 @@
         <ProjectReference Include="..\..\..\Common\Vendor.Application\Vendor.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="CQRS" />
+    </ItemGroup>
+
 </Project>

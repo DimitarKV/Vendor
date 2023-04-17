@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Vendor.Domain.Views;
-using Vendor.Services.User.Commands.User;
+using Vendor.Services.User.CQRS.Commands.User;
 using Vendor.Services.User.Data.Entities;
 
 namespace Vendor.Services.User.MappingProfiles;

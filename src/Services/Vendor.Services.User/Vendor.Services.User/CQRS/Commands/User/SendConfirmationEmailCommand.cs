@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Vendor.Domain.Types;
 
-namespace Vendor.Services.User.Commands.User;
+namespace Vendor.Services.User.CQRS.Commands.User;
 
 public class SendConfirmationEmailCommand : IRequest<ApiResponse>
 {

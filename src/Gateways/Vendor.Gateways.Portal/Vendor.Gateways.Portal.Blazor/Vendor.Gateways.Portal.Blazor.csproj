@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Services\Vendor.Services.Machines\Vendor.Services.Machines\Vendor.Services.Machines.csproj" />
+      <ProjectReference Include="..\..\..\Services\Vendor.Services.Machines\Vendor.Services.Machines.Domain\Vendor.Services.Machines.Domain.csproj" />
       <ProjectReference Include="..\Vendor.Gateways.Portal\Vendor.Gateways.Portal.csproj" />
     </ItemGroup>
 

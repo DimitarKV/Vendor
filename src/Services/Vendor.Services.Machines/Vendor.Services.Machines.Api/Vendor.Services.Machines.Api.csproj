@@ -20,7 +20,8 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\Vendor.Application\Vendor.Application.csproj" />
       <ProjectReference Include="..\..\..\Common\Vendor.Domain\Vendor.Domain.csproj" />
-      <ProjectReference Include="..\Vendor.Services.Machines\Vendor.Services.Machines.csproj" />
+      <ProjectReference Include="..\Vendor.Services.Machines.Domain\Vendor.Services.Machines.Domain.csproj" />
+      <ProjectReference Include="..\Vendor.Services.Machines.Infrastructure\Vendor.Services.Machines.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

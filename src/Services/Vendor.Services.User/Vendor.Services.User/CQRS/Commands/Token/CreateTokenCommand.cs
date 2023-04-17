@@ -10,7 +10,7 @@ using Vendor.Domain.Types;
 using Vendor.Services.User.Authorization;
 using Vendor.Services.User.Data.Entities;
 
-namespace Vendor.Services.User.Commands.Token;
+namespace Vendor.Services.User.CQRS.Commands.Token;
 
 public class CreateTokenCommand : IRequest<ApiResponse<string>>
 {

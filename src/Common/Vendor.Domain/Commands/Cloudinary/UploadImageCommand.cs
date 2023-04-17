@@ -1,10 +1,9 @@
-﻿using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
+﻿using CloudinaryDotNet.Actions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Vendor.Domain.Types;
 
-namespace Vendor.Domain.Commands.UploadImageCommand;
+namespace Vendor.Domain.Commands.Cloudinary;
 
 public class UploadImageCommand : IRequest<ApiResponse<string>>
 {
@@ -14,9 +13,9 @@ public class UploadImageCommand : IRequest<ApiResponse<string>>
 
 public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, ApiResponse<string>>
 {
-    private readonly Cloudinary _cloudinary;
+    private readonly CloudinaryDotNet.Cloudinary _cloudinary;
 
-    public UploadImageCommandHandler(Cloudinary cloudinary)
+    public UploadImageCommandHandler(CloudinaryDotNet.Cloudinary cloudinary)
     {
         _cloudinary = cloudinary;
     }

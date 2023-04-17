@@ -2,8 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vendor.Services.Machines.DTO;
-using Vendor.Services.Machines.Queries;
+using Vendor.Services.Machines.Api.CQRS.Queries;
 
 namespace Vendor.Services.Machines.Api.Controllers;
 
@@ -22,10 +21,9 @@ public class SpiralController : ControllerBase
 
     [HttpGet]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> Query(QuerySpiralDto dto)
+    public async Task<IActionResult> Query(QuerySpiral query)
     {
-        var command = _mapper.Map<QuerySpiral>(dto);
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(query);
 
         if (result.IsValid)
             return Ok(result);
