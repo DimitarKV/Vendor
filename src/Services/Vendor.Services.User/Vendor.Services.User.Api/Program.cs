@@ -1,7 +1,7 @@
 using Vendor.Application.Extensions;
+using Vendor.Services.User;
+using Vendor.Services.User.Api;
 using Vendor.Services.User.Api.Controllers;
-using Vendor.Services.User.Data.Entities;
-using Vendor.Services.User.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

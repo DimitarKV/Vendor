@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Vendor.Services.User.Data.Entities;
 
-namespace Vendor.Services.User.Data.Persistence;
+namespace Vendor.Services.User;
 
 public class UserDbContext : IdentityDbContext<VendorUser>
 {

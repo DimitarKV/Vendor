@@ -1,4 +1,4 @@
-﻿@page "/Maintainer"
+﻿@page "/maintainer/empty"
 @using Vendor.Domain.Views
 @using Vendor.Gateways.Portal.Services.Maintainer
 
@@ -48,9 +48,39 @@
 
     private async Task PopulateVendingViews()
     {
-        var response = await _service.FetchEmptyMachines();
-        if (response.IsSuccessful)
-            _vendingViews = response.Result!.Result;
+    // var response = await _service.FetchEmptyMachines();
+    // if (response.IsSuccessful)
+    //     _vendingViews = response.Result!.Result;
+
+        for (int i = 0; i < 15; i++)
+        {
+            _vendingViews.Add(new VendingView()
+            {
+                Title = "Title",
+                Banknotes = new()
+                {
+                    new() { Value = 10, ValueInString = "10.00" },
+                    new() { Value = 2, ValueInString = "2.00" },
+                    new() { Value = 0.2, ValueInString = "0.20" },
+                    new() { Value = 0.10, ValueInString = "0.10" },
+                    new() { Value = 0.5, ValueInString = "0.50" }
+                },
+                Money = 12.8,
+                Latitude = 42.13001583579213 + i*0.001,
+                Longitude = 24.70542094646375 + i*0.001,
+                Spirals = new()
+                {
+                    new() { Loads = 7, ProductId = 1, Price = 1.2, Id = 235 + i*10 },
+                    new() { Loads = 0, ProductId = 2, Price = 0.5, Id = 236 + i*10 },
+                    new() { Loads = 1, ProductId = 3, Price = 0.9, Id = 237 + i*10 },
+                    new() { Loads = 3, ProductId = 8, Price = 2.0, Id = 238 + i*10 },
+                    new() { Loads = 0, ProductId = 2, Price = 1.5, Id = 239 + i*10 },
+                    new() { Loads = 9, ProductId = 3, Price = 1.7, Id = 240 + i*10 },
+                },
+                ImageUrl = "/images/default_vending_image.png",
+                Id = i
+            });
+        }
         StateHasChanged();
     }
 

@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Vendor.Domain.Entities;
 
-namespace Vendor.Services.User.Data.Entities;
+namespace Vendor.Services.User;
 
-public class VendorUser : IdentityUser, IEntity<string>
+public class VendorUser : IdentityUser
 {
     public DateTime CreatedOn { get; private set; }
     public DateTime UpdatedOn { get; private set; }

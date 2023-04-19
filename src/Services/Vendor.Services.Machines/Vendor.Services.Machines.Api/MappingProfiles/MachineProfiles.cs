@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Vendor.Domain.DTO;
 using Vendor.Domain.Views;
+using Vendor.Services.Machines.AggregateModel.HandleAggregate;
 using Vendor.Services.Machines.AggregateModel.MachineAggregate;
 using Vendor.Services.Machines.Api.CQRS.Commands;
 using Vendor.Services.Machines.Api.CQRS.Queries;
@@ -19,5 +20,6 @@ public class MachineProfiles : Profile
         CreateMap<LoadSpiralDto, LoadSpiralCommand>();
         CreateMap<Spiral, SpiralView>();
         CreateMap<QuerySpiralDto, QuerySpiral>();
+        CreateMap<Handle, HandleView>();
     }
 }

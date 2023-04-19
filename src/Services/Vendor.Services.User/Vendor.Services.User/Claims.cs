@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Vendor.Services.User.Authorization;
+namespace Vendor.Services.User;
 
 public static class Claims
 {

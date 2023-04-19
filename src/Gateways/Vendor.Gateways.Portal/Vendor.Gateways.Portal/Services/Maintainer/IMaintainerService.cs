@@ -8,5 +8,5 @@ public interface IMaintainerService
 {
     Task<ClientResponse<ApiResponse<List<VendingView>>>> FetchEmptyMachines();
 
-    Task HandleMachine(string title);
+    Task<ClientResponse<ApiResponse<HandleView>>> HandleMachine(int id); 
 }

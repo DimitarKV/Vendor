@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace Vendor.Services.User.SendGridConfiguration.Sender;
+namespace Vendor.Services.User.Api.SendGridConfiguration.Sender;
 
 public class EmailSender : IEmailSender
 {

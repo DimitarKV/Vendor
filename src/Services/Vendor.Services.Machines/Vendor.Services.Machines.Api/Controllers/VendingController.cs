@@ -65,4 +65,15 @@ public class VendingController : ControllerBase
             return Ok(result);
         return BadRequest(result);
     }
+
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
+    public async Task<IActionResult> HandleMachine(HandleVendingCommand command)
+    {
+        var result = await _mediator.Send(command);
+        
+        if (result.IsValid)
+            return Ok(result);
+        return BadRequest(result);
+    }
 }

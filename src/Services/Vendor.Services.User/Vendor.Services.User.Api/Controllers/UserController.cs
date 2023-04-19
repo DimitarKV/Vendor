@@ -2,8 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Vendor.Services.User.CQRS.Commands.Token;
-using Vendor.Services.User.CQRS.Commands.User;
+using Vendor.Services.User.Api.CQRS.Commands.Token;
+using Vendor.Services.User.Api.CQRS.Commands.User;
 
 namespace Vendor.Services.User.Api.Controllers;
 

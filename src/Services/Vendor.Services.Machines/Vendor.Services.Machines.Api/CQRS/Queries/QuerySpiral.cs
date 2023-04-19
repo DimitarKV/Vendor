@@ -26,7 +26,7 @@ public class QuerySpiralHandler : IRequestHandler<QuerySpiral, ApiResponse<Spira
     public async Task<ApiResponse<SpiralView>> Handle(QuerySpiral request, CancellationToken cancellationToken)
     {
         var spiral = await _repository.GetSpiralByIdAsync(request.SpiralId);
-        return new ApiResponse<SpiralView>(_mapper.Map<SpiralView>(spiral), "Here u go buddy!");
+        return new ApiResponse<SpiralView>(_mapper.Map<SpiralView>(spiral), "Spiral!");
     }
 }
 

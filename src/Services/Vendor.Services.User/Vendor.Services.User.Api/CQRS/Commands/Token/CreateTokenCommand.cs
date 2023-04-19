@@ -4,13 +4,10 @@ using System.Text;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Vendor.Domain.Types;
-using Vendor.Services.User.Authorization;
-using Vendor.Services.User.Data.Entities;
 
-namespace Vendor.Services.User.CQRS.Commands.Token;
+namespace Vendor.Services.User.Api.CQRS.Commands.Token;
 
 public class CreateTokenCommand : IRequest<ApiResponse<string>>
 {

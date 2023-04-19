@@ -2,9 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Vendor.Domain.Types;
-using Vendor.Services.User.Data.Entities;
 
-namespace Vendor.Services.User.CQRS.Commands.User;
+namespace Vendor.Services.User.Api.CQRS.Commands.User;
 
 public class ConfirmUserEmailCommand : IRequest<ApiResponse>
 {

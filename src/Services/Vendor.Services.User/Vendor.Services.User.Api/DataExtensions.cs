@@ -1,11 +1,7 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Vendor.Services.User.Data.Persistence;
 
-namespace Vendor.Services.User.Extensions;
+namespace Vendor.Services.User.Api;
 
 public static class DataExtensions
 {

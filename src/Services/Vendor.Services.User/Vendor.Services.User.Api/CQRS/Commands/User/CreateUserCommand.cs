@@ -4,13 +4,10 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Configuration;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
-using Vendor.Services.User.Authorization;
-using Vendor.Services.User.Data.Entities;
 
-namespace Vendor.Services.User.CQRS.Commands.User;
+namespace Vendor.Services.User.Api.CQRS.Commands.User;
 
 public class CreateUserCommand : IRequest<ApiResponse<UserView?>>
 {
@@ -59,6 +56,9 @@ public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ApiRe
         {
             await _userManager.DeleteAsync((await _userManager.FindByNameAsync(request.Username))!);
         }
+
+        //TODO: Remove in production
+        user.EmailConfirmed = true;
 
         var result = await _userManager.CreateAsync(user, request.Password);
 

@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Vendor.Domain.Views;
-using Vendor.Services.User.CQRS.Commands.User;
-using Vendor.Services.User.Data.Entities;
+using Vendor.Services.User.Api.CQRS.Commands.User;
 
-namespace Vendor.Services.User.MappingProfiles;
+namespace Vendor.Services.User.Api.MappingProfiles;
 
 public class UserProfile : Profile
 {

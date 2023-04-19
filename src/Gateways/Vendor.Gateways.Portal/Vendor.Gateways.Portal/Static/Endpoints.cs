@@ -7,5 +7,7 @@ public static class Endpoints
     public const string Login = "/user/login";
     public const string QueryProductById = "/products/query";
 
+    public const string HandleVending = "/vending/handlemachine";
+    
     public const string EmailConfirmation = "/user/confirmemail";
 }

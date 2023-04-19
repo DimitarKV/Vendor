@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Vendor.Services.Machines.AggregateModel.HandleAggregate;
 using Vendor.Services.Machines.AggregateModel.MachineAggregate;
 using Vendor.Services.Machines.SeedWork;
 
@@ -9,6 +10,8 @@ public class MachineDbContext : DbContext, IUnitOfWork
     public DbSet<Vending> Vendings { get; set; }
     public DbSet<Banknote> Banknotes { get; set; }
     public DbSet<Spiral> Spirals { get; set; }
+
+    public DbSet<Handle> Handles { get; set; }
 
     public MachineDbContext()
     {

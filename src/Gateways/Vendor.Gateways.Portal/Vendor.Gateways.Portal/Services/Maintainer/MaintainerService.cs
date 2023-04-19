@@ -41,11 +41,14 @@ public class MaintainerService : IMaintainerService
             Endpoints.QueryEmptyVendings,
             HttpMethod.Get);
 
-        return response;
+        return response; 
     }
 
-    public Task HandleMachine(string title)
+    public async Task<ClientResponse<ApiResponse<HandleView>>> HandleMachine(int id)
     {
-        throw new NotImplementedException();
+        var response =
+            await _clientWrapper.SendAsJsonAsync<ApiResponse<HandleView>>(_client, Endpoints.HandleVending,
+                HttpMethod.Get);
+        return response;
     }
 }

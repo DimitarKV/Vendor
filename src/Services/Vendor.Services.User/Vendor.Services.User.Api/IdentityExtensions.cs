@@ -1,15 +1,10 @@
 using System.Reflection;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Vendor.Services.User.Data.Entities;
-using Vendor.Services.User.Data.Persistence;
-using Vendor.Services.User.SendGridConfiguration;
-using Vendor.Services.User.SendGridConfiguration.Sender;
+using Vendor.Services.User.Api.SendGridConfiguration;
+using Vendor.Services.User.Api.SendGridConfiguration.Sender;
 
-namespace Vendor.Services.User.Extensions;
+namespace Vendor.Services.User.Api;
 
 public static class IdentityExtensions
 {
