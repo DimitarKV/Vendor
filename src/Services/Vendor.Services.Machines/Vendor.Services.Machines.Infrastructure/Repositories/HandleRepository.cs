@@ -14,15 +14,15 @@ public class HandleRepository : IHandleRepository
     }
 
     public IUnitOfWork UnitOfWork => _context;
-    
-    public Handle HandleMachine(int machineId, TimeSpan handleDuration)
+
+    public Handle HandleMachine(int machineId, string maintainerId, TimeSpan handleDuration)
     {
-        var handle = new Handle(machineId, DateTime.Now.Add(handleDuration));
+        var handle = new Handle(maintainerId, machineId, DateTime.Now.Add(handleDuration));
         return _context.Handles.Add(handle).Entity;
     }
 
     public async Task<bool> IsMachineNotHandled(int machineId)
     {
-        return await _context.Handles.AnyAsync(h => h.MaintainerId == machineId && h.HandleExpiry > DateTime.Now);
+        return await _context.Handles.AnyAsync(h => h.MachineId == machineId && h.HandleExpiry > DateTime.Now);
     }
 }

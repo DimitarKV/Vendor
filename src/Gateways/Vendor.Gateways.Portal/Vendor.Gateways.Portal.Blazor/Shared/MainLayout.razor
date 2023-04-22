@@ -3,11 +3,12 @@
 @inherits LayoutComponentBase
 @inject TokenAuthenticationStateProvider _stateProvider
 @inject NavigationManager _navManager;
+@inject IJSRuntime JS
 
 <nav class="navbar custom-navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="20">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img style="height: 10vh; width: auto" src="/images/logo.png" alt="LOGO"/>
+            <img class="nav-logo" src="/images/logo.png" alt="LOGO"/>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -18,17 +19,36 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
+
+                <AuthorizeView Roles="@($"Admin")">
+                    <Authorized>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/panel">Admin</a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+
+                <AuthorizeView Roles="@($"Admin, Manager")">
+                    <Authorized>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/manager/panel">Manager</a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+
+                <AuthorizeView Roles="@($"Admin, Maintainer, Manager")">
+                    <Authorized>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/maintainer/empty">Maintainer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/maintainer/create">Create machine</a>
+                        </li>
+                    </Authorized>
+                </AuthorizeView>
+
                 <li class="nav-item">
-                    <a class="nav-link" href="/maintainer/empty">Maintainer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/maintainer/create">Create machine</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/team">Team</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/blog">Blog</a>
+                    <a class="nav-link" href="/aboutus">About us</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/contactus">Contact us</a>
@@ -37,15 +57,15 @@
                 <AuthorizeView>
                     <NotAuthorized>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary btn-sm ml-lg-3" href="/register">Sign up</a>
+                            <a class="nav-link btn btn-primary rounded w-sm btn-lg my-1" href="/register">Sign up</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary btn-sm ml-lg-3" href="/login">Sign in</a>
+                            <a class="nav-link btn btn-primary rounded w-sm btn-lg my-1" href="/login">Sign in</a>
                         </li>
                     </NotAuthorized>
                     <Authorized>
                         <li class="nav-item">
-                            <a class="nav-link btn btn-primary btn-sm ml-lg-3" @onclick="HandleLogoutAsync">Log out</a>
+                            <a class="nav-link btn btn-primary rounded w-sm btn-lg my-1" @onclick="HandleLogoutAsync">Log out</a>
                         </li>
                     </Authorized>
                 </AuthorizeView>
@@ -60,6 +80,14 @@
 
 @code
 {
+    private IJSObjectReference? module;
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+            module = await JS.InvokeAsync<IJSObjectReference>("import", "./Shared/MainLayout.razor.js");
+    }
+
     private async Task HandleLogoutAsync()
     {
         if ((await _stateProvider.GetAuthenticationStateAsync()).User.IsAuthenticated())

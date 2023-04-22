@@ -4,7 +4,7 @@ using Vendor.Services.Machines.SeedWork;
 
 namespace Vendor.Services.Machines.AggregateModel.MachineAggregate;
 
-public class Machine : Entity, IAggregateRoot
+public abstract class Machine : Entity, IAggregateRoot
 {
     public string Title { get; private set; }
     public Double Latitude { get; private set; }

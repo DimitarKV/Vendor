@@ -1,60 +1,107 @@
 ﻿@page "/Maintainer/MachineInfo/{MachineIdString}"
-<h3>MachineInfo</h3>
-<h1>@MachineId</h1>
+@inject IJSRuntime JsRuntime
+@inject NavigationManager UriHelper
 
-<div class="container">
-  <div class="row">
-    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-      <div class="card">
-        <div class="card-header">
-          <ul class="nav nav-tabs card-header-tabs" id="bologna-list" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" href="#status" role="tab" aria-controls="description" aria-selected="true">Status</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link"  href="#location" role="tab" aria-controls="history" aria-selected="false">Location</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#statistics" role="tab" aria-controls="deals" aria-selected="false">Statistics</a>
-            </li>
-          </ul>
+@* <h1>@MachineId</h1> *@
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-10 col-lg-8">
+            <div class="card">
+
+                <div class="card">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs" id="myTab">
+                            <li class="nav-item">
+                                <a href="#status" class="nav-link active" data-toggle="tab">Status</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#location" class="nav-link" data-toggle="tab">Location</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#statistics" class="nav-link" data-toggle="tab">Statistics</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade vh-50 active show parent" style="height: 50vh" id="status">
+                                <h5 class="card-title">Active</h5>
+                                <p class="card-text">The machine has 24.85лв.</p>
+                                <p class="card-text">The machine is out of Coca-Cola, Chio paprika, Tuc, Salam.</p>
+                                <p class="card-text">9 spirals are currently empty.</p>
+                                <h3>Machine last serviced by: </h3>
+                                <div class="fill-empty-space">
+                                    @* TODO Imortant!!! User this format for the date *@
+                                    Spas[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Kola, Fanta, moreni<br/>
+                                    Ivan[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Ismail[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Azis[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                    Serafim[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("g")] - Filled Kola, Fanta, moreni<br/>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade vh-50" style="height: 50vh" id="location">
+                                <div id="map" style="height: 100%;"></div>
+                            </div>
+                            <div class="tab-pane fade" style="height: 50vh" id="statistics">
+                                <h5 class="card-title">Messages tab content</h5>
+                                <p class="card-text">Here is some example text to make up the tab's content. Replace it with your own text anytime.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="card-body">
-          <h4 class="card-title">Bologna</h4>
-          <h6 class="card-subtitle mb-2">Emilia-Romagna Region, Italy</h6>
-          
-          <div class="tab-content mt-3">
-            <div class="tab-pane active" id="status" role="tabpanel">
-              <p class="card-text">Comming soon! </p>
-            </div>
-             
-            <div class="tab-pane" id="location" role="tabpanel" aria-labelledby="history-tab">  
-              <div id="map"></div>
-            </div>
-             
-            <div class="tab-pane" id="statistics" role="tabpanel" aria-labelledby="deals-tab">
-              <p class="card-text">Comming soon!</p>
-            </div>
-          </div>
+        <div class="col-12 col-sm-12 col-md-2 col-lg-4">
+            <img src="http://sc04.alicdn.com/kf/H4b75178f1af34606b4f7bfce2acfc9c5o.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%" alt="Machine"/>
         </div>
-      </div>
     </div>
-  </div>
 </div>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-<script type="module" src="js/machineInfoMap.js"></script>
-<script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-        ({key: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg", v: "beta"});</script>
+
 
 @code {
+
     [Parameter]
     public string MachineIdString { get; set; }
 
     public int MachineId { get; set; }
 
+    private IJSObjectReference? module;
+
     protected async override Task OnInitializedAsync()
     {
         MachineId = int.Parse(MachineIdString);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) 
+        {
+            module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/Maintainer/MachineInfo.razor.js"); 
+            await module.InvokeVoidAsync("initMap", 42.128247, 24.728230, "Title");
+            StateHasChanged();
+        }
     }
 
 }
