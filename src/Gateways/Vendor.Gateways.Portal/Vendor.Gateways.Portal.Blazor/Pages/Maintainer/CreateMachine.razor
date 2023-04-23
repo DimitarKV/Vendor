@@ -114,6 +114,11 @@
         }
     }
 
+    private async Task LoadFiles(InputFileChangeEventArgs e)
+    {
+        DataModel.Image = e.File;
+    }
+
     private async Task HandleCheckbox(bool val)
     {
         _checkBoxValue = val;
