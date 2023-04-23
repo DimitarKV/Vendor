@@ -14,7 +14,7 @@
             accuracy: pos.coords.accuracy
         };
 
-        dotNetHelper.invokeMethodAsync('OnSuccessAsync', coord);
+        dotNetHelper.invokeMethodAsync('OnLocationSuccessAsync', coord);
     }
 
     function error(err) {

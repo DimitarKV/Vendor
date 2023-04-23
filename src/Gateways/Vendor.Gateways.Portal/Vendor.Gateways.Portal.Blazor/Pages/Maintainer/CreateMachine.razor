@@ -1,59 +1,117 @@
 ﻿@page "/Maintainer/Create"
 @using Vendor.Domain.DTO
 @using Vendor.Gateways.Portal.DTO
-@implements IAsyncDisposable
-<h3>CreateMachine</h3>
 
-<div style="margin-top: 200px">
-    <EditForm Model="@model" OnSubmit="@HandleSubmit">
-        <DataAnnotationsValidator/>
-        <ValidationSummary/>
+<section class="vh-70 mt-5">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-12 col-xl-11">
+                <div class="card text-black" style="border-radius: 25px;">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-        <div>
-            <label for="title">Machine title</label>
-            <InputText id="title" @bind-Value="model.Title"></InputText>
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Create machine</p>
+
+                                <EditForm Context="CreateMachineContext" Model="@DataModel" OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4">
+
+                                    <DataAnnotationsValidator/>
+                                    <ValidationSummary/>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <InputText id="title" @bind-Value="DataModel.Title" class="form-control"></InputText>
+                                            <label class="form-label" for="title">Title</label>
+                                        </div>
+                                    </div>
+                                    @if (_checkBoxValue)
+                                    {
+                                        <InputNumber hidden="true" id="latitude" @bind-Value="DataModel.Latitude" class="form-control"></InputNumber>
+                                        <InputNumber hidden="true" id="longitude" @bind-Value="DataModel.Longitude" class="form-control"></InputNumber>
+                                    }
+                                    else
+                                    {
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <InputNumber id="latitude" @bind-Value="DataModel.Latitude" class="form-control"></InputNumber>
+                                                <label class="form-label" for="latitude">Latitude</label>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <InputNumber id="longitude" @bind-Value="DataModel.Longitude" class="form-control"></InputNumber>
+                                                <label class="form-label" for="longitude">Longitude</label>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+
+                                            <InputCheckbox id="currentLocationCheckbox" Value="@_checkBoxValue" ValueChanged="HandleCheckbox" ValueExpression="() => _checkBoxValue"></InputCheckbox>
+                                            <label class="form-label" for="currentLocationCheckbox">Use current location</label>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                            <InputNumber id="spirals" @bind-Value="DataModel.Spirals" class="form-control"></InputNumber>
+                                            <label class="form-label" for="spirals">Spirals</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <InputFile class="form-control" type="file" @bind-Value="DataModel.Image" id="formFile"></InputFile>
+                                        <label for="formFile" class="form-label">Picture</label>
+                                    </div>
+
+
+                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                        <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                                    </div>
+
+                                </EditForm>
+
+                            </div>
+                            <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
+
+                                <img src="https://vendlife.cn/wp-content/uploads/2020/06/Vendlife-HOT-food-vending-machine.jpg"
+                                     class="img-fluid" alt="Sample image">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div>
-            <label for="currentLocationCheckbox">Use current location</label>
-            <InputCheckbox id="currentLocationCheckbox" Value="@_checkBoxValue" ValueChanged="HandleCheckbox" ValueExpression="() => _checkBoxValue"></InputCheckbox>
-
-            <label hidden="@_checkBoxValue" for="latitude">Latitude</label>
-            <InputNumber hidden="@_checkBoxValue" id="latitude" @bind-Value="model.Latitude"></InputNumber>
-            <label hidden="@_checkBoxValue" for="longitude">Longitude</label>
-            <InputNumber hidden="@_checkBoxValue" id="longitude" @bind-Value="model.Longitude"></InputNumber>
-        </div>
-
-        <div>
-            <label for="spirals">Number of spirals in the vending</label>
-            <InputNumber id="spirals" @bind-Value="model.Spirals"></InputNumber>
-        </div>
-
-        <button type="submit">Create</button>
-    </EditForm>
-
-</div>
+    </div>
+</section>
 
 
 @code {
-    private CreateVendingDto model = new();
+    private CreateVendingDto DataModel = new();
     private bool _checkBoxValue = false;
 
-    private readonly Lazy<Task<IJSObjectReference>> _moduleTask;
-    private readonly DotNetObjectReference<CreateMachine> _dotNetObjectReference;
+    private IJSObjectReference _module;
+    private DotNetObjectReference<CreateMachine> _dotNetObjectReference;
     private GeoCoordinatesDto? _geoCoordinatesDto = null;
 
     [Inject]
     private IJSRuntime JsRuntime { get; set; } = default!;
 
-    public CreateMachine()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        _moduleTask = new(() => JsRuntime!.InvokeAsync<IJSObjectReference>(
-            identifier: "import",
-            args: "/js/GeoLocation.js")
-            .AsTask());
-
         _dotNetObjectReference = DotNetObjectReference.Create(this);
+        if (firstRender)
+        {
+            _module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/Maintainer/CreateMachine.razor.js");
+        }
     }
 
     private async Task HandleCheckbox(bool val)
@@ -61,45 +119,33 @@
         _checkBoxValue = val;
         if (_checkBoxValue)
             await GetLocationAsync();
-
     }
 
-    private async Task HandleSubmit()
+    private async Task HandleFormSubmitAsync()
     {
         if (_checkBoxValue)
         {
             if (_geoCoordinatesDto is not null)
             {
-                model.Latitude = _geoCoordinatesDto!.Latitude;
-                model.Longitude = _geoCoordinatesDto!.Longitude;
+                DataModel.Latitude = _geoCoordinatesDto!.Latitude;
+                DataModel.Longitude = _geoCoordinatesDto!.Longitude;
             }
         }
-        
-        
+
 
         Console.WriteLine();
     }
 
     public async Task GetLocationAsync()
     {
-        var module = await _moduleTask.Value;
-        await module.InvokeVoidAsync(identifier: "getCurrentPosition", _dotNetObjectReference);
+        await _module.InvokeVoidAsync("getCurrentPosition", _dotNetObjectReference);
     }
 
     [JSInvokable]
-    public async Task OnSuccessAsync(GeoCoordinatesDto geoCoordinatesDto)
+    public async Task OnLocationSuccessAsync(GeoCoordinatesDto geoCoordinatesDto)
     {
-        this._geoCoordinatesDto = geoCoordinatesDto;
+        _geoCoordinatesDto = geoCoordinatesDto;
         await InvokeAsync(StateHasChanged);
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        if (_moduleTask.IsValueCreated)
-        {
-            var module = await _moduleTask.Value;
-            await module.DisposeAsync();
-        }
     }
 
 }
