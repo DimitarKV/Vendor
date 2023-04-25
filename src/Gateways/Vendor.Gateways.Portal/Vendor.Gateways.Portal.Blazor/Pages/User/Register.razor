@@ -17,55 +17,67 @@
 
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                                <EditForm Context="RegisterUserContext" Model="@DataModel" OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4">
+                                @if (IsFormVisible)
+                                {
+                                    <EditForm Context="RegisterUserContext" Model="@DataModel" OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4">
 
-                                    <DataAnnotationsValidator/>
-                                    <ValidationSummary/>
+                                        <DataAnnotationsValidator/>
+                                        <ValidationSummary/>
 
-                                    <ul class="validation-errors">
-                                        @foreach (var error in _validationErrors)
-                                        {
-                                            <li class="validation-message">@error</li>
-                                        }
-                                    </ul>
+                                        <ul class="validation-errors">
+                                            @foreach (var error in _validationErrors)
+                                            {
+                                                <li class="validation-message">@error</li>
+                                            }
+                                        </ul>
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <InputText @bind-Value="DataModel.Username" type="text" id="form3Example1c" class="form-control"/>
-                                            <label class="form-label" for="form3Example1c">Username</label>
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <InputText @bind-Value="DataModel.Username" type="text" id="form3Example1c" class="form-control"/>
+                                                <label class="form-label" for="form3Example1c">Username</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <InputText @bind-Value="DataModel.Email" type="email" id="form3Example3c" class="form-control"/>
+                                                <label class="form-label" for="form3Example3c">Your Email</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <InputText @bind-Value="DataModel.Password" type="password" id="form3Example4c" class="form-control"/>
+                                                <label class="form-label" for="form3Example4c">Password</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex flex-row align-items-center mb-4">
+                                            <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                            <div class="form-outline flex-fill mb-0">
+                                                <InputText @bind-Value="DataModel.RepeatPassword" type="password" id="form3Example4cd" class="form-control"/>
+                                                <label class="form-label" for="form3Example4cd">Repeat your password</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                                        </div>
+
+                                    </EditForm>
+                                }
+                                else
+                                {
+                                    <div class="text-center">
+                                        <p class="h3">Logging in, please wait!</p>
+                                        <div class="spinner-border text-primary mt-5" role="status">
+                                            <span class="sr-only">Logging in, please wait!</span>
                                         </div>
                                     </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <InputText @bind-Value="DataModel.Email" type="email" id="form3Example3c" class="form-control"/>
-                                            <label class="form-label" for="form3Example3c">Your Email</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <InputText @bind-Value="DataModel.Password" type="password" id="form3Example4c" class="form-control"/>
-                                            <label class="form-label" for="form3Example4c">Password</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <InputText @bind-Value="DataModel.RepeatPassword" type="password" id="form3Example4cd" class="form-control"/>
-                                            <label class="form-label" for="form3Example4cd">Repeat your password</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
-                                    </div>
-
-                                </EditForm>
+                                }
 
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
@@ -86,6 +98,7 @@
 
     private readonly RegisterUserFormData DataModel = new RegisterUserFormData();
     private List<string> _validationErrors = new List<string>();
+    private bool IsFormVisible = true;
 
     protected override void OnInitialized()
     {
@@ -93,32 +106,36 @@
 
     private async void HandleFormSubmitAsync()
     {
-        var result = await _authenticationService.RegisterAsync(DataModel);
-        if (!result.IsSuccessful)
+        _validationErrors.Clear();
+
+        var registerTask = _authenticationService.RegisterAsync(DataModel);
+        
+        IsFormVisible = false;
+        StateHasChanged();
+        
+        var registerResult = await registerTask;
+        
+        IsFormVisible = true;
+        StateHasChanged();
+        
+        if (!registerResult.IsValid)
         {
-            _validationErrors.Add("An error occured trying to connect with the server, please try again later!");
-            StateHasChanged();
-            return;
-        }
-            
-        if (!result.Result!.IsValid)
-        {
-            _validationErrors = result.Result.Errors!;
+            _validationErrors.AddRange(registerResult.Errors!);
             StateHasChanged();
             return;
         }
 
         var loginResult = await _authenticationService.LoginAsync(
-            new LoginUserFormData() {Username = DataModel.Username, Password = DataModel.Password});
+            new LoginUserFormData() { Username = DataModel.Username, Password = DataModel.Password });
 
-        if (loginResult.IsSuccessful && loginResult.Result!.IsValid)
+        if (!loginResult.IsValid)
         {
-            await _stateProvider.SetAuthenticationStateAsync(loginResult.Result.Result);
-            _navManager.NavigateTo("/", true);
+            _validationErrors.AddRange(loginResult.Errors!);
+            StateHasChanged();
             return;
         }
-        
-        _validationErrors.Add("An error occured while trying to log in, please do so manually!");
+        await _stateProvider.SetAuthenticationStateAsync(loginResult.Result);
+        _navManager.NavigateTo("/", true);
     }
 
 }

@@ -4,7 +4,6 @@ using Vendor.Domain.Views;
 using Vendor.Gateways.Portal.Providers;
 using Vendor.Gateways.Portal.Static;
 using Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
-using Vendor.Gateways.Portal.Wrappers.ResponseTypes;
 
 namespace Vendor.Gateways.Portal.Services.Maintainer;
 
@@ -35,19 +34,19 @@ public class MaintainerService : IMaintainerService
     // const d = R * c; // in metres
 
     //TODO: Sort by proximity to maintainer
-    public async Task<ClientResponse<ApiResponse<List<VendingView>>>> FetchEmptyMachines()
+    public async Task<ApiResponse<List<VendingView>>> FetchEmptyMachines()
     {
-        var response = await _clientWrapper.SendAsJsonAsync<ApiResponse<List<VendingView>>>(_client,
+        var response = await _clientWrapper.SendAsJsonAsync<List<VendingView>>(_client,
             Endpoints.QueryEmptyVendings,
             HttpMethod.Get);
 
         return response; 
     }
 
-    public async Task<ClientResponse<ApiResponse<HandleView>>> HandleMachine(int id)
+    public async Task<ApiResponse<HandleView>> HandleMachine(int id)
     {
         var response =
-            await _clientWrapper.SendAsJsonAsync<ApiResponse<HandleView>>(_client, Endpoints.HandleVending,
+            await _clientWrapper.SendAsJsonAsync<HandleView>(_client, Endpoints.HandleVending,
                 HttpMethod.Get);
         return response;
     }

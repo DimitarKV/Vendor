@@ -46,8 +46,8 @@
         foreach (var productId in unavailableProductIds)
         {
             var result = await ProductService.GetProductByIdAsync(productId);
-            if (result.IsSuccessful && result.Result!.IsValid)
-                UnavailableProducts.Add(result.Result!.Result.Name);
+            if (result.IsValid)
+                UnavailableProducts.Add(result.Result.Name);
         }
     }
 

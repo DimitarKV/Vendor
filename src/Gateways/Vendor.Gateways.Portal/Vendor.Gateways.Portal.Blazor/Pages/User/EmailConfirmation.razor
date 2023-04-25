@@ -23,7 +23,7 @@
     protected override async Task OnInitializedAsync()
     {
         var response = await AuthService.ConfirmEmailAsync(new ConfirmEmailDto() { Token = Token, Username = Username });
-        if (response.IsSuccessful && response.Result!.IsValid)
+        if (response.IsValid)
             Message = "Successfully activated profile!";
         else
             Message = "There was a problem with the confirmation of the email!";

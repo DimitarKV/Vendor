@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
+using Vendor.Domain.Types;
 using Vendor.Gateways.Portal.Extensions;
 using Vendor.Gateways.Portal.Providers;
-using Vendor.Gateways.Portal.Wrappers.ResponseTypes;
 
 namespace Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
 
@@ -15,7 +15,7 @@ public class HttpClientWrapper : IHttpClientWrapper
         _stateProvider = stateProvider;
     }
 
-    public async Task<ClientResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method,
+    public async Task<ApiResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method,
         S? body,
         IEnumerable<KeyValuePair<string, string>>? headers)
     {
@@ -36,7 +36,7 @@ public class HttpClientWrapper : IHttpClientWrapper
         return await ReadResultAsync<R>(result);
     }
 
-    public async Task<ClientResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method,
+    public async Task<ApiResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method,
         S? body)
     {
         var request = new HttpRequestMessage(method, uri);
@@ -52,7 +52,7 @@ public class HttpClientWrapper : IHttpClientWrapper
         return await ReadResultAsync<R>(result);
     }
 
-    public async Task<ClientResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method,
+    public async Task<ApiResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method,
         IEnumerable<KeyValuePair<string, string>>? headers)
     {
         var request = new HttpRequestMessage(method, uri);
@@ -70,7 +70,7 @@ public class HttpClientWrapper : IHttpClientWrapper
         return await ReadResultAsync<R>(result);
     }
 
-    public async Task<ClientResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method)
+    public async Task<ApiResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method)
     {
         var request = new HttpRequestMessage(method, uri);
 
@@ -90,7 +90,8 @@ public class HttpClientWrapper : IHttpClientWrapper
         }
         catch (HttpRequestException e)
         {
-            return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
+            var serviceUnavailableResponse = new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
+            return serviceUnavailableResponse;
         }
         catch (Exception e)
         {
@@ -98,24 +99,15 @@ public class HttpClientWrapper : IHttpClientWrapper
         }
     }
 
-    private async Task<ClientResponse<R>> ReadResultAsync<R>(HttpResponseMessage response)
+    private async Task<ApiResponse<R>> ReadResultAsync<R>(HttpResponseMessage response)
     {
-        var clientResponse = new ClientResponse<R>()
-        {
-            StatusCode = response.StatusCode,
-            IsSuccessful = response.IsSuccessStatusCode,
-            ReasonPhrase = response.ReasonPhrase
-        };
-
         try
         {
-            clientResponse.Result = (await response.Content.ReadFromJsonAsync<R>())!;
+            return (await response.Content.ReadFromJsonAsync<ApiResponse<R>>())!;
         }
         catch (Exception e)
         {
-            clientResponse.Result = default;
+            return new ApiResponse<R>(default!, "Error!", new[] { response.ReasonPhrase! });
         }
-
-        return clientResponse;
     }
 }

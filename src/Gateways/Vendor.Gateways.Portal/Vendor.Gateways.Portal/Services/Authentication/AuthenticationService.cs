@@ -1,12 +1,9 @@
-﻿using System.Text;
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
 using Vendor.Gateways.Portal.DTO;
 using Vendor.Gateways.Portal.Static;
 using Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
-using Vendor.Gateways.Portal.Wrappers.ResponseTypes;
 
 namespace Vendor.Gateways.Portal.Services.Authentication;
 
@@ -23,24 +20,24 @@ public class AuthenticationService : IAuthenticationService
     }
 
     //Add user view to common
-    public async Task<ClientResponse<ApiResponse<UserView>>> RegisterAsync(RegisterUserFormData createUserForm)
+    public async Task<ApiResponse<UserView>> RegisterAsync(RegisterUserFormData createUserForm)
     {
         var response =
-            await _clientWrapper.SendAsJsonAsync<ApiResponse<UserView>, RegisterUserFormData>(_client,
+            await _clientWrapper.SendAsJsonAsync<UserView, RegisterUserFormData>(_client,
                 Endpoints.RegisterUser, HttpMethod.Post, createUserForm);
         return response;
     }
 
-    public async Task<ClientResponse<ApiResponse<string>>> LoginAsync(LoginUserFormData loginForm)
+    public async Task<ApiResponse<string>> LoginAsync(LoginUserFormData loginForm)
     {
         var response =
-            await _clientWrapper.SendAsJsonAsync<ApiResponse<string>, LoginUserFormData>(_client, Endpoints.Login,
+            await _clientWrapper.SendAsJsonAsync<string, LoginUserFormData>(_client, Endpoints.Login,
                 HttpMethod.Post, loginForm);
 
         return response;
     }
 
-    public async Task<ClientResponse<ApiResponse>> ConfirmEmailAsync(ConfirmEmailDto dto)
+    public async Task<ApiResponse> ConfirmEmailAsync(ConfirmEmailDto dto)
     {
         var response =
             await _clientWrapper.SendAsJsonAsync<ApiResponse, ConfirmEmailDto>(_client, Endpoints.EmailConfirmation,

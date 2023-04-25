@@ -74,6 +74,8 @@ public class CreateTokenCommandValidator : AbstractValidator<CreateTokenCommand>
             .Cascade(CascadeMode.Stop)
             
             .MustAsync(async (pair, _) => await userManager.FindByNameAsync(pair.UserName) is not null)
+            .WithErrorCode("401")
+            .WithMessage("Wrong credentials")
             
             .MustAsync(async (pair, _) =>
                 await userManager.CheckPasswordAsync((await userManager.FindByNameAsync(pair.UserName))!, pair.Password))
