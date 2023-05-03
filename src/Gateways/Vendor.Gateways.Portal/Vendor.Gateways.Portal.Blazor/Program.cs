@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor().AddHubOptions(hub => hub.MaximumReceiveMessageSize = 100 * 1024 * 1024);
 builder.Services.AddAuthorization();
 builder.AddHttpClients();
 builder.AddBlazorExtensions(new[] { typeof(TokenAuthenticationStateProvider).Assembly, typeof(BlazorProfile).Assembly });

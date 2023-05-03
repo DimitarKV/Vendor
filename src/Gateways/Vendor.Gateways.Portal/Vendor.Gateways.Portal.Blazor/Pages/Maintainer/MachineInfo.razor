@@ -1,6 +1,9 @@
 ﻿@page "/Maintainer/MachineInfo/{MachineIdString}"
+@using Vendor.Domain.Views
+@using Vendor.Gateways.Portal.Services.Maintainer
 @inject IJSRuntime JsRuntime
 @inject NavigationManager UriHelper
+@inject IMaintainerService MaintainerService;
 
 @* <h1>@MachineId</h1> *@
 
@@ -85,6 +88,8 @@
 
     private IJSObjectReference? module;
 
+    private VendingView _vendingView;
+
     protected async override Task OnInitializedAsync()
     {
         MachineId = int.Parse(MachineIdString);
@@ -92,8 +97,10 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender) 
+        if (firstRender)
         {
+            _vendingView = (await MaintainerService.FetchMachineById(MachineId)).Result;
+            
             module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/Maintainer/MachineInfo.razor.js"); 
             await module.InvokeVoidAsync("initMap", 42.128247, 24.728230, "Title");
             StateHasChanged();

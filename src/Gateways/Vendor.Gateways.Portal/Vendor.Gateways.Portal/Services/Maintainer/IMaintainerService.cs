@@ -8,7 +8,8 @@ public interface IMaintainerService
     Task<ApiResponse<List<VendingView>>> FetchEmptyMachines();
 
     Task<ApiResponse<VendingView>> CreateMachineAsync(CreateVendingRequestDto requestDto);
-    public Task<ApiResponse<VendingView>> SetMachineImageAsync(SetMachineImageDto requestDto);
+    Task<ApiResponse<VendingView>> SetMachineImageAsync(SetMachineImageDto requestDto);
 
-    Task<ApiResponse<HandleView>> HandleMachine(int id); 
+    Task<ApiResponse<HandleView>> HandleMachine(int id);
+    Task<ApiResponse<VendingView>> FetchMachineById(int machineId);
 }

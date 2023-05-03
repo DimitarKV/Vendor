@@ -1,4 +1,5 @@
 ﻿@using Vendor.Domain.Views
+@using Vendor.Gateways.Portal.DTO
 @using Vendor.Gateways.Portal.Services.Product
 @inject IProductService ProductService
 
@@ -7,11 +8,6 @@
     <div class="card-body">
         <h5 class="card-title">@Machine.Title</h5>
         <p class="card-text">@Machine.Spirals.Count(s => s.Loads == 0) Empty spirals</p>
-
-        @if (UnavailableProducts.Any())
-        {
-            <p class="card-text">Out of products @String.Join(", ", UnavailableProducts)</p>
-        }
 
         <a href="/Maintainer/MachineInfo/@Machine.Id" class="btn btn-primary">More</a>
         @* <a @onclick="() => HandleMachine(view)" class="btn btn-success">Handle</a> *@
@@ -22,35 +18,4 @@
 
     [Parameter]
     public VendingView Machine { get; set; }
-
-    public List<string> UnavailableProducts { get; set; } = new() { "Kola", "Voda", "Chips", "nz" };
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await AggregateEmptySpirals();
-        StateHasChanged();
-    }
-
-    protected async Task AggregateEmptySpirals()
-    {
-        var unavailableProductIds = Machine.Spirals.Aggregate(new Dictionary<int, int>(), (d, next) =>
-        {
-            if (next.ProductId == -1)
-                return d;
-            if (d.ContainsKey(next.ProductId))
-                d[next.ProductId] += next.Loads;
-            else
-                d.Add(next.ProductId, next.Loads);
-            return d;
-        },
-            d => d.Where(kp => kp.Value == 0).Select(kp => kp.Key).ToList());
- 
-        foreach (var productId in unavailableProductIds)
-        {
-            var result = await ProductService.GetProductByIdAsync(productId);
-            if (result.IsValid)
-                UnavailableProducts.Add(result.Result.Name);
-        }
-    }
-
 }

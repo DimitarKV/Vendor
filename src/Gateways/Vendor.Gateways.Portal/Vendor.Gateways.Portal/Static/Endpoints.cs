@@ -15,4 +15,5 @@ public static class Endpoints
     public const string CreateMachine = "/vending/create";
     public const string SetMachineImageEndpoint = "/vending/setimage";
     public const string RegisterProductEndpoint = "/products/create";
+    public const string FetchMachineById = "/vending/fetch";
 }

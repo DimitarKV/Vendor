@@ -102,4 +102,17 @@ public class VendingController : ControllerBase
             return Ok(result);
         return BadRequest(result);
     }
+
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
+    [Route("/[controller]/[action]/{id}")]
+    public async Task<IActionResult> Fetch(int id)
+    {
+        var query = new QueryVendingById() { Id = id };
+        var result = await _mediator.Send(query);
+
+        if (result.IsValid)
+            return Ok(result);
+        return BadRequest(result);
+    }
 }

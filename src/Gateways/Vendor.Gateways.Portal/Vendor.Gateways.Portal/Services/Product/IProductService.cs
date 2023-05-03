@@ -6,6 +6,6 @@ namespace Vendor.Gateways.Portal.Services.Product;
 
 public interface IProductService
 {
-    public Task<ApiResponse<ProductView>> GetProductByIdAsync(int id);
+    public Task<ApiResponse<ProductView>> GetProductByIdAsync(QueryProductByIdDto dto);
     public Task<ApiResponse<ProductView>> RegisterProductAsync(RegisterProductDto dto);
 }

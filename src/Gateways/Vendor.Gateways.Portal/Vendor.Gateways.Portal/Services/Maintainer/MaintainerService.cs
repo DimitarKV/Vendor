@@ -73,4 +73,13 @@ public class MaintainerService : IMaintainerService
                 HttpMethod.Get);
         return response;
     }
+
+    public async Task<ApiResponse<VendingView>> FetchMachineById(int machineId)
+    {
+        var response =
+            await _clientWrapper.SendAsJsonAsync<VendingView>(
+                Endpoints.FetchMachineById + "/" + machineId,
+                HttpMethod.Get);
+        return response;
+    }
 }

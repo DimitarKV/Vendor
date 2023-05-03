@@ -8,6 +8,7 @@ using Vendor.Domain.DTO.Requests;
 using Vendor.Domain.Types;
 using Vendor.Services.Products.Api.CQRS.Commands;
 using Vendor.Services.Products.Api.CQRS.Queries;
+using Vendor.Services.Products.Api.DTO;
 
 namespace Vendor.Services.Products.Api.Controllers;
 
@@ -52,9 +53,9 @@ public class ProductsController : ControllerBase
 
     [HttpGet]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> Query(int id)
+    public async Task<IActionResult> Query(QueryProductByIdDto dto)
     {
-        var query = new QueryProductById() { Id = id };
+        var query = new QueryProductById() { Id = dto.Id };
         var result = await _mediator.Send(query);
 
         if (!result.IsValid)
