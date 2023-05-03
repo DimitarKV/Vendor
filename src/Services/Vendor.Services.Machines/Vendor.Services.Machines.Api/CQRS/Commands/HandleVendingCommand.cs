@@ -2,7 +2,7 @@
 using MediatR;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
-using Vendor.Services.Machines.AggregateModel.HandleAggregate;
+using Vendor.Services.Machines.Domain.AggregateModel.HandleAggregate;
 
 namespace Vendor.Services.Machines.Api.CQRS.Commands;
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Vendor.Services.Machines.SeedWork;
+namespace Vendor.Services.Machines.Domain.SeedWork;
 
 public abstract class Entity
 {

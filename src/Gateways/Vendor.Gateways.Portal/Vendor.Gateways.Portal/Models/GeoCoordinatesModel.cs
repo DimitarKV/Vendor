@@ -1,6 +1,6 @@
-﻿namespace Vendor.Gateways.Portal.DTO;
+﻿namespace Vendor.Gateways.Portal.Models;
 
-public class GeoCoordinatesDto
+public class GeoCoordinatesModel
 {
     public double Latitude { get; set; }
     public double Longitude { get; set; }

@@ -2,8 +2,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Vendor.Domain.Types;
 using Vendor.Services.User.Api.CQRS.Commands.Token;
 using Vendor.Services.User.Api.CQRS.Commands.User;
+using Vendor.Services.User.Api.CQRS.Queries;
 
 namespace Vendor.Services.User.Api.Controllers;
 
@@ -76,5 +78,23 @@ public class UserController : ControllerBase
         if (!loginResult.IsValid)
             return BadRequest(loginResult);
         return Ok(loginResult);
+    }
+
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin,Manager")]
+    public async Task<IActionResult> Query(QueryUsers query)
+    {
+        var queryUsersResult = await _mediator.Send(query);
+        
+        if (!queryUsersResult.IsValid)
+            return BadRequest(queryUsersResult);
+        return Ok(queryUsersResult);
+    }
+
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Admin, Manager")]
+    public IActionResult QueryRoles()
+    {
+        return Ok(new ApiResponse<List<string>>(Claims.RoleClaims.Keys.ToList()));
     }
 }

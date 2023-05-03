@@ -1,4 +1,4 @@
-﻿namespace Vendor.Services.Machines.SeedWork;
+﻿namespace Vendor.Services.Machines.Domain.SeedWork;
 
 public interface IRepository
 {

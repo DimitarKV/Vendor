@@ -1,5 +1,9 @@
 ﻿using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Vendor.Domain.Types;
 using Vendor.Gateways.Portal.Extensions;
 using Vendor.Gateways.Portal.Providers;
@@ -9,13 +13,18 @@ namespace Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
 public class HttpClientWrapper : IHttpClientWrapper
 {
     private readonly TokenAuthenticationStateProvider _stateProvider;
+    private HttpClient _client;
+    private readonly ILogger<HttpClientWrapper> _logger;
 
-    public HttpClientWrapper(TokenAuthenticationStateProvider stateProvider)
+    public HttpClientWrapper(HttpClient client, TokenAuthenticationStateProvider stateProvider,
+        ILogger<HttpClientWrapper> logger)
     {
         _stateProvider = stateProvider;
+        _logger = logger;
+        _client = client;
     }
 
-    public async Task<ApiResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method,
+    public async Task<ApiResponse<R>> SendAsJsonAsync<R, S>(string uri, HttpMethod method,
         S? body,
         IEnumerable<KeyValuePair<string, string>>? headers)
     {
@@ -31,12 +40,12 @@ public class HttpClientWrapper : IHttpClientWrapper
             foreach (var header in headers)
                 request.Headers.Add(header.Key, header.Value);
 
-        var result = await TrySendAsync(client, request);
+        var result = await TrySendAsync(request);
 
         return await ReadResultAsync<R>(result);
     }
 
-    public async Task<ApiResponse<R>> SendAsJsonAsync<R, S>(HttpClient client, string uri, HttpMethod method,
+    public async Task<ApiResponse<R>> SendAsJsonAsync<R, S>(string uri, HttpMethod method,
         S? body)
     {
         var request = new HttpRequestMessage(method, uri);
@@ -47,12 +56,12 @@ public class HttpClientWrapper : IHttpClientWrapper
         if ((await _stateProvider.GetAuthenticationStateAsync()).User.IsAuthenticated())
             request.Headers.Add("Authorization", "Bearer " + await _stateProvider.GetTokenAsync());
 
-        var result = await TrySendAsync(client, request);
+        var result = await TrySendAsync(request);
 
         return await ReadResultAsync<R>(result);
     }
 
-    public async Task<ApiResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method,
+    public async Task<ApiResponse<R>> SendAsJsonAsync<R>(string uri, HttpMethod method,
         IEnumerable<KeyValuePair<string, string>>? headers)
     {
         var request = new HttpRequestMessage(method, uri);
@@ -65,49 +74,46 @@ public class HttpClientWrapper : IHttpClientWrapper
             foreach (var header in headers)
                 request.Headers.Add(header.Key, header.Value);
 
-        var result = await TrySendAsync(client, request);
+        var result = await TrySendAsync(request);
 
         return await ReadResultAsync<R>(result);
     }
 
-    public async Task<ApiResponse<R>> SendAsJsonAsync<R>(HttpClient client, string uri, HttpMethod method)
+    public async Task<ApiResponse<R>> SendAsJsonAsync<R>(string uri, HttpMethod method)
     {
         var request = new HttpRequestMessage(method, uri);
 
         if ((await _stateProvider.GetAuthenticationStateAsync()).User.IsAuthenticated())
             request.Headers.Add("Authorization", "Bearer " + await _stateProvider.GetTokenAsync());
 
-        var result = await TrySendAsync(client, request);
+        var result = await TrySendAsync(request);
 
         return await ReadResultAsync<R>(result);
     }
 
-    private async Task<HttpResponseMessage> TrySendAsync(HttpClient client, HttpRequestMessage request)
+    public async Task<ApiResponse<R>> PostImageAsync<R>(string url, HttpMethod method, IBrowserFile body)
     {
-        try
+        var request = new HttpRequestMessage(method, url);
+        using (var multipartFormContent = new MultipartFormDataContent())
         {
-            return await client.SendAsync(request);
+            var fileStreamContent = new StreamContent(body.OpenReadStream());
+            fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue(body.ContentType!);
+            
+            multipartFormContent.Add(fileStreamContent, name: "image", fileName: "filename");
+
+            request.Content = multipartFormContent;
+            var response = await TrySendAsync(request);
+            return await ReadResultAsync<R>(response);
         }
-        catch (HttpRequestException e)
-        {
-            var serviceUnavailableResponse = new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
-            return serviceUnavailableResponse;
-        }
-        catch (Exception e)
-        {
-            return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-        }
+    }
+
+    private async Task<HttpResponseMessage> TrySendAsync(HttpRequestMessage request)
+    {
+        return await _client.SendAsync(request);
     }
 
     private async Task<ApiResponse<R>> ReadResultAsync<R>(HttpResponseMessage response)
     {
-        try
-        {
-            return (await response.Content.ReadFromJsonAsync<ApiResponse<R>>())!;
-        }
-        catch (Exception e)
-        {
-            return new ApiResponse<R>(default!, "Error!", new[] { response.ReasonPhrase! });
-        }
+        return (await response.Content.ReadFromJsonAsync<ApiResponse<R>>())!;
     }
 }

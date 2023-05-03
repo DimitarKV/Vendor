@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 
-namespace Vendor.Services.Products.Domain.DTO;
+namespace Vendor.Domain.DTO.Requests;
 
-public class CreateProductDto
+public class CreateProductRequestDto
 {
     [Required]
     public string Name { get; set; }

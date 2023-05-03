@@ -1,6 +1,6 @@
 ﻿@page "/EmailConfirmation"
 @using Vendor.Gateways.Portal.Services.Authentication
-@using Vendor.Gateways.Portal.DTO
+@using Vendor.Domain.DTO.Requests
 @inject IAuthenticationService AuthService
 @inject NavigationManager NavManager
 
@@ -22,11 +22,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var response = await AuthService.ConfirmEmailAsync(new ConfirmEmailDto() { Token = Token, Username = Username });
+        var response = await AuthService.ConfirmEmailAsync(new ConfirmEmailRequestDto() { Token = Token, Username = Username });
         if (response.IsValid)
             Message = "Successfully activated profile!";
         else
             Message = "There was a problem with the confirmation of the email!";
+        StateHasChanged();
 
     }
 

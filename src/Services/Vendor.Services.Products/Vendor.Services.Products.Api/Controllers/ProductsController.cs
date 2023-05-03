@@ -3,10 +3,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Vendor.Domain.Commands.Cloudinary;
+using Vendor.Domain.DTO;
+using Vendor.Domain.DTO.Requests;
 using Vendor.Domain.Types;
 using Vendor.Services.Products.Api.CQRS.Commands;
 using Vendor.Services.Products.Api.CQRS.Queries;
-using Vendor.Services.Products.Domain.DTO;
 
 namespace Vendor.Services.Products.Api.Controllers;
 
@@ -25,7 +26,7 @@ public class ProductsController : ControllerBase
 
     [HttpPost]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> Create([FromForm] CreateProductDto dto)
+    public async Task<IActionResult> Create([FromForm] CreateProductRequestDto dto)
     {
         var product = (await _mediator.Send(new QueryProductByExactName(dto.Name))).Result;
         if (product is not null)

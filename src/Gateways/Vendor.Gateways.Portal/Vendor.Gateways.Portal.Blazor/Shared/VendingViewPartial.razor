@@ -35,6 +35,8 @@
     {
         var unavailableProductIds = Machine.Spirals.Aggregate(new Dictionary<int, int>(), (d, next) =>
         {
+            if (next.ProductId == -1)
+                return d;
             if (d.ContainsKey(next.ProductId))
                 d[next.ProductId] += next.Loads;
             else
@@ -42,7 +44,7 @@
             return d;
         },
             d => d.Where(kp => kp.Value == 0).Select(kp => kp.Key).ToList());
-
+ 
         foreach (var productId in unavailableProductIds)
         {
             var result = await ProductService.GetProductByIdAsync(productId);

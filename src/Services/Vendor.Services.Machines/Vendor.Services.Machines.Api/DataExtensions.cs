@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Vendor.Services.Machines.AggregateModel.HandleAggregate;
-using Vendor.Services.Machines.AggregateModel.MachineAggregate;
+using Vendor.Services.Machines.Domain.AggregateModel.HandleAggregate;
+using Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 using Vendor.Services.Machines.Infrastructure;
 using Vendor.Services.Machines.Infrastructure.Repositories;
 
@@ -20,6 +20,8 @@ public static class DataExtensions
         builder.Services.AddTransient<MachineDbContext, MachineDbContext>();
         builder.Services.AddTransient<IMachineRepository, MachineRepository>();
         builder.Services.AddTransient<IHandleRepository, HandleRepository>();
+        
+        
     }
 
     public static void EnsureDatabaseCreated(this WebApplication app)

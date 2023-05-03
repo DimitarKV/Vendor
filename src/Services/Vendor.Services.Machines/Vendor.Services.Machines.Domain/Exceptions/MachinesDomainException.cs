@@ -1,4 +1,4 @@
-﻿namespace Vendor.Services.Machines.Exceptions;
+﻿namespace Vendor.Services.Machines.Domain.Exceptions;
 
 public class MachinesDomainException : Exception
 {

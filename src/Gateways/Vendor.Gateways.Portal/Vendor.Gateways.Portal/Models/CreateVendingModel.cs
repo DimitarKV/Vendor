@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 
-namespace Vendor.Domain.DTO;
+namespace Vendor.Gateways.Portal.Models;
 
-public class CreateVendingDto
+public class CreateVendingModel
 {
     // [Required]
     public string Title { get; set; }

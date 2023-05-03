@@ -1,4 +1,4 @@
-﻿namespace Vendor.Services.Machines.AggregateModel.MachineAggregate;
+﻿namespace Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 
 public class Vending : Machine
 {

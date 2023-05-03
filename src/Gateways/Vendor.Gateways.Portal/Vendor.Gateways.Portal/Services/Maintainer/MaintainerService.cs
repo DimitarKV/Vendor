@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Net.Http.Headers;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Vendor.Domain.DTO.Requests;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
 using Vendor.Gateways.Portal.Providers;
@@ -13,10 +16,10 @@ public class MaintainerService : IMaintainerService
     private readonly IHttpClientWrapper _clientWrapper;
 
     public MaintainerService(IHttpClientFactory httpClientFactory, IConfiguration configuration,
-        TokenAuthenticationStateProvider stateProvider, IHttpClientWrapper clientWrapper)
+        TokenAuthenticationStateProvider stateProvider, ILogger<HttpClientWrapper> logger)
     {
         _client = httpClientFactory.CreateClient(configuration["Services:Machines:Client"]!);
-        _clientWrapper = clientWrapper;
+        _clientWrapper = new HttpClientWrapper(_client, stateProvider, logger);
     }
 
     // JS code for Haversine formula
@@ -36,17 +39,37 @@ public class MaintainerService : IMaintainerService
     //TODO: Sort by proximity to maintainer
     public async Task<ApiResponse<List<VendingView>>> FetchEmptyMachines()
     {
-        var response = await _clientWrapper.SendAsJsonAsync<List<VendingView>>(_client,
+        var response = await _clientWrapper.SendAsJsonAsync<List<VendingView>>(
             Endpoints.QueryEmptyVendings,
             HttpMethod.Get);
 
         return response; 
     }
 
+    public async Task<ApiResponse<VendingView>> CreateMachineAsync(CreateVendingRequestDto requestDto)
+    {
+        var response = await _clientWrapper.SendAsJsonAsync<VendingView, CreateVendingRequestDto>(
+            Endpoints.CreateMachine,
+            HttpMethod.Post,
+            requestDto);
+
+        return response;
+    }
+
+    public async Task<ApiResponse<VendingView>> SetMachineImageAsync(SetMachineImageDto requestDto)
+    {
+        var endpoint = Endpoints.SetMachineImageEndpoint + "/" + requestDto.MachineId;
+
+        var response = await _clientWrapper.PostImageAsync<VendingView>(endpoint, HttpMethod.Post, requestDto.Image);
+
+        return response;
+    }
+
     public async Task<ApiResponse<HandleView>> HandleMachine(int id)
     {
         var response =
-            await _clientWrapper.SendAsJsonAsync<HandleView>(_client, Endpoints.HandleVending,
+            await _clientWrapper.SendAsJsonAsync<HandleView>(
+                Endpoints.HandleVending,
                 HttpMethod.Get);
         return response;
     }

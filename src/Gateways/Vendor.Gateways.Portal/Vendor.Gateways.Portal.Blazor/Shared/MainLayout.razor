@@ -39,10 +39,13 @@
                 <AuthorizeView Roles="@($"Admin, Maintainer, Manager")">
                     <Authorized>
                         <li class="nav-item">
-                            <a class="nav-link" href="/maintainer/empty">Maintainer</a>
+                            <a class="nav-link" href="/product/register">Product</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/maintainer/create">Create machine</a>
+                            <a class="nav-link" href="/maintainer/empty">Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/maintainer/create">Machine</a>
                         </li>
                     </Authorized>
                 </AuthorizeView>
@@ -84,7 +87,7 @@
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
+        if (firstRender)
             module = await JS.InvokeAsync<IJSObjectReference>("import", "./Shared/MainLayout.razor.js");
     }
 

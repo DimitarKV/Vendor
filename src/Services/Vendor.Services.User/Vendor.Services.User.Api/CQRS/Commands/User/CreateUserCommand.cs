@@ -4,6 +4,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Vendor.Domain.DTO;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
 

@@ -1,7 +1,8 @@
 using Vendor.Application.Extensions;
-using Vendor.Services.Machines.AggregateModel.MachineAggregate;
+using Vendor.Domain.Commands.Cloudinary;
 using Vendor.Services.Machines.Api;
 using Vendor.Services.Machines.Api.Controllers;
+using Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddApplication(new[] {typeof(Machine).Assembly, typeof(VendingController).Assembly});
+builder.Services.AddApplication(new[] {typeof(Machine).Assembly, typeof(VendingController).Assembly, typeof(UploadImageCommand).Assembly});
 builder.AddSecurity();
+builder.AddCloudinary();
 
 var app = builder.Build();
 

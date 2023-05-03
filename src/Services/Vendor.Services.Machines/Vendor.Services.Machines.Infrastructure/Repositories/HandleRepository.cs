@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vendor.Services.Machines.AggregateModel.HandleAggregate;
-using Vendor.Services.Machines.SeedWork;
+using Vendor.Services.Machines.Domain.AggregateModel.HandleAggregate;
+using Vendor.Services.Machines.Domain.SeedWork;
 
 namespace Vendor.Services.Machines.Infrastructure.Repositories;
 

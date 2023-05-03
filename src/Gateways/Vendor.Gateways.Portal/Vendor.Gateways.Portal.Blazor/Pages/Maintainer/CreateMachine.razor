@@ -1,6 +1,11 @@
 ﻿@page "/Maintainer/Create"
-@using Vendor.Domain.DTO
-@using Vendor.Gateways.Portal.DTO
+@using Vendor.Gateways.Portal.Services.Maintainer
+@using AutoMapper
+@using Vendor.Domain.DTO.Requests
+@using Vendor.Gateways.Portal.Models
+
+@inject IMaintainerService MaintainerService;
+@inject IMapper Mapper;
 
 <section class="vh-70 mt-5">
     <div class="container h-100">
@@ -13,7 +18,15 @@
 
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Create machine</p>
 
-                                <EditForm Context="CreateMachineContext" Model="@DataModel" OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4">
+
+                                <EditForm Context="CreateMachineContext" Model="@DataModel" OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4" style="@(IsFormVisible ? "" : "display: none")">
+
+                                    <ul class="validation-errors">
+                                        @foreach (var error in _validationErrors)
+                                        {
+                                            <li class="validation-message">@error</li>
+                                        }
+                                    </ul>
 
                                     <DataAnnotationsValidator/>
                                     <ValidationSummary/>
@@ -65,9 +78,9 @@
                                             <label class="form-label" for="spirals">Spirals</label>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="mb-3">
-                                        <InputFile class="form-control" type="file" @bind-Value="DataModel.Image" id="formFile"></InputFile>
+                                        <InputFile class="form-control" OnChange="@LoadFiles" id="formFile"/>
                                         <label for="formFile" class="form-label">Picture</label>
                                     </div>
 
@@ -77,6 +90,26 @@
                                     </div>
 
                                 </EditForm>
+                                @if (IsSuccessful)
+                                {
+                                    <div class="text-center">
+                                        <p class="h5">Successfully created a <a href="/Maintainer/MachineInfo/@MachineId">machine</a>!</p>
+                                        <p class="h4">
+                                            <a href="/">Home</a>
+                                        </p>
+                                    </div>
+                                }
+                                else if (!IsFormVisible)
+                                {
+                                    <div class="text-center">
+                                        <p class="h3">Magic, please wait!</p>
+                                        <div class="spinner-border text-primary mt-5" role="status">
+                                            <span class="sr-only">Magic, please wait!</span>
+                                        </div>
+                                    </div>
+                                }
+                                
+
 
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
@@ -95,12 +128,17 @@
 
 
 @code {
-    private CreateVendingDto DataModel = new();
+    private CreateVendingModel DataModel = new();
     private bool _checkBoxValue = false;
+
+    private List<string> _validationErrors = new List<string>();
+    private bool IsFormVisible = true;
+    private bool IsSuccessful = false;
+    private int MachineId;
 
     private IJSObjectReference _module;
     private DotNetObjectReference<CreateMachine> _dotNetObjectReference;
-    private GeoCoordinatesDto? _geoCoordinatesDto = null;
+    private GeoCoordinatesModel? _coordinatesModel = null;
 
     [Inject]
     private IJSRuntime JsRuntime { get; set; } = default!;
@@ -128,17 +166,42 @@
 
     private async Task HandleFormSubmitAsync()
     {
+        _validationErrors.Clear();
+        
+        IsFormVisible = false;
+        StateHasChanged();
+
         if (_checkBoxValue)
         {
-            if (_geoCoordinatesDto is not null)
+            if (_coordinatesModel is not null)
             {
-                DataModel.Latitude = _geoCoordinatesDto!.Latitude;
-                DataModel.Longitude = _geoCoordinatesDto!.Longitude;
+                DataModel.Latitude = _coordinatesModel!.Latitude;
+                DataModel.Longitude = _coordinatesModel!.Longitude;
             }
         }
 
+        var createResponse = await MaintainerService.CreateMachineAsync(Mapper.Map<CreateVendingRequestDto>(DataModel));
 
-        Console.WriteLine();
+        if (!createResponse.IsValid)
+        {
+            _validationErrors.AddRange(createResponse.Errors!);
+            IsFormVisible = true;
+            StateHasChanged();
+            return;
+        }
+
+        var setImageResponse = await MaintainerService.SetMachineImageAsync(new SetMachineImageDto() { Image = DataModel.Image, MachineId = createResponse.Result.Id });
+
+        if (!setImageResponse.IsValid)
+        {
+            _validationErrors.AddRange(setImageResponse.Errors!);
+            IsFormVisible = true;
+            StateHasChanged();
+            return;
+        }
+
+        IsSuccessful = true;
+        StateHasChanged();
     }
 
     public async Task GetLocationAsync()
@@ -147,9 +210,9 @@
     }
 
     [JSInvokable]
-    public async Task OnLocationSuccessAsync(GeoCoordinatesDto geoCoordinatesDto)
+    public async Task OnLocationSuccessAsync(GeoCoordinatesModel coordinatesModel)
     {
-        _geoCoordinatesDto = geoCoordinatesDto;
+        _coordinatesModel = coordinatesModel;
         await InvokeAsync(StateHasChanged);
     }
 

@@ -1,5 +1,5 @@
 ﻿@page "/Register"
-@using Vendor.Gateways.Portal.DTO
+@using Vendor.Gateways.Portal.Models
 @using Vendor.Gateways.Portal.Services.Authentication
 @using Vendor.Gateways.Portal.Providers
 @inject IAuthenticationService _authenticationService;
@@ -96,7 +96,7 @@
 
 @code {
 
-    private readonly RegisterUserFormData DataModel = new RegisterUserFormData();
+    private readonly RegisterUserModel DataModel = new RegisterUserModel();
     private List<string> _validationErrors = new List<string>();
     private bool IsFormVisible = true;
 
@@ -126,7 +126,7 @@
         }
 
         var loginResult = await _authenticationService.LoginAsync(
-            new LoginUserFormData() { Username = DataModel.Username, Password = DataModel.Password });
+            new LoginUserModel() { Username = DataModel.Username, Password = DataModel.Password });
 
         if (!loginResult.IsValid)
         {

@@ -1,6 +1,6 @@
-﻿using Vendor.Services.Machines.SeedWork;
+﻿using Vendor.Services.Machines.Domain.SeedWork;
 
-namespace Vendor.Services.Machines.AggregateModel.MachineAggregate;
+namespace Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 
 public interface IMachineRepository : IRepository
 {
@@ -11,4 +11,5 @@ public interface IMachineRepository : IRepository
     public Task<Vending?> GetVendingByIdAsync(int id);
     public Task<Spiral?> GetSpiralByIdAsync(int id);
     public Task<Spiral?> GetSpiralAndVendingByIdAsync(int id);
+    public Task<Vending?> SetVendingImageUrl(int machineId, string url);
 }

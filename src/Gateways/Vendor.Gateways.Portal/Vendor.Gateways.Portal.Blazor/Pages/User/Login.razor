@@ -1,6 +1,6 @@
 ﻿@page "/Login"
 @using Microsoft.AspNetCore.Components
-@using Vendor.Gateways.Portal.DTO
+@using Vendor.Gateways.Portal.Models
 @using Vendor.Gateways.Portal.Providers
 @using Vendor.Gateways.Portal.Services.Authentication
 
@@ -82,7 +82,7 @@
 </section>
 
 @code {
-    private LoginUserFormData DataModel = new LoginUserFormData();
+    private LoginUserModel DataModel = new LoginUserModel();
     private List<string> ValidationErrors = new List<string>();
     private bool IsFormVisible = true;
 

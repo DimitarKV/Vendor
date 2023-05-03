@@ -1,6 +1,6 @@
-﻿namespace Vendor.Gateways.Portal.DTO;
+﻿namespace Vendor.Domain.DTO.Requests;
 
-public class ConfirmEmailDto
+public class ConfirmEmailRequestDto
 {
     public string Token { get; set; }
     public string Username { get; set; }

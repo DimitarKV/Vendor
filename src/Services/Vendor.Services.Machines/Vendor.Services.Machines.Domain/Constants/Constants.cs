@@ -1,4 +1,4 @@
-﻿namespace Vendor.Services.Machines.Constants;
+﻿namespace Vendor.Services.Machines.Domain.Constants;
 
 public static class Constants
 {

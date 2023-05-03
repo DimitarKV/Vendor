@@ -1,8 +1,8 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using Vendor.Services.Machines.Exceptions;
-using Vendor.Services.Machines.SeedWork;
+using Vendor.Services.Machines.Domain.Exceptions;
+using Vendor.Services.Machines.Domain.SeedWork;
 
-namespace Vendor.Services.Machines.AggregateModel.MachineAggregate;
+namespace Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 
 public abstract class Machine : Entity, IAggregateRoot
 {

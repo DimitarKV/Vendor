@@ -1,6 +1,6 @@
-﻿using Vendor.Services.Machines.SeedWork;
+﻿using Vendor.Services.Machines.Domain.SeedWork;
 
-namespace Vendor.Services.Machines.AggregateModel.HandleAggregate;
+namespace Vendor.Services.Machines.Domain.AggregateModel.HandleAggregate;
 
 public class Handle : Entity, IAggregateRoot
 {

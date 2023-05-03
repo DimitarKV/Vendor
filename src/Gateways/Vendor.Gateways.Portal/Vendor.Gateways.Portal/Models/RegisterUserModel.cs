@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Vendor.Gateways.Portal.DTO;
+namespace Vendor.Gateways.Portal.Models;
 
-public class RegisterUserFormData
+public class RegisterUserModel
 {
     [Required]
     [EmailAddress]

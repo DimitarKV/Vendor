@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vendor.Services.Machines.AggregateModel.MachineAggregate;
-using Vendor.Services.Machines.Exceptions;
-using Vendor.Services.Machines.SeedWork;
+using Vendor.Domain.Views;
+using Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
+using Vendor.Services.Machines.Domain.Exceptions;
+using Vendor.Services.Machines.Domain.SeedWork;
 
 namespace Vendor.Services.Machines.Infrastructure.Repositories;
 
@@ -73,5 +74,15 @@ public class MachineRepository : IMachineRepository
     {
         var spiral = await _context.Spirals.Include(s => s.Vending).SingleOrDefaultAsync(s => s.Id == id);
         return spiral;
+    }
+
+    public async Task<Vending?> SetVendingImageUrl(int machineId, string url)
+    {
+        var machine = await _context.Vendings.SingleOrDefaultAsync(v => v.Id == machineId);
+        if (machine is null)
+            return null;
+
+        machine.SetImageUrl(url);
+        return machine;
     }
 }

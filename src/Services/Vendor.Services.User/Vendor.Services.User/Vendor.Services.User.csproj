@@ -23,8 +23,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\Common\Vendor.Domain\Vendor.Domain.csproj" />
         <ProjectReference Include="..\..\..\Common\Vendor.Application\Vendor.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="DTO" />
     </ItemGroup>
 
 </Project>

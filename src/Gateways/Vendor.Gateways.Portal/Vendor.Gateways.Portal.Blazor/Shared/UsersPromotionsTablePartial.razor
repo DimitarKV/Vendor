@@ -1,0 +1,9 @@
+﻿@using Vendor.Gateways.Portal.Services.User
+@inject IUserService UserService;
+
+
+@code {
+    [Parameter]
+    public List<string> AvailableRoles { get; set; }
+    
+}
