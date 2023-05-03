@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Headers;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Vendor.Domain.DTO.Requests;
 using Vendor.Domain.Types;
@@ -79,6 +78,15 @@ public class MaintainerService : IMaintainerService
         var response =
             await _clientWrapper.SendAsJsonAsync<VendingView>(
                 Endpoints.FetchMachineById + "/" + machineId,
+                HttpMethod.Get);
+        return response;
+    }
+
+    public async Task<ApiResponse<List<int>>> QueryMissingProducts(int machineId)
+    {
+        var response =
+            await _clientWrapper.SendAsJsonAsync<List<int>>(
+                Endpoints.QueryMissingProductsEndpoint + "/" + machineId,
                 HttpMethod.Get);
         return response;
     }

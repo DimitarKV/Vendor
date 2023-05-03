@@ -26,12 +26,11 @@ public class ProductService : IProductService
         _clientWrapper = new HttpClientWrapper(_client, stateProvider, logger);
     }
 
-    public async Task<ApiResponse<ProductView>> GetProductByIdAsync(QueryProductByIdDto dto)
+    public async Task<ApiResponse<ProductView>> GetProductByIdAsync(int id)
     {
-        var response = await _clientWrapper.SendAsJsonAsync<ProductView, int>(
-            Endpoints.QueryProductById, 
-            HttpMethod.Get, 
-            dto.Id);
+        var response = await _clientWrapper.SendAsJsonAsync<ProductView>(
+            Endpoints.QueryProductById + "/" + id, 
+            HttpMethod.Get);
 
         return response;
     }

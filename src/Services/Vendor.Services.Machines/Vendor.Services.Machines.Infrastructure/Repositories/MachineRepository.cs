@@ -63,6 +63,12 @@ public class MachineRepository : IMachineRepository
         var vending = await _context.Vendings.SingleOrDefaultAsync(v => v.Id == id);
         return vending;
     }
+    
+    public async Task<Vending?> GetVendingAndSpiralsByIdAsync(int id)
+    {
+        var vending = await _context.Vendings.Include(v => v.Spirals).SingleOrDefaultAsync(v => v.Id == id);
+        return vending;
+    }
 
     public async Task<Spiral?> GetSpiralByIdAsync(int id)
     {

@@ -12,4 +12,5 @@ public interface IMaintainerService
 
     Task<ApiResponse<HandleView>> HandleMachine(int id);
     Task<ApiResponse<VendingView>> FetchMachineById(int machineId);
+    Task<ApiResponse<List<int>>> QueryMissingProducts(int machineId);
 }

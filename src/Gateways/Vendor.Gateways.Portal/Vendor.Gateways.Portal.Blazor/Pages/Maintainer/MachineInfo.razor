@@ -1,9 +1,11 @@
 ﻿@page "/Maintainer/MachineInfo/{MachineIdString}"
 @using Vendor.Domain.Views
 @using Vendor.Gateways.Portal.Services.Maintainer
+@using Vendor.Gateways.Portal.Services.Product
 @inject IJSRuntime JsRuntime
 @inject NavigationManager UriHelper
 @inject IMaintainerService MaintainerService;
+@inject IProductService ProductService;
 
 @* <h1>@MachineId</h1> *@
 
@@ -30,9 +32,9 @@
                         <div class="tab-content">
                             <div class="tab-pane fade vh-50 active show parent" style="height: 50vh" id="status">
                                 <h5 class="card-title">Active</h5>
-                                <p class="card-text">The machine has 24.85лв.</p>
-                                <p class="card-text">The machine is out of Coca-Cola, Chio paprika, Tuc.</p>
-                                <p class="card-text">9 spirals are currently empty.</p>
+                                <p class="card-text">The machine has @(_vendingView.Money)лв.</p>
+                                <p class="card-text">The machine is out of @String.Join(", ", _unavailableProducts.Select(p => p.Name)).</p>
+                                <p class="card-text">@_emptySpiralsCount spirals are currently empty.</p>
                                 <h3>Machine last serviced by: </h3>
                                 <div class="fill-empty-space">
                                     @* TODO Imortant!!! User this format for the date *@
@@ -45,17 +47,17 @@
                                     David[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Dr. Pepper, Ruffles, Hershey's<br/>
                                     Laura[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Coke, Pringles, Skittles<br/>
                                     Jason[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Sprite, SunChips, Reeses<br/>
-                                     Samantha[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Pepsi, Tostitos, Snickers<br/>
-                                     Kevin[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Mountain Dew, Cheetos, Milky Way<br/>
-                                     Lily[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled 7UP, Pringles, Twizzlers<br/>
-                                     Ethan[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Dr. Pepper, Ruffles, Skittles<br/>
-                                     Olivia[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Coke, SunChips, M&Ms<br/>
-                                     William[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Pepsi, Fritos, Snickers<br/>
-                                     Ava[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Sprite, Lays, Hershey's<br/>
-                                     Daniel[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Mountain Dew, Nachos, KitKat<br/>
-                                     Mia[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled 7UP, Tostitos, Twix<br/>
-                                     Benjamin[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Dr. Pepper, Popcorn, Reeses<br/>
-                                     Emma[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Coke, Fanta, Skittles<br/>
+                                    Samantha[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Pepsi, Tostitos, Snickers<br/>
+                                    Kevin[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Mountain Dew, Cheetos, Milky Way<br/>
+                                    Lily[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled 7UP, Pringles, Twizzlers<br/>
+                                    Ethan[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Dr. Pepper, Ruffles, Skittles<br/>
+                                    Olivia[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Coke, SunChips, M&Ms<br/>
+                                    William[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Pepsi, Fritos, Snickers<br/>
+                                    Ava[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Sprite, Lays, Hershey's<br/>
+                                    Daniel[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Mountain Dew, Nachos, KitKat<br/>
+                                    Mia[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled 7UP, Tostitos, Twix<br/>
+                                    Benjamin[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Dr. Pepper, Popcorn, Reeses<br/>
+                                    Emma[@DateTime.Now.AddDays(-Random.Shared.Next(15)).ToString("dd/MM/yy hh:mm")] - Filled Coke, Fanta, Skittles<br/>
                                 </div>
                             </div>
                             <div class="tab-pane fade vh-50" style="height: 50vh" id="location">
@@ -73,7 +75,7 @@
             </div>
         </div>
         <div class="col-12 col-sm-12 col-md-2 col-lg-4">
-            <img src="http://sc04.alicdn.com/kf/H4b75178f1af34606b4f7bfce2acfc9c5o.jpg" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%" alt="Machine"/>
+            <img src="@_vendingView.ImageUrl" style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%" alt="Machine"/>
         </div>
     </div>
 </div>
@@ -89,20 +91,42 @@
     private IJSObjectReference? module;
 
     private VendingView _vendingView;
+    private List<ProductView> _unavailableProducts = new();
+    private int _emptySpiralsCount = 0;
 
     protected async override Task OnInitializedAsync()
     {
         MachineId = int.Parse(MachineIdString);
+        _vendingView = new();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            _vendingView = (await MaintainerService.FetchMachineById(MachineId)).Result;
+            var queryMachineResponse = await MaintainerService.FetchMachineById(MachineId);
+            if (queryMachineResponse.IsValid)
+                _vendingView = queryMachineResponse.Result;
             
-            module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/Maintainer/MachineInfo.razor.js"); 
-            await module.InvokeVoidAsync("initMap", 42.128247, 24.728230, "Title");
+            
+            var missingProductsResponse = await MaintainerService.QueryMissingProducts(MachineId);
+            if (missingProductsResponse.IsValid)
+            {
+                foreach (var productId in missingProductsResponse.Result)
+                {
+                    var productResponse = await ProductService.GetProductByIdAsync(productId);
+                    if (productResponse.IsValid)
+                    {
+                        _unavailableProducts.Add(productResponse.Result);
+                    }
+                }
+            }
+
+            _emptySpiralsCount = _vendingView.Spirals.Count(s => s.Loads == 0);
+
+
+            module = await JsRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/Maintainer/MachineInfo.razor.js");
+            await module.InvokeVoidAsync("initMap", _vendingView.Latitude, _vendingView.Longitude, _vendingView.Title);
             StateHasChanged();
         }
     }

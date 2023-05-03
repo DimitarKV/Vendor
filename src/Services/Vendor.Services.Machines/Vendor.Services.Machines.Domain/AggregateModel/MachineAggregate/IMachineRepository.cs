@@ -9,6 +9,7 @@ public interface IMachineRepository : IRepository
     public Task DropProductAsync(int spiralId);
     public Task<List<Vending>> GetEmptyVendingsAsync();
     public Task<Vending?> GetVendingByIdAsync(int id);
+    public Task<Vending?> GetVendingAndSpiralsByIdAsync(int id);
     public Task<Spiral?> GetSpiralByIdAsync(int id);
     public Task<Spiral?> GetSpiralAndVendingByIdAsync(int id);
     public Task<Vending?> SetVendingImageUrl(int machineId, string url);

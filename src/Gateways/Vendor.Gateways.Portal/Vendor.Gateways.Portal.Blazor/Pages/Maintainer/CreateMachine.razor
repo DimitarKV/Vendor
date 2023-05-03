@@ -189,6 +189,7 @@
             StateHasChanged();
             return;
         }
+        MachineId = createResponse.Result.Id;
 
         var setImageResponse = await MaintainerService.SetMachineImageAsync(new SetMachineImageDto() { Image = DataModel.Image, MachineId = createResponse.Result.Id });
 

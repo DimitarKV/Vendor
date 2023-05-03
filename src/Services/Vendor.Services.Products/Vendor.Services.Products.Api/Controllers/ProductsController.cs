@@ -53,9 +53,10 @@ public class ProductsController : ControllerBase
 
     [HttpGet]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> Query(QueryProductByIdDto dto)
+    [Route("/[controller]/[action]/{id}")]
+    public async Task<IActionResult> Query(int id)
     {
-        var query = new QueryProductById() { Id = dto.Id };
+        var query = new QueryProductById() { Id = id };
         var result = await _mediator.Send(query);
 
         if (!result.IsValid)

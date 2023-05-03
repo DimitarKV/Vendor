@@ -25,7 +25,7 @@ public class QueryVendingByIdHandler : IRequestHandler<QueryVendingById, ApiResp
 
     public async Task<ApiResponse<VendingView>> Handle(QueryVendingById request, CancellationToken cancellationToken)
     {
-        var vending = await _repository.GetVendingByIdAsync(request.Id);
+        var vending = await _repository.GetVendingAndSpiralsByIdAsync(request.Id);
         var vendingView = _mapper.Map<VendingView>(vending);
         return new ApiResponse<VendingView>(vendingView);
     }
