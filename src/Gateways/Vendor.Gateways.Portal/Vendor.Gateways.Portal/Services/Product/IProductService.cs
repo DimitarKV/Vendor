@@ -8,4 +8,5 @@ public interface IProductService
 {
     public Task<ApiResponse<ProductView>> GetProductByIdAsync(int id);
     public Task<ApiResponse<ProductView>> RegisterProductAsync(RegisterProductDto dto);
+    public Task<ApiResponse<List<ProductView>>> FetchAllProducts();
 }

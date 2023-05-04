@@ -1,0 +1,86 @@
+﻿@page "/Maintainer/Reload/{id:int}"
+@using Vendor.Gateways.Portal.Services.Maintainer
+@using Vendor.Domain.Views
+@using Vendor.Gateways.Portal.Services.Product
+
+@inject IMaintainerService MaintainerService;
+@inject IProductService ProductService;
+
+@if (Initialized)
+{
+@* <EditForm Context="ReloadMachineContext" *@
+ @*           Model="@VendingView" *@
+ @*           OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4" *@
+ @*           style="@(IsFormVisible ? "" : "display: none")"> *@
+    <div class="mt-5">
+        <table class="table text-center text-light" style="background: rgba(73, 80, 87, 0.5)">
+            @for (int row = 0; row < Math.Ceiling(VendingView.Spirals.Count / (decimal)VendingView.SpiralsPerRow); row++)
+            {
+                <tr>
+                    @for (int col = 0; col < VendingView.SpiralsPerRow; col++)
+                    {
+                        var spiral = VendingView.Spirals[row * VendingView.SpiralsPerRow + col];
+                        <td>
+                            <div>
+                                Spiral @spiral.Id
+                            </div>
+                            <div>
+                                @if (Products.ContainsKey(spiral.ProductId))
+                                {
+                                    <span>@spiral.Loads of @Products[spiral.ProductId].Name at price @spiral.Price</span>
+                                }
+                                else
+                                {
+                                    <span>N/A of N/A at price N/A</span>
+                                }
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+
+
+ @* </EditForm> *@
+}
+
+
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public VendingView VendingView { get; set; }
+    private bool IsFormVisible = true;
+    private bool Initialized = false;
+
+    public Dictionary<int, ProductView> Products { get; set; } = new();
+
+    protected async override Task OnInitializedAsync()
+    {
+        var machineResponse = await MaintainerService.FetchMachineById(Id);
+        if (machineResponse.IsValid)
+            VendingView = machineResponse.Result;
+
+        var productsResponse = await ProductService.FetchAllProducts();
+        if (productsResponse.IsValid)
+        {
+            foreach (var product in productsResponse.Result)
+            {
+                Products.Add(product.Id, product);
+            }
+        }
+
+
+        Initialized = true;
+        StateHasChanged();
+    }
+
+    private async Task HandleFormSubmitAsync()
+    {
+    }
+
+}

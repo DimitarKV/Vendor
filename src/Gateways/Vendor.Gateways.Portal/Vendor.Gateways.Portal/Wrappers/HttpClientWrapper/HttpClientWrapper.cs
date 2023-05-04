@@ -96,7 +96,7 @@ public class HttpClientWrapper : IHttpClientWrapper
         var request = new HttpRequestMessage(method, url);
         using (var multipartFormContent = new MultipartFormDataContent())
         {
-            var fileStreamContent = new StreamContent(body.OpenReadStream());
+            var fileStreamContent = new StreamContent(body.OpenReadStream(150 * 1024 * 1024));
             fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue(body.ContentType!);
             
             multipartFormContent.Add(fileStreamContent, name: "image", fileName: "filename");

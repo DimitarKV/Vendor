@@ -1,8 +1,11 @@
-﻿namespace Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
+﻿using Vendor.Services.Machines.Domain.Exceptions;
+
+namespace Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 
 public class Vending : Machine
 {
     public List<Spiral> Spirals { get; }
+    public int SpiralsPerRow { get; private set; }
 
     public void AddSpiral(Spiral spiral)
     {
@@ -14,23 +17,38 @@ public class Vending : Machine
         Spirals.AddRange(spirals);
     }
 
-    public Vending(string title, double latitude, double longitude, string imageUrl, List<Banknote> banknotes) : base(title, latitude, longitude, imageUrl, banknotes)
+    public void SetSpiralsPerRow(int n)
     {
-        Spirals = new List<Spiral>();
+        if (n <= 0)
+            throw new MachinesDomainException("Spirals per row must be at least 1!");
+        SpiralsPerRow = n;
     }
 
-    public Vending(string title, double latitude, double longitude, List<Banknote> banknotes) : base(title, latitude, longitude, banknotes)
+
+    public Vending(string title, double latitude, double longitude, string imageUrl, List<Banknote> banknotes) : base(
+        title, latitude, longitude, imageUrl, banknotes)
     {
         Spirals = new List<Spiral>();
+        SpiralsPerRow = 1;
+    }
+
+    public Vending(string title, double latitude, double longitude, List<Banknote> banknotes) : base(title, latitude,
+        longitude, banknotes)
+    {
+        Spirals = new List<Spiral>();
+        SpiralsPerRow = 1;
     }
 
     public Vending(string title, double latitude, double longitude) : base(title, latitude, longitude)
     {
         Spirals = new List<Spiral>();
+        SpiralsPerRow = 1;
     }
 
-    public Vending(string title, double latitude, double longitude, string imageUrl) : base(title, latitude, longitude, imageUrl)
+    public Vending(string title, double latitude, double longitude, string imageUrl) : base(title, latitude, longitude,
+        imageUrl)
     {
         Spirals = new List<Spiral>();
+        SpiralsPerRow = 1;
     }
 }

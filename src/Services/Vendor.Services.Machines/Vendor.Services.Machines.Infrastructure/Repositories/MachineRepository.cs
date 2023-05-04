@@ -17,9 +17,10 @@ public class MachineRepository : IMachineRepository
 
     public IUnitOfWork UnitOfWork => _context;
     
-    public Vending CreateVending(string title, int spiralCount, double latitude, double longitude)
+    public Vending CreateVending(string title, int spiralCount, double latitude, double longitude, int spiralsPerRow)
     {
         var vending = new Vending(title, latitude, longitude);
+        vending.SetSpiralsPerRow(spiralsPerRow);
 
         for (int j = 0; j < spiralCount; j++)
         {

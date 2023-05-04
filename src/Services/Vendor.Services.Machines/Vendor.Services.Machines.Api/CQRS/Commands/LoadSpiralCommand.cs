@@ -9,7 +9,7 @@ namespace Vendor.Services.Machines.Api.CQRS.Commands;
 
 public class LoadSpiralCommand : IRequest<ApiResponse<SpiralView>>
 {
-    public int SpiralId { get; set; }
+    public int Id { get; set; }
     public int ProductId { get; set; }
     public int Loads { get; set; }
     public Double Price { get; set; }
@@ -28,9 +28,9 @@ public class LoadSpiralCommandHandler : IRequestHandler<LoadSpiralCommand, ApiRe
 
     public async Task<ApiResponse<SpiralView>> Handle(LoadSpiralCommand request, CancellationToken cancellationToken)
     {
-        await _repository.LoadSpiralAsync(request.SpiralId, request.ProductId, request.Loads, request.Price);
+        await _repository.LoadSpiralAsync(request.Id, request.ProductId, request.Loads, request.Price);
         await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
-        var spiral = await _repository.GetSpiralByIdAsync(request.SpiralId);
+        var spiral = await _repository.GetSpiralByIdAsync(request.Id);
         return new ApiResponse<SpiralView>(_mapper.Map<SpiralView>(spiral), "Spiral loaded");
     }
 }
@@ -43,7 +43,7 @@ public class LoadSpiralCommandValidator : AbstractValidator<LoadSpiralCommand>
         RuleFor(v => v)
 
             .MustAsync(async (ls, _) => 
-                (await repository.GetSpiralByIdAsync(ls.SpiralId) is not  null))
+                (await repository.GetSpiralByIdAsync(ls.Id) is not  null))
             .WithMessage("No such spiral in the specified machine")
             .WithErrorCode("409");
     }

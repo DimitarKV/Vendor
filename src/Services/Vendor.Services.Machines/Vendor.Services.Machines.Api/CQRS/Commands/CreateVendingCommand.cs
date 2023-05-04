@@ -13,6 +13,7 @@ public class CreateVendingCommand : IRequest<ApiResponse<VendingView>>
     public Double Latitude { get; set; }
     public Double Longitude { get; set; }
     public int Spirals { get; set; }
+    public int SpiralsPerRow { get; set; }
 
     public CreateVendingCommand()
     {
@@ -49,7 +50,7 @@ public class CreateVendingCommandHandler : IRequestHandler<CreateVendingCommand,
     public async Task<ApiResponse<VendingView>> Handle(CreateVendingCommand request,
         CancellationToken cancellationToken)
     {
-        var vending = _repository.CreateVending(request.Title, request.Spirals, request.Latitude, request.Longitude);
+        var vending = _repository.CreateVending(request.Title, request.Spirals, request.Latitude, request.Longitude, request.SpiralsPerRow);
         await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         var vendingView = _mapper.Map<VendingView>(vending);

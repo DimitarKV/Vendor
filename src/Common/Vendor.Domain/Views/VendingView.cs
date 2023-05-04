@@ -10,4 +10,6 @@ public class VendingView
     public string ImageUrl { get; set; } = "";
     public List<BanknoteView> Banknotes { get; set; } = new();
     public List<SpiralView> Spirals { get; set; } = new();
+
+    public int SpiralsPerRow { get; set; }
 }

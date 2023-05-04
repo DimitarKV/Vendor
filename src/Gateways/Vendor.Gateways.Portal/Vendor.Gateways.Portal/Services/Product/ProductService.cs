@@ -57,4 +57,13 @@ public class ProductService : IProductService
             return (await response.Content.ReadFromJsonAsync<ApiResponse<ProductView>>())!;
         }
     }
+
+    public async Task<ApiResponse<List<ProductView>>> FetchAllProducts()
+    {
+        var response = await _clientWrapper.SendAsJsonAsync<List<ProductView>>(
+            Endpoints.QueryProductsMyMatch,
+            HttpMethod.Get);
+
+        return response;
+    }
 }

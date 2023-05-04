@@ -8,4 +8,5 @@ public class CreateVendingRequestDto
     public Double Latitude { get; set; }
     public Double Longitude { get; set; }
     public int Spirals { get; set; }
+    public int SpiralsPerRow { get; set; }
 }

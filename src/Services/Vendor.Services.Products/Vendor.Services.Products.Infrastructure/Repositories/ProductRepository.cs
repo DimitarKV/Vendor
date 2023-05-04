@@ -22,6 +22,8 @@ public class ProductRepository : IProductRepository
 
     public async Task<List<Product>> FindProductsByMatchingNameAsync(string name)
     {
+        if (name == "")
+            return await _context.Products.ToListAsync();
         return await _context.Products.Where(p => p.Name.Contains(name)).ToListAsync();
     }
 

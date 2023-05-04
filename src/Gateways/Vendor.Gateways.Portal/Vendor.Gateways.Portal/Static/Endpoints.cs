@@ -17,4 +17,5 @@ public static class Endpoints
     public const string RegisterProductEndpoint = "/products/create";
     public const string FetchMachineById = "/vending/fetch";
     public const string QueryMissingProductsEndpoint = "/vending/QueryMissingProducts";
+    public const string QueryProductsMyMatch = "/products/querymatching";
 }

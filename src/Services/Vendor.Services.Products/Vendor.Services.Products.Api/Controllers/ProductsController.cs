@@ -67,7 +67,8 @@ public class ProductsController : ControllerBase
 
     [HttpGet]
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
-    public async Task<IActionResult> QueryMatching(string name)
+    [Route("/[controller]/[action]/{name?}")]
+    public async Task<IActionResult> QueryMatching(string name = "")
     {
         var query = new QueryProductsByMatchingName(name);
         var result = await _mediator.Send(query);

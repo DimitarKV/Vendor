@@ -1,4 +1,4 @@
-﻿@page "/Maintainer/MachineInfo/{MachineIdString}"
+﻿@page "/Maintainer/MachineInfo/{id:int}"
 @using Vendor.Domain.Views
 @using Vendor.Gateways.Portal.Services.Maintainer
 @using Vendor.Gateways.Portal.Services.Product
@@ -84,9 +84,7 @@
 @code {
 
     [Parameter]
-    public string MachineIdString { get; set; }
-
-    public int MachineId { get; set; }
+    public int Id { get; set; }
 
     private IJSObjectReference? module;
 
@@ -96,7 +94,6 @@
 
     protected async override Task OnInitializedAsync()
     {
-        MachineId = int.Parse(MachineIdString);
         _vendingView = new();
     }
 
@@ -104,12 +101,12 @@
     {
         if (firstRender)
         {
-            var queryMachineResponse = await MaintainerService.FetchMachineById(MachineId);
+            var queryMachineResponse = await MaintainerService.FetchMachineById(Id);
             if (queryMachineResponse.IsValid)
                 _vendingView = queryMachineResponse.Result;
             
             
-            var missingProductsResponse = await MaintainerService.QueryMissingProducts(MachineId);
+            var missingProductsResponse = await MaintainerService.QueryMissingProducts(Id);
             if (missingProductsResponse.IsValid)
             {
                 foreach (var productId in missingProductsResponse.Result)
