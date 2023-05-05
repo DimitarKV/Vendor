@@ -20,14 +20,6 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
 
-                <AuthorizeView Roles="@($"Admin")">
-                    <Authorized>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/admin/panel">Admin</a>
-                        </li>
-                    </Authorized>
-                </AuthorizeView>
-
                 <AuthorizeView Roles="@($"Admin, Manager")">
                     <Authorized>
                         <li class="nav-item">

@@ -35,4 +35,12 @@ public class UserService : IUserService
             Endpoints.QueryAvailableRoles,
             HttpMethod.Get);
     }
+
+    public async Task<ApiResponse<UserView>> UpdateUserRole(UserView user)
+    {
+        return await _clientWrapper.SendAsJsonAsync<UserView, UserView>(
+            Endpoints.AddRoleEndpoint,
+            HttpMethod.Post,
+            user);
+    }
 }

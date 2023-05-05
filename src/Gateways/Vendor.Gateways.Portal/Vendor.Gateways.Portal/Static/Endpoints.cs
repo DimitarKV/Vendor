@@ -20,4 +20,5 @@ public static class Endpoints
     public const string QueryProductsMyMatch = "/products/querymatching";
     public const string LoadSpiralEndpoint = "/vending/load";
     public const string LoadSpiralsEndpoint = "/vending/loadrange";
+    public const string AddRoleEndpoint = "/user/addrole";
 }

@@ -8,4 +8,5 @@ public interface IUserService
 {
     public Task<ApiResponse<List<UserView>>> QueryUsersAsync(QueryUsersRequestDto requestDto);
     public Task<ApiResponse<List<string>>> QueryAvailableRolesAsync();
+    public Task<ApiResponse<UserView>> UpdateUserRole(UserView user);
 }
