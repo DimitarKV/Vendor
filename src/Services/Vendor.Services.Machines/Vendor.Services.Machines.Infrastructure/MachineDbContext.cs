@@ -8,7 +8,6 @@ namespace Vendor.Services.Machines.Infrastructure;
 public class MachineDbContext : DbContext, IUnitOfWork
 {
     public DbSet<Vending> Vendings { get; set; }
-    public DbSet<Banknote> Banknotes { get; set; }
     public DbSet<Spiral> Spirals { get; set; }
 
     public DbSet<Handle> Handles { get; set; }
@@ -24,12 +23,5 @@ public class MachineDbContext : DbContext, IUnitOfWork
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Banknote>()
-            .HasIndex(b => b.ValueInString)
-            .IsUnique();
-        
-        modelBuilder.Entity<Banknote>()
-            .HasIndex(b => b.Value)
-            .IsUnique();
     }
 }

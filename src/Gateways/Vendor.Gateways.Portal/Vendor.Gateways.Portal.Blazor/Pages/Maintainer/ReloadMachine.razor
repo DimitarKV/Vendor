@@ -5,48 +5,64 @@
 
 @inject IMaintainerService MaintainerService;
 @inject IProductService ProductService;
+@inject NavigationManager NavManager;
 
 @if (Initialized)
 {
-@* <EditForm Context="ReloadMachineContext" *@
- @*           Model="@VendingView" *@
- @*           OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4" *@
- @*           style="@(IsFormVisible ? "" : "display: none")"> *@
-    <div class="mt-5">
-        <table class="table text-center text-light" style="background: rgba(73, 80, 87, 0.5)">
-            @for (int row = 0; row < Math.Ceiling(VendingView.Spirals.Count / (decimal)VendingView.SpiralsPerRow); row++)
-            {
-                <tr>
-                    @for (int col = 0; col < VendingView.SpiralsPerRow; col++)
-                    {
-                        var spiral = VendingView.Spirals[row * VendingView.SpiralsPerRow + col];
-                        <td>
-                            <div>
-                                Spiral @spiral.Id
-                            </div>
-                            <div>
-                                @if (Products.ContainsKey(spiral.ProductId))
-                                {
-                                    <span>@spiral.Loads of @Products[spiral.ProductId].Name at price @spiral.Price</span>
-                                }
-                                else
-                                {
-                                    <span>N/A of N/A at price N/A</span>
-                                }
-                            </div>
-                        </td>
-                    }
-                </tr>
-            }
-        </table>
-    </div>
+    <EditForm Context="ReloadMachineContext"
+              Model="@VendingView"
+              OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4"
+              style="@(IsFormVisible ? "" : "display: none")">
 
+        <div class="mt-5 container justify-content-center">
+            <ul class="validation-errors">
+                @foreach (var error in _validationErrors)
+                {
+                    <li class="validation-message">@error</li>
+                }
+            </ul>
 
- @* </EditForm> *@
+            <table class="table text-center text-light" style="background: rgba(73, 80, 87, 0.5)">
+                @for (int row = 0; row < Math.Ceiling(VendingView.Spirals.Count / (decimal)VendingView.SpiralsPerRow); row++)
+                {
+                    <tr>
+                        @for (int col = 0; col < VendingView.SpiralsPerRow && (row * VendingView.SpiralsPerRow + col) < VendingView.Spirals.Count; col++)
+                        {
+                            var spiral = VendingView.Spirals[row * VendingView.SpiralsPerRow + col];
+                            <td style="background: @(spiral.Loads == 0 ? "rgba(254,127,150,0.5);" : "rgba(58,161,135,0.5);")">
+                                <div>
+                                    #@spiral.Id
+                                </div>
+                                <div>
+
+                                    <div>
+                                        <InputSelect @bind-Value="@spiral.ProductId">
+                                            @foreach (var product in Products)
+                                            {
+                                                <option value="@product.Key" selected="@(product.Key == @spiral.ProductId)">@product.Value.Name</option>
+                                            }
+                                            @if (spiral.ProductId == -1)
+                                            {
+                                                <option value="-1">No product</option>
+                                            }
+                                        </InputSelect>
+                                    </div>
+                                    <div>
+                                        <InputNumber @bind-Value="@spiral.Loads" style="width: 40px;" step="1" min="0"/>
+                                        at
+                                        <InputNumber @bind-Value="spiral.Price" style="width: 55px;" step="0.1" min="0"/>лв.
+                                    </div>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+
+    </EditForm>
 }
-
-
-
 
 @code {
 
@@ -59,7 +75,9 @@
 
     public Dictionary<int, ProductView> Products { get; set; } = new();
 
-    protected async override Task OnInitializedAsync()
+    private List<string> _validationErrors = new List<string>();
+
+    protected override async Task OnInitializedAsync()
     {
         var machineResponse = await MaintainerService.FetchMachineById(Id);
         if (machineResponse.IsValid)
@@ -81,6 +99,14 @@
 
     private async Task HandleFormSubmitAsync()
     {
-    }
+        _validationErrors.Clear();
+        var spiralResponse = await MaintainerService.LoadSpiralsAsync(VendingView.Spirals);
+        if (!spiralResponse.IsValid)
+        {
+            _validationErrors.AddRange(spiralResponse.Errors!);
+            return;
+        }
 
+        NavManager.NavigateTo(NavManager.Uri, true);
+    }
 }

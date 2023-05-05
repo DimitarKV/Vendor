@@ -10,9 +10,24 @@ public abstract class Machine : Entity, IAggregateRoot
     public Double Latitude { get; private set; }
     public Double Longitude { get; private set; }
     public string ImageUrl { get; private set; }
-    public Double Money { get; }
-    public List<Banknote> Banknotes { get; }
+    public Decimal Money { get; private set; }
 
+    public void AddMoney(Decimal value)
+    {
+        if (value < 0)
+            throw new MachinesDomainException("Use the subtract method for this operation!");
+
+        Money += value;
+    }
+    
+    public void SubtractMoney(Decimal value)
+    {
+        if(value > Money)
+            throw new MachinesDomainException("Not enough balance in the machine!");
+
+        Money -= value;
+    }
+    
     public void SetTitle(string title)
     {
         if (title.IsNullOrEmpty())
@@ -33,26 +48,13 @@ public abstract class Machine : Entity, IAggregateRoot
         ImageUrl = imageUrl.Trim();
     }
 
-    public Machine(string title, double latitude, double longitude, string imageUrl, List<Banknote> banknotes)
+    public Machine(string title, double latitude, double longitude, string imageUrl)
     {
         Title = title;
         Latitude = latitude;
         Longitude = longitude;
         ImageUrl = imageUrl;
-        Banknotes = banknotes;
-
-        Money = Banknotes.Aggregate(0.0, (sum, b) => sum + b.Value);
-    }
-
-    public Machine(string title, double latitude, double longitude, List<Banknote> banknotes)
-    {
-        Title = title;
-        Latitude = latitude;
-        Longitude = longitude;
-        Banknotes = banknotes;
-
-        Money = Banknotes.Aggregate(0.0, (sum, b) => sum + b.Value);
-        ImageUrl = Constants.Constants.DefaultVendingImageUrl;
+        Money = 0;
     }
 
     public Machine(string title, double latitude, double longitude)
@@ -60,20 +62,7 @@ public abstract class Machine : Entity, IAggregateRoot
         Title = title;
         Latitude = latitude;
         Longitude = longitude;
-        
         ImageUrl = Constants.Constants.DefaultVendingImageUrl;
-        Banknotes = new List<Banknote>();
-        Money = 0.0;
-    }
-
-    public Machine(string title, double latitude, double longitude, string imageUrl)
-    {
-        Title = title;
-        Latitude = latitude;
-        Longitude = longitude;
-        ImageUrl = imageUrl;
-        
-        Banknotes = new List<Banknote>();
-        Money = 0.0;
+        Money = 0;
     }
 }

@@ -31,3 +31,5 @@ public class HandleVendingCommandHandler : IRequestHandler<HandleVendingCommand,
         return new ApiResponse<HandleView>(_mapper.Map<HandleView>(handle));
     }
 }
+
+//TODO: add validations for missing vending

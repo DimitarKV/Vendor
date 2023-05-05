@@ -10,7 +10,9 @@ public interface IMaintainerService
     Task<ApiResponse<VendingView>> CreateMachineAsync(CreateVendingRequestDto requestDto);
     Task<ApiResponse<VendingView>> SetMachineImageAsync(SetMachineImageDto requestDto);
 
-    Task<ApiResponse<HandleView>> HandleMachine(int id);
+    Task<ApiResponse<HandleView>> HandleMachineAsync(int id);
     Task<ApiResponse<VendingView>> FetchMachineById(int machineId);
-    Task<ApiResponse<List<int>>> QueryMissingProducts(int machineId);
+    Task<ApiResponse<List<int>>> QueryMissingProductsAsync(int machineId);
+    Task<ApiResponse<SpiralView>> LoadSpiralAsync(SpiralView spiral);
+    Task<ApiResponse<List<SpiralView>>> LoadSpiralsAsync(List<SpiralView> spiral);
 }

@@ -2,6 +2,7 @@
 using Vendor.Domain.DTO.Requests;
 using Vendor.Domain.Views;
 using Vendor.Services.Machines.Api.CQRS.Commands;
+using Vendor.Services.Machines.Api.DTO;
 using Vendor.Services.Machines.Domain.AggregateModel.HandleAggregate;
 using Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 
@@ -16,5 +17,7 @@ public class MachineProfiles : Profile
         CreateMap<Spiral, SpiralView>();
         CreateMap<Handle, HandleView>();
         CreateMap<CreateVendingRequestDto, CreateVendingCommand>();
+        CreateMap<LoadSpiralRequestDto, LoadSpiralCommand>();
+        CreateMap<ExtractMoneyDto, ExtractMoneyCommand>();
     }
 }

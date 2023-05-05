@@ -5,7 +5,7 @@ namespace Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 public interface IMachineRepository : IRepository
 {
     public Vending CreateVending(string title, int spiralCount, Double latitude, Double longitude, int spiralsPerRow);
-    public Task LoadSpiralAsync(int spiralId, int productId, int loads, Double price);
+    public Task LoadSpiralAsync(int spiralId, int productId, int loads, Decimal price);
     public Task DropProductAsync(int spiralId);
     public Task<List<Vending>> GetEmptyVendingsAsync();
     public Task<Vending?> GetVendingByIdAsync(int id);

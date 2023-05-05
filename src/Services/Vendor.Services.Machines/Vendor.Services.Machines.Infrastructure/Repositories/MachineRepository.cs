@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Vendor.Domain.Views;
 using Vendor.Services.Machines.Domain.AggregateModel.MachineAggregate;
 using Vendor.Services.Machines.Domain.Exceptions;
 using Vendor.Services.Machines.Domain.SeedWork;
@@ -24,14 +23,14 @@ public class MachineRepository : IMachineRepository
 
         for (int j = 0; j < spiralCount; j++)
         {
-            var spiral = new Spiral(vending, -1, 0.0);
+            var spiral = new Spiral(vending, -1, 0);
             vending.Spirals.Add(spiral);
         }
 
         return _context.Vendings.Add(vending).Entity;
     }
 
-    public async Task LoadSpiralAsync(int spiralId, int productId, int loads, double price)
+    public async Task LoadSpiralAsync(int spiralId, int productId, int loads, Decimal price)
     {
         var spiral = await _context.Spirals.SingleOrDefaultAsync(s => s.Id == spiralId);
         if (spiral is null)
@@ -44,11 +43,14 @@ public class MachineRepository : IMachineRepository
 
     public async Task DropProductAsync(int spiralId)
     {
-        var spiral = await _context.Spirals.SingleOrDefaultAsync(s => s.Id == spiralId);
+        var spiral = await _context.Spirals.Include(s => s.Vending).SingleOrDefaultAsync(s => s.Id == spiralId);
         if (spiral is null)
             throw new MachinesDomainException("Spiral with id " + spiralId + " does not exist!");
+        
+        spiral.Vending.AddMoney(spiral.Price);
 
         spiral.DecrementLoads();
+        
     }
 
     public async Task<List<Vending>> GetEmptyVendingsAsync()

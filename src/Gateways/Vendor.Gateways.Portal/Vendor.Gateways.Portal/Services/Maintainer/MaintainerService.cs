@@ -21,20 +21,6 @@ public class MaintainerService : IMaintainerService
         _clientWrapper = new HttpClientWrapper(_client, stateProvider, logger);
     }
 
-    // JS code for Haversine formula
-    // const R = 6371e3; // metres
-    // const φ1 = lat1 * Math.PI/180; // φ, λ in radians
-    // const φ2 = lat2 * Math.PI/180;
-    // const Δφ = (lat2-lat1) * Math.PI/180;
-    // const Δλ = (lon2-lon1) * Math.PI/180;
-    //
-    // const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-    // Math.cos(φ1) * Math.cos(φ2) *
-    // Math.sin(Δλ/2) * Math.sin(Δλ/2);
-    // const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    //
-    // const d = R * c; // in metres
-
     //TODO: Sort by proximity to maintainer
     public async Task<ApiResponse<List<VendingView>>> FetchEmptyMachines()
     {
@@ -64,7 +50,7 @@ public class MaintainerService : IMaintainerService
         return response;
     }
 
-    public async Task<ApiResponse<HandleView>> HandleMachine(int id)
+    public async Task<ApiResponse<HandleView>> HandleMachineAsync(int id)
     {
         var response =
             await _clientWrapper.SendAsJsonAsync<HandleView>(
@@ -82,12 +68,32 @@ public class MaintainerService : IMaintainerService
         return response;
     }
 
-    public async Task<ApiResponse<List<int>>> QueryMissingProducts(int machineId)
+    public async Task<ApiResponse<List<int>>> QueryMissingProductsAsync(int machineId)
     {
         var response =
             await _clientWrapper.SendAsJsonAsync<List<int>>(
                 Endpoints.QueryMissingProductsEndpoint + "/" + machineId,
                 HttpMethod.Get);
+        return response;
+    }
+
+    public async Task<ApiResponse<SpiralView>> LoadSpiralAsync(SpiralView spiral)
+    {
+        var response =
+            await _clientWrapper.SendAsJsonAsync<SpiralView, SpiralView>(
+                Endpoints.LoadSpiralEndpoint,
+                HttpMethod.Post,
+                spiral);
+        return response;
+    }
+
+    public async Task<ApiResponse<List<SpiralView>>> LoadSpiralsAsync(List<SpiralView> spirals)
+    {
+        var response =
+            await _clientWrapper.SendAsJsonAsync<List<SpiralView>, List<SpiralView>>(
+                Endpoints.LoadSpiralsEndpoint,
+                HttpMethod.Post,
+                spirals);
         return response;
     }
 }

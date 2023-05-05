@@ -6,6 +6,7 @@ using Vendor.Domain.Commands.Cloudinary;
 using Vendor.Domain.DTO.Requests;
 using Vendor.Services.Machines.Api.CQRS.Commands;
 using Vendor.Services.Machines.Api.CQRS.Queries;
+using Vendor.Services.Machines.Api.DTO;
 
 namespace Vendor.Services.Machines.Api.Controllers;
 
@@ -65,12 +66,26 @@ public class VendingController : ControllerBase
             return Ok(result);
         return BadRequest(result);
     }
-
+    
     [HttpPost]
-    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Machine,Maintainer,Admin")]
-    public async Task<IActionResult> Drop(VendingDropRequestDto request)
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
+    public async Task<IActionResult> LoadRange(List<LoadSpiralRequestDto> request)
     {
-        var command = _mapper.Map<VendingDropCommand>(request);
+        var command = new LoadSpiralsCommand() { Spirals = request};
+
+        var result = await _mediator.Send(command);
+
+        if (result.IsValid)
+            return Ok(result);
+        return BadRequest(result);
+    }
+
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Machine,Maintainer,Admin")]
+    [Route("/[controller]/[action]/{id}")]
+    public async Task<IActionResult> Drop(int id)
+    {
+        var command = new VendingDropCommand() {SpiralId = id};
 
         var result = await _mediator.Send(command);
 
@@ -110,6 +125,18 @@ public class VendingController : ControllerBase
     {
         var query = new QueryVendingById() { Id = id };
         var result = await _mediator.Send(query);
+
+        if (result.IsValid)
+            return Ok(result);
+        return BadRequest(result);
+    }
+    
+    [HttpPost]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
+    public async Task<IActionResult> ExtractMoney(ExtractMoneyDto dto)
+    {
+        var command = _mapper.Map<ExtractMoneyCommand>(dto);
+        var result = await _mediator.Send(command);
 
         if (result.IsValid)
             return Ok(result);

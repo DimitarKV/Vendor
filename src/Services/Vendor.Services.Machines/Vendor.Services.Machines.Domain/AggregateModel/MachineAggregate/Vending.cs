@@ -25,28 +25,15 @@ public class Vending : Machine
     }
 
 
-    public Vending(string title, double latitude, double longitude, string imageUrl, List<Banknote> banknotes) : base(
-        title, latitude, longitude, imageUrl, banknotes)
+    public Vending(string title, double latitude, double longitude, string imageUrl) : base(
+        title, latitude, longitude, imageUrl)
     {
         Spirals = new List<Spiral>();
         SpiralsPerRow = 1;
     }
 
-    public Vending(string title, double latitude, double longitude, List<Banknote> banknotes) : base(title, latitude,
-        longitude, banknotes)
-    {
-        Spirals = new List<Spiral>();
-        SpiralsPerRow = 1;
-    }
-
-    public Vending(string title, double latitude, double longitude) : base(title, latitude, longitude)
-    {
-        Spirals = new List<Spiral>();
-        SpiralsPerRow = 1;
-    }
-
-    public Vending(string title, double latitude, double longitude, string imageUrl) : base(title, latitude, longitude,
-        imageUrl)
+    public Vending(string title, double latitude, double longitude) : base(title, latitude,
+        longitude)
     {
         Spirals = new List<Spiral>();
         SpiralsPerRow = 1;

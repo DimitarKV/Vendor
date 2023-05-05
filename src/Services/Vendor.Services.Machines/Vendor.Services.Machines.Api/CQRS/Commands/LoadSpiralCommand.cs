@@ -12,7 +12,7 @@ public class LoadSpiralCommand : IRequest<ApiResponse<SpiralView>>
     public int Id { get; set; }
     public int ProductId { get; set; }
     public int Loads { get; set; }
-    public Double Price { get; set; }
+    public Decimal Price { get; set; }
 }
 
 public class LoadSpiralCommandHandler : IRequestHandler<LoadSpiralCommand, ApiResponse<SpiralView>>

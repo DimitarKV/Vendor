@@ -7,7 +7,7 @@ public class Spiral : Entity
 {
     public Vending Vending { get; private set; }
     public int ProductId { get; private set; }
-    public Double Price { get; private set;  }
+    public Decimal Price { get; private set;  }
     public int Loads { get; private set; }
 
     public void SetVending(Vending vending)
@@ -20,7 +20,7 @@ public class Spiral : Entity
         ProductId = id;
     }
 
-    public void SetPrice(Double price)
+    public void SetPrice(Decimal price)
     {
         if (price < 0)
             throw new MachinesDomainException("Price cannot be negative!");
@@ -46,14 +46,14 @@ public class Spiral : Entity
         return Loads == 0;
     }
 
-    public Spiral(int productId, double price, int loads)
+    public Spiral(int productId, Decimal price, int loads)
     {
         ProductId = productId;
         Price = price;
         Loads = loads;
     }
 
-    public Spiral(Vending vending, int productId, double price, int loads)
+    public Spiral(Vending vending, int productId, Decimal price, int loads)
     {
         Vending = vending;
         ProductId = productId;
@@ -61,7 +61,7 @@ public class Spiral : Entity
         SetLoads(loads);
     }
 
-    public Spiral(Vending vending, int productId, double price)
+    public Spiral(Vending vending, int productId, Decimal price)
     {
         Vending = vending;
         ProductId = productId;

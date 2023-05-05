@@ -18,4 +18,6 @@ public static class Endpoints
     public const string FetchMachineById = "/vending/fetch";
     public const string QueryMissingProductsEndpoint = "/vending/QueryMissingProducts";
     public const string QueryProductsMyMatch = "/products/querymatching";
+    public const string LoadSpiralEndpoint = "/vending/load";
+    public const string LoadSpiralsEndpoint = "/vending/loadrange";
 }
