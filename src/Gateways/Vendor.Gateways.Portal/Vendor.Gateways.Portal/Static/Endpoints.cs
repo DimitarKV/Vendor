@@ -23,4 +23,5 @@ public static class Endpoints
     public const string LoadSpiralsEndpoint = "/vending/loadrange";
     public const string AddRoleEndpoint = "/user/addrole";
     public const string FetchServiceRecordsEndpoint = "/vending/QueryServicingRecords";
+    public const string ExtractMoneyEndpoint = "/vending/extractmoney";
 }

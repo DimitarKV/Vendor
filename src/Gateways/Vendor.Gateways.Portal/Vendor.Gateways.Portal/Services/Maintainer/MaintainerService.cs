@@ -115,4 +115,14 @@ public class MaintainerService : IMaintainerService
                 HttpMethod.Get);
         return response;
     }
+
+    public async Task<ApiResponse<VendingView>> ExtractMoney(ExtractMoneyDto dto)
+    {
+        var response =
+            await _clientWrapper.SendAsJsonAsync<VendingView, ExtractMoneyDto>(
+                Endpoints.ExtractMoneyEndpoint,
+                HttpMethod.Post,
+                dto);
+        return response;
+    }
 }

@@ -1,4 +1,4 @@
-﻿namespace Vendor.Services.Machines.Api.DTO;
+﻿namespace Vendor.Gateways.Portal.DTO;
 
 public class ExtractMoneyDto
 {

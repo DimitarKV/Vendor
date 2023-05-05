@@ -20,4 +20,5 @@ public interface IMaintainerService
     Task<ApiResponse<List<SpiralView>>> LoadSpiralsAsync(List<SpiralView> spiral);
 
     Task<ApiResponse<List<ServiceRecordDto>>> FetchServiceRecords(int machineId);
+    Task<ApiResponse<VendingView>> ExtractMoney(ExtractMoneyDto dto);
 }

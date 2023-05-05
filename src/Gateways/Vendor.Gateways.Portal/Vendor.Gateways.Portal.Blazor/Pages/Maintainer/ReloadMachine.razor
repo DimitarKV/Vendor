@@ -1,6 +1,8 @@
 ﻿@page "/Maintainer/Reload/{id:int}"
 @using Vendor.Gateways.Portal.Services.Maintainer
 @using Vendor.Domain.Views
+@using Vendor.Gateways.Portal.DTO
+@using Vendor.Gateways.Portal.Models
 @using Vendor.Gateways.Portal.Services.Product
 
 @inject IMaintainerService MaintainerService;
@@ -9,8 +11,7 @@
 
 @if (Initialized)
 {
-    <EditForm Context="ReloadMachineContext"
-              Model="@VendingView"
+    <EditForm Model="@VendingView"
               OnValidSubmit="@HandleFormSubmitAsync" class="mx-1 mx-md-4"
               style="@(IsFormVisible ? "" : "display: none")">
 
@@ -62,6 +63,16 @@
         </div>
 
     </EditForm>
+
+    <div class="mt-5 container justify-content-center text-light">
+        <EditForm Model="@MoneyModel"
+                  OnValidSubmit="@HandleMoneyExtractionAsync" class="mx-1 mx-md-4"
+                  style="@(IsFormVisible ? "" : "display: none")">
+            <div>Money, currently in - @(VendingView.Money)лв.</div>
+            <InputNumber @bind-Value="MoneyModel.Amount" step="0.1"></InputNumber>
+            <button type="submit" class="btn btn-primary">Extract</button>
+        </EditForm>
+    </div>
 }
 
 @code {
@@ -72,6 +83,8 @@
     public VendingView VendingView { get; set; }
     private bool IsFormVisible = true;
     private bool Initialized = false;
+
+    private ExtractMoneyModel MoneyModel = new();
 
     public Dictionary<int, ProductView> Products { get; set; } = new();
 
@@ -109,4 +122,14 @@
 
         NavManager.NavigateTo(NavManager.Uri, true);
     }
+
+    private async Task HandleMoneyExtractionAsync()
+    {
+        Console.WriteLine();
+        var moneyExtractionResponse = await MaintainerService.ExtractMoney(new ExtractMoneyDto() { Amount = MoneyModel.Amount, VendingId = Id });
+        if (moneyExtractionResponse.IsValid)
+            NavManager.NavigateTo(NavManager.Uri, true);
+        Console.WriteLine();
+    }
+
 }
