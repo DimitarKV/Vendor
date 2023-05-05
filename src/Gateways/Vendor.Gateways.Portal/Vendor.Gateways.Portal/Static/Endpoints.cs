@@ -3,6 +3,7 @@
 public static class Endpoints
 {
     public const string QueryEmptyVendings = "/vending/queryempty";
+    public const string QueryNonEmptyVendings = "/vending/querynonempty";
     public const string RegisterUser = "/user/register";
     public const string Login = "/user/login";
     public const string QueryProductById = "/products/query";
@@ -21,4 +22,5 @@ public static class Endpoints
     public const string LoadSpiralEndpoint = "/vending/load";
     public const string LoadSpiralsEndpoint = "/vending/loadrange";
     public const string AddRoleEndpoint = "/user/addrole";
+    public const string FetchServiceRecordsEndpoint = "/vending/QueryServicingRecords";
 }

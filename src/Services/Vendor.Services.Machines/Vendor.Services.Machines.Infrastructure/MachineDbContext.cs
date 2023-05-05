@@ -11,6 +11,7 @@ public class MachineDbContext : DbContext, IUnitOfWork
     public DbSet<Spiral> Spirals { get; set; }
 
     public DbSet<Handle> Handles { get; set; }
+    public DbSet<Servicing> Servicings { get; set; }
 
     public MachineDbContext()
     {

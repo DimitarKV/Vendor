@@ -49,7 +49,6 @@ public class CreateTokenCommandHandler : IRequestHandler<CreateTokenCommand, Api
         
         var claims = await _userManager.GetClaimsAsync(user!);
         claims.Add(new Claim(ClaimTypes.Name, request.UserName));
-
         var role = claims.First(c => c.Type == ClaimTypes.Role).Value;
         var expirationTime = Claims.RoleClaims[role].SessionExpiry;
         

@@ -13,8 +13,8 @@
                         <h2>Serviceable machines</h2>
                     </div>
                     <div class="row justify-content-center">
-                        
-                        @if (_vendingViews.Count == 0)
+
+                        @if (!emptyVendingRequest)
                         {
                             <div class="spinner-border text-primary" role="status">
                                 <span class="sr-only">Loading machines, please wait!</span>
@@ -22,7 +22,36 @@
                         }
                         else
                         {
+                            if (_vendingViews.Count == 0)
+                            {
+                                <p>Currently, there are no empty machines!</p>
+                            }
+
                             @foreach (var view in _vendingViews)
+                            {
+                                <VendingViewPartial Machine="@view"></VendingViewPartial>
+                            }
+                        }
+                    </div>
+                    <div class="text-center">
+                        <h2>Non-empty machines</h2>
+                    </div>
+                    <div class="row justify-content-center">
+
+                        @if (!nonEmptyVendingRequest)
+                        {
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">Loading machines, please wait!</span>
+                            </div>
+                        }
+                        else
+                        {
+                            if (_nonEmptyVendingViews.Count == 0)
+                            {
+                                <p>Currently, there are no non-empty machines!</p>
+                            }
+
+                            @foreach (var view in _nonEmptyVendingViews)
                             {
                                 <VendingViewPartial Machine="@view"></VendingViewPartial>
                             }
@@ -36,19 +65,40 @@
 
 @code {
     private List<VendingView> _vendingViews = new();
+    private List<VendingView> _nonEmptyVendingViews = new();
+
+    private bool emptyVendingRequest = false;
+    private bool nonEmptyVendingRequest = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (_vendingViews.Count == 0 || firstRender)
-            await PopulateVendingViews();
+        if (!emptyVendingRequest)
+            await PopulateEmptyVendingViews();
+
+        if (!nonEmptyVendingRequest)
+            await PopulateNonEmptyVendingViews();
     }
 
-    private async Task PopulateVendingViews()
+    private async Task PopulateEmptyVendingViews()
     {
-        var response = await _service.FetchEmptyMachines();
-        if (response.IsValid)
-            _vendingViews = response.Result;
-        
+        var emptyMachinesResponse = await _service.FetchEmptyMachines();
+        if (emptyMachinesResponse.IsValid)
+        {
+            _vendingViews = emptyMachinesResponse.Result;
+            emptyVendingRequest = true;
+        }
+        StateHasChanged();
+    }
+
+
+    private async Task PopulateNonEmptyVendingViews()
+    {
+        var nonEmptyMachinesResponse = await _service.FetchNonEmptyMachines();
+        if (nonEmptyMachinesResponse.IsValid)
+        {
+            _nonEmptyVendingViews = nonEmptyMachinesResponse.Result;
+            nonEmptyVendingRequest = true;
+        }
         StateHasChanged();
     }
 

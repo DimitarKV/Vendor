@@ -30,15 +30,21 @@ public class MachineRepository : IMachineRepository
         return _context.Vendings.Add(vending).Entity;
     }
 
-    public async Task LoadSpiralAsync(int spiralId, int productId, int loads, Decimal price)
+    public async Task<bool> LoadSpiralAsync(int spiralId, int productId, int loads, decimal price)
     {
+        bool filled = false;
         var spiral = await _context.Spirals.SingleOrDefaultAsync(s => s.Id == spiralId);
         if (spiral is null)
             throw new MachinesDomainException("Spiral with id " + spiralId + " does not exist!");
-        
+
+        if (spiral.ProductId != productId || spiral.Loads != loads)
+            filled = true;
+            
         spiral.SetProductId(productId);
         spiral.SetLoads(loads);
         spiral.SetPrice(price);
+
+        return filled;
     }
 
     public async Task DropProductAsync(int spiralId)
@@ -57,6 +63,14 @@ public class MachineRepository : IMachineRepository
     {
         var emptyVendings = await _context.Vendings.Include(v => v.Spirals)
             .Where(v => v.Spirals.Any(s => s.Loads == 0))
+            .ToListAsync();
+        return emptyVendings;
+    }
+
+    public async Task<List<Vending>> GetNonEmptyVendingsAsync()
+    {
+        var emptyVendings = await _context.Vendings.Include(v => v.Spirals)
+            .Where(v => v.Spirals.All(s => s.Loads != 0))
             .ToListAsync();
         return emptyVendings;
     }
@@ -93,5 +107,18 @@ public class MachineRepository : IMachineRepository
 
         machine.SetImageUrl(url);
         return machine;
+    }
+
+    public Servicing CreateServicingRecord(int machineId, string maintainerUserName, DateTime time, string fillings)
+    {
+        var record = new Servicing(machineId, maintainerUserName, time, fillings);
+        _context.Servicings.Add(record);
+        return record;
+    }
+
+    public async Task<List<Servicing>> GetServicingRecordsAsync(int machineId)
+    {
+        var records = await _context.Servicings.Where(s => s.MachineId == machineId).ToListAsync();
+        return records;
     }
 }

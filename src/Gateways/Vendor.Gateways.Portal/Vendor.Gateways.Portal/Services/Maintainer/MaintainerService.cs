@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Vendor.Domain.DTO.Requests;
 using Vendor.Domain.Types;
 using Vendor.Domain.Views;
+using Vendor.Gateways.Portal.DTO;
 using Vendor.Gateways.Portal.Providers;
 using Vendor.Gateways.Portal.Static;
 using Vendor.Gateways.Portal.Wrappers.HttpClientWrapper;
@@ -26,6 +27,15 @@ public class MaintainerService : IMaintainerService
     {
         var response = await _clientWrapper.SendAsJsonAsync<List<VendingView>>(
             Endpoints.QueryEmptyVendings,
+            HttpMethod.Get);
+
+        return response; 
+    }
+
+    public async Task<ApiResponse<List<VendingView>>> FetchNonEmptyMachines()
+    {
+        var response = await _clientWrapper.SendAsJsonAsync<List<VendingView>>(
+            Endpoints.QueryNonEmptyVendings,
             HttpMethod.Get);
 
         return response; 
@@ -94,6 +104,15 @@ public class MaintainerService : IMaintainerService
                 Endpoints.LoadSpiralsEndpoint,
                 HttpMethod.Post,
                 spirals);
+        return response;
+    }
+
+    public async Task<ApiResponse<List<ServiceRecordDto>>> FetchServiceRecords(int machineId)
+    {
+        var response =
+            await _clientWrapper.SendAsJsonAsync<List<ServiceRecordDto>>(
+                Endpoints.FetchServiceRecordsEndpoint + "/" + machineId,
+                HttpMethod.Get);
         return response;
     }
 }

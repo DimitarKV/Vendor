@@ -10,6 +10,7 @@ namespace Vendor.Services.Machines.Api.CQRS.Commands;
 
 public class LoadSpiralsCommand : IRequest<ApiResponse<List<SpiralView>>>
 {
+    public string MaintainerUsername { get; set; }
     public List<LoadSpiralRequestDto> Spirals { get; set; }
 }
 
@@ -27,13 +28,29 @@ public class LoadSpiralsCommandHandler : IRequestHandler<LoadSpiralsCommand, Api
     public async Task<ApiResponse<List<SpiralView>>> Handle(LoadSpiralsCommand request,
         CancellationToken cancellationToken)
     {
+        var loadedProducts = new List<int>();
+
         foreach (var spiralRequestDto in request.Spirals)
-            await _repository.LoadSpiralAsync(spiralRequestDto.Id, spiralRequestDto.ProductId, spiralRequestDto.Loads,
-                spiralRequestDto.Price);
+        {
+            var loaded = await _repository.LoadSpiralAsync(spiralRequestDto.Id, spiralRequestDto.ProductId, spiralRequestDto.Loads,
+                            spiralRequestDto.Price);
+            if(loaded && !loadedProducts.Contains(spiralRequestDto.ProductId))
+                loadedProducts.Add(spiralRequestDto.ProductId);
+        }
+
+
+        if (loadedProducts.Count != 0)
+        {
+            var vending = await _repository.GetSpiralAndVendingByIdAsync(request.Spirals[0].Id);
+            
+            _repository.CreateServicingRecord(vending!.Id, request.MaintainerUsername, DateTime.Now,
+                String.Join(", ", loadedProducts));
+        }
 
         await _repository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
         var spirals = new List<SpiralView>();
+
 
         foreach (var spiralRequestDto in request.Spirals)
             spirals.Add(_mapper.Map<SpiralView>(await _repository.GetSpiralByIdAsync(spiralRequestDto.Id)));

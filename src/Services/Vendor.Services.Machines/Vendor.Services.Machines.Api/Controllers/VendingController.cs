@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,7 +72,7 @@ public class VendingController : ControllerBase
     [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
     public async Task<IActionResult> LoadRange(List<LoadSpiralRequestDto> request)
     {
-        var command = new LoadSpiralsCommand() { Spirals = request};
+        var command = new LoadSpiralsCommand() { Spirals = request, MaintainerUsername = User.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Name)!.Value};
 
         var result = await _mediator.Send(command);
 
@@ -99,6 +100,17 @@ public class VendingController : ControllerBase
     public async Task<IActionResult> QueryEmpty()
     {
         var result = await _mediator.Send(new QueryEmptyVendings());
+
+        if (result.IsValid)
+            return Ok(result);
+        return BadRequest(result);
+    }
+    
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
+    public async Task<IActionResult> QueryNonEmpty()
+    {
+        var result = await _mediator.Send(new QueryNonEmptyVendings());
 
         if (result.IsValid)
             return Ok(result);
@@ -149,6 +161,19 @@ public class VendingController : ControllerBase
     public async Task<IActionResult> QueryMissingProducts(int id)
     {
         var query = new QueryMissingProducts() { MachineId = id };
+        var result = await _mediator.Send(query);
+
+        if (result.IsValid)
+            return Ok(result);
+        return BadRequest(result);
+    }
+    
+    [HttpGet]
+    [Authorize(AuthenticationSchemes = "Bearer", Roles = "Maintainer,Admin")]
+    [Route("/[controller]/[action]/{machineId}")]
+    public async Task<IActionResult> QueryServicingRecords(int machineId)
+    {
+        var query = new QueryServiceRecords() { MachineId = machineId };
         var result = await _mediator.Send(query);
 
         if (result.IsValid)
