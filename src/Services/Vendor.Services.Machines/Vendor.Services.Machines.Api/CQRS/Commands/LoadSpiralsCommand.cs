@@ -41,7 +41,7 @@ public class LoadSpiralsCommandHandler : IRequestHandler<LoadSpiralsCommand, Api
 
         if (loadedProducts.Count != 0)
         {
-            var vending = await _repository.GetSpiralAndVendingByIdAsync(request.Spirals[0].Id);
+            var vending = (await _repository.GetSpiralAndVendingByIdAsync(request.Spirals[0].Id))!.Vending;
             
             _repository.CreateServicingRecord(vending!.Id, request.MaintainerUsername, DateTime.Now,
                 String.Join(", ", loadedProducts));
