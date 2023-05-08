@@ -25,7 +25,7 @@ public class UploadImageCommandHandler : IRequestHandler<UploadImageCommand, Api
         var uploadParams = new ImageUploadParams()
         {
             File = new FileDescription(request.Image.Name, request.Image.OpenReadStream()),
-            PublicId = request.Name.Replace(" ", "")
+            PublicId = Guid.NewGuid().ToString()
         };
         var uploadResult = await _cloudinary.UploadAsync(uploadParams);
 

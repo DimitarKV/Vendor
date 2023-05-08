@@ -44,7 +44,7 @@ public class ProductService : IProductService
 
         using (var multipartFormContent = new MultipartFormDataContent())
         {
-            var fileStreamContent = new StreamContent(dto.Image.OpenReadStream());
+            var fileStreamContent = new StreamContent(dto.Image.OpenReadStream(100*1024*1024));
             fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue(dto.Image.ContentType);
             multipartFormContent.Add(fileStreamContent, name: "image", fileName: "filename");
 
