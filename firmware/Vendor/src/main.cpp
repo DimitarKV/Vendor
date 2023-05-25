@@ -4,16 +4,22 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include <queue>
 
 const char *SSID = "SSID";
 const char *SSID_PASSWORD = "SSID_PASSWORD";
 
-const char *VENDOR_USERS_SERVER_HOSTNAME = "192.168.1.103:7075";
-const char *VENDOR_USERS_SERVER_ADDRESS = "192.168.1.103";
+const char *VENDOR_USERS_SERVER_HOSTNAME = "192.168.1.104:7075";
+const char *VENDOR_USERS_SERVER_ADDRESS = "192.168.1.104";
 const int VENDOR_USERS_SERVER_PORT = 7075;
 
-WiFiClientSecure client;
+const char *VENDOR_MACHINES_SERVER_HOSTNAME = "192.168.1.104:7195";
+const char *VENDOR_MACHINES_SERVER_ADDRESS = "192.168.1.104";
+const int VENDOR_MACHINES_SERVER_PORT = 7195;
+
 std::string apiToken;
+
+WiFiClientSecure client;
 
 const std::string WHITESPACE = " \n\r\t\f\v";
 
@@ -87,9 +93,9 @@ private:
   std::string _body;
 };
 
-bool connectToServer()
+bool connectToServer(std::string serverAddress, int serverPort)
 {
-  if (!client.connect(VENDOR_USERS_SERVER_ADDRESS, VENDOR_USERS_SERVER_PORT))
+  if (!client.connect(serverAddress.c_str(), serverPort))
     return false;
   return true;
 }
@@ -153,10 +159,13 @@ std::string serializeDocToJson(DynamicJsonDocument doc)
   return json;
 }
 
-void login(char *username, char *password)
+std::string login(char *username, char *password)
 {
-  if(!connectToServer())
-    return;
+  if (!connectToServer(VENDOR_USERS_SERVER_ADDRESS, VENDOR_USERS_SERVER_PORT))
+  {
+    std::string empty = "";
+    return empty;
+  }
   DynamicJsonDocument doc(128);
 
   doc["username"] = username;
@@ -179,10 +188,42 @@ void login(char *username, char *password)
 
   HttpResponse response = readResponse();
   DynamicJsonDocument responseDoc = deserializeJsonToDoc(response.getBody());
-  apiToken = responseDoc["result"].as<std::string>();
+  std::string token = responseDoc["result"].as<std::string>();
 
   closeConnection();
+  return token;
 }
+
+bool dropSpiral(long long spiralId)
+{
+  if (!connectToServer(VENDOR_MACHINES_SERVER_ADDRESS, VENDOR_MACHINES_SERVER_PORT))
+    return false;
+
+  client.print("GET /vending/drop/");
+  client.print(spiralId);
+  client.println(" HTTP/1.1");
+
+  client.print("Host: ");
+  client.println(VENDOR_MACHINES_SERVER_HOSTNAME);
+
+  client.println("Content-Type: application/json");
+  
+  client.print("Authorization: Bearer ");
+  client.println(apiToken.c_str());
+  client.println();
+
+  HttpResponse response = readResponse();
+  DynamicJsonDocument responseDoc = deserializeJsonToDoc(response.getBody());
+  bool isValid = responseDoc["isValid"];
+  if(isValid){
+    int remainingQuantity = responseDoc["result"]["spirals"][0]["loads"];
+    Serial.println(remainingQuantity);
+  }
+
+  closeConnection();
+  return true;
+}
+
 
 void setup()
 {
@@ -205,10 +246,49 @@ void setup()
   // client.setCACert(ca);
   client.setInsecure();
 
-  login("admin", "admin");
+  apiToken = login("admin", "admin");
   Serial.println(apiToken.c_str());
+}
+
+std::string commandBuffer;
+std::queue<std::string> commands;
+void handleSerial()
+{
+  while (Serial.available())
+  {
+    char c = Serial.read();
+    Serial.print(c);
+    commandBuffer += c;
+    if (c == '\n')
+    {
+      commandBuffer = commandBuffer.substr(0, commandBuffer.find('\r'));
+      commands.push(commandBuffer);
+      commandBuffer = "";
+    }
+  }
+}
+
+void handleCommands()
+{
+  handleSerial();
+  while (!commands.empty())
+  {
+    std::string currentCommand = commands.front();
+    char commandName = currentCommand[0];
+    switch (commandName)
+    {
+    case 'D':
+      Serial.println(dropSpiral(std::stoll(currentCommand.substr(1))) ? "Success!" : "Failure!");
+      break;
+
+    default:
+      break;
+    }
+    commands.pop();
+  }
 }
 
 void loop()
 {
+  handleCommands();
 }
