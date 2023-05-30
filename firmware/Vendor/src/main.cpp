@@ -1,5 +1,7 @@
 #include <WiFiClientSecure.h>
 #include <ArduinoJson.h>
+#include <ezButton.h>
+
 #include <string>
 #include <map>
 #include <vector>
@@ -17,11 +19,18 @@ const char *VENDOR_MACHINES_SERVER_HOSTNAME = "192.168.1.104:7195";
 const char *VENDOR_MACHINES_SERVER_ADDRESS = "192.168.1.104";
 const int VENDOR_MACHINES_SERVER_PORT = 7195;
 
+const std::string WHITESPACE = " \n\r\t\f\v";
+#define DEBOUNCE_TIME 50
+
+ezButton button1(5);
+ezButton button2(18);
+ezButton button3(19);
+ezButton button4(21);
+int led = 32;
+
 std::string apiToken;
 
 WiFiClientSecure client;
-
-const std::string WHITESPACE = " \n\r\t\f\v";
 
 std::string ltrim(const std::string &s)
 {
@@ -207,7 +216,7 @@ bool dropSpiral(long long spiralId)
   client.println(VENDOR_MACHINES_SERVER_HOSTNAME);
 
   client.println("Content-Type: application/json");
-  
+
   client.print("Authorization: Bearer ");
   client.println(apiToken.c_str());
   client.println();
@@ -215,19 +224,26 @@ bool dropSpiral(long long spiralId)
   HttpResponse response = readResponse();
   DynamicJsonDocument responseDoc = deserializeJsonToDoc(response.getBody());
   bool isValid = responseDoc["isValid"];
-  if(isValid){
+  if (isValid)
+  {
     int remainingQuantity = responseDoc["result"]["spirals"][0]["loads"];
     Serial.println(remainingQuantity);
   }
 
   closeConnection();
-  return true;
+  return isValid;
 }
-
 
 void setup()
 {
   Serial.begin(115200);
+
+  button1.setDebounceTime(DEBOUNCE_TIME);
+  button2.setDebounceTime(DEBOUNCE_TIME);
+  button3.setDebounceTime(DEBOUNCE_TIME);
+  button4.setDebounceTime(DEBOUNCE_TIME);
+  pinMode(led, OUTPUT);
+  digitalWrite(led, LOW);
 
   Serial.print("Attempting to connect to SSID: ");
   Serial.println(SSID);
@@ -268,27 +284,91 @@ void handleSerial()
   }
 }
 
+void blink(int n)
+{
+  for (int i = 0; i < n; i++)
+  {
+    digitalWrite(led, HIGH);
+    delay(70);
+    digitalWrite(led, LOW);
+    delay(70);
+  }
+}
+
 void handleCommands()
 {
-  handleSerial();
-  while (!commands.empty())
-  {
-    std::string currentCommand = commands.front();
-    char commandName = currentCommand[0];
-    switch (commandName)
-    {
-    case 'D':
-      Serial.println(dropSpiral(std::stoll(currentCommand.substr(1))) ? "Success!" : "Failure!");
-      break;
+  // handleSerial();
+  // while (!commands.empty())
+  // {
+  //   std::string currentCommand = commands.front();
+  //   char commandName = currentCommand[0];
+  //   switch (commandName)
+  //   {
+  //   case 'D':
+  //     Serial.println(dropSpiral(std::stoll(currentCommand.substr(1))) ? "Success!" : "Failure!");
+  //     break;
 
-    default:
-      break;
-    }
-    commands.pop();
+  //   default:
+  //     break;
+  //   }
+  //   commands.pop();
+  // }
+
+  if (button1.isPressed() || button2.isPressed() || button3.isPressed() || button4.isPressed())
+  {
+    digitalWrite(led, HIGH);
+  }
+
+  if (button1.isReleased())
+  {
+    digitalWrite(led, LOW);
+    bool status = dropSpiral(1);
+    Serial.println(status ? "Success!" : "Failure!");
+    if (status)
+      blink(2);
+    else
+      blink(3);
+  }
+  if (button2.isReleased())
+  {
+    digitalWrite(led, LOW);
+    bool status = dropSpiral(2);
+    Serial.println(status ? "Success!" : "Failure!");
+    if (status)
+      blink(2);
+    else
+      blink(3);
+  }
+  if (button3.isReleased())
+  {
+    digitalWrite(led, LOW);
+    bool status = dropSpiral(3);
+
+    Serial.println(status ? "Success!" : "Failure!");
+    if (status)
+      blink(2);
+    else
+      blink(3);
+  }
+  if (button4.isReleased())
+  {
+    digitalWrite(led, LOW);
+    bool status = dropSpiral(4);
+
+    Serial.println(status ? "Success!" : "Failure!");
+    if (status)
+      blink(2);
+    else
+      blink(3);
   }
 }
 
 void loop()
 {
+  button1.loop();
+  button2.loop();
+  button3.loop();
+  button4.loop();
+
   handleCommands();
 }
